@@ -30,7 +30,7 @@ void load_media()
 
    SDL_FreeSurface(surface);
 
-   main1.x=-400;
+   main1.x=-800;
    main1.y=winHeight*.5;
    main1.w=(int)main1.w*.4;
    main1.h=(int)main1.h*.4;
