@@ -13,25 +13,25 @@ SDL_Renderer *render=NULL;
 void init()
 {   if(SDL_Init(SDL_INIT_VIDEO)<0)
     {  
-      cout<<"Init failor: "<<SDL_GetError()<<endl;
+      cout<<"Init failure: "<<SDL_GetError()<<endl;
     }
     else
     {
        win=SDL_CreateWindow("The Hunt For Red October",SDL_WINDOWPOS_CENTERED,SDL_WINDOWPOS_CENTERED,winWidth,winHeight,SDL_WINDOW_SHOWN|SDL_WINDOW_RESIZABLE);
         if(!win)
         {   
-            cout<<"Window failor: "<<SDL_GetError()<<endl;
+            cout<<"Window failure: "<<SDL_GetError()<<endl;
             SDL_Quit();
         }
     }
     if(IMG_Init(IMG_INIT_JPG|IMG_INIT_PNG)<0)
     {
-        cout<<"IMG failor:"<<SDL_GetError()<<endl;
+        cout<<"IMG failure: "<<SDL_GetError()<<endl;
     }
     render =SDL_CreateRenderer(win,-1,SDL_RENDERER_ACCELERATED|SDL_RENDERER_PRESENTVSYNC);
     if(!render)
     {
-       cout<<"Render failor: "<<SDL_GetError()<<endl;
+       cout<<"Render failure: "<<SDL_GetError()<<endl;
     }
 }
 

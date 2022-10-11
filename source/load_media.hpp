@@ -16,7 +16,7 @@ void load_media()
    redmain=SDL_CreateTextureFromSurface(render,surface);
    if(!redmain)
    {
-    cout<<"Texture failor: "<<SDL_GetError()<<endl;
+    cout<<"Texture failure: "<<SDL_GetError()<<endl;
    }
    SDL_FreeSurface(surface);
    SDL_QueryTexture(redmain,NULL,NULL,&main1.w,&main1.h);
@@ -25,7 +25,7 @@ void load_media()
    background=SDL_CreateTextureFromSurface(render,surface);
    if(!background)
    {
-     cout<<"Texture failor: "<<SDL_GetError()<<endl;
+     cout<<"Texture failure: "<<SDL_GetError()<<endl;
    }
 
    SDL_FreeSurface(surface);
