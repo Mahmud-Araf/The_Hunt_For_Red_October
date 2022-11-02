@@ -9,6 +9,9 @@
 //loads texuture
 SDL_Texture *loadTexture(std::string path);
 
+SDL_Texture *loadTexturewithKey(std::string path);
+
+
 //loads texure and sound
 bool loadMedia();
 

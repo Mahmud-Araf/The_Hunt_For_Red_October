@@ -30,11 +30,11 @@ extern SDL_Texture *explo_waterObj;
 //sound part
 
 extern Mix_Music *gamemusic;
-extern Mix_Chunk *missileL1;
-extern Mix_Chunk *missileL2;
-extern Mix_Chunk *torpL;
-extern Mix_Chunk *E_surface;
-extern Mix_Chunk *E_water;
+extern Mix_Chunk *missileL1_chunk;
+extern Mix_Chunk *missileL2_chunk;
+extern Mix_Chunk *torpL_chunk;
+extern Mix_Chunk *explosion_surface_chunk;
+extern Mix_Chunk *explosion_water_chunk;
 
 
 #endif

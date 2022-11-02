@@ -14,5 +14,7 @@ extern int first_time_missile_launch;
 
 extern int player_x_pos;
 extern int player_y_pos;
+
+extern int is_paused;
 #endif
 

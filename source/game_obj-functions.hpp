@@ -18,6 +18,11 @@ struct Torpedo
     //initializer
     void init();
 
+    //rendering
+    void render();
+    //player single torp launch
+    void launch_single_ptorp();
+
 };
 
 struct Missile
@@ -40,6 +45,8 @@ struct Missile
 
     void render2();//rendering for missile type 2
 
+    //player missile launch
+    void launch_single_missile();
 };
 
 
@@ -92,13 +99,21 @@ struct Player
     //rendering
     void render();
 
-    //handles keyboard and mouse inputs 
-    void handle_event();
+    //handles keyboard events to move player submarine
+    void handle_event_movement();
+
+    //handles mouse events to  launch torpedos
+    void handle_event_torps();
+
+    //handle mouse events to launch missiles
+    void handle_event_missiles();
 
     //player torpedo launching
     void launch_torps();
-   
-   
+
+    //player missile launching
+    void launch_missiles();
+
 };
 
 extern Player player;

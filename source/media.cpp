@@ -21,11 +21,11 @@ SDL_Texture *explo_waterObj;
 //sound part
 
 Mix_Music *gamemusic;
-Mix_Chunk *missileL1;
-Mix_Chunk *missileL2;
-Mix_Chunk *torpL;
-Mix_Chunk *E_surface;
-Mix_Chunk *E_water;
+Mix_Chunk *missileL1_chunk;
+Mix_Chunk *missileL2_chunk;
+Mix_Chunk *torpL_chunk;
+Mix_Chunk *explosion_surface_chunk;
+Mix_Chunk *explosion_water_chunk;
 
 
 SDL_Texture* loadTexture(std::string path) 
@@ -41,6 +41,33 @@ SDL_Texture* loadTexture(std::string path)
       } 
       else 
       {
+            newTexture = SDL_CreateTextureFromSurface(gameRenderer,loadedSurface);
+            SDL_FreeSurface(loadedSurface);
+            loadedSurface=NULL;
+            if (newTexture == NULL) 
+            {
+                  cout<<"Texture Load Error: "<<path.c_str()<<endl
+                  <<IMG_GetError()<<endl;
+            }
+      }
+      return newTexture;
+}
+
+SDL_Texture* loadTexturewithKey(std::string path) 
+{
+      SDL_Texture* newTexture = NULL;
+ 
+      SDL_Surface* loadedSurface = IMG_Load(path.c_str());
+
+      if (loadedSurface == NULL) 
+      {
+        cout<<"Surface Load Error: "<<path.c_str()<<endl
+        <<IMG_GetError()<<endl;
+      } 
+      else 
+      {     
+            SDL_SetColorKey(loadedSurface, SDL_TRUE, SDL_MapRGB(loadedSurface->format, 255, 255, 255));
+            
             newTexture = SDL_CreateTextureFromSurface(gameRenderer,loadedSurface);
             SDL_FreeSurface(loadedSurface);
             loadedSurface=NULL;
@@ -81,6 +108,7 @@ bool loadMedia()
         cout<<"Failed to load player torpedo"<<endl;
         success=false;
     }
+    SDL_SetTextureColorMod(player_torpObj, 200, 255, 255);
     player_missile1Obj=loadTexture("assets/missile1.png");
     if(player_missile1Obj==NULL)
     {
@@ -99,18 +127,20 @@ bool loadMedia()
         cout<<"Failed to load enemy submarine"<<endl;
         success=false;
     }
+    SDL_SetTextureColorMod(enemy_subObj, 200, 200, 200);
     enemy_torpObj=loadTexture("assets/enemytorpedo.png");
     if(enemy_torpObj==NULL)
     {
         cout<<"Failed to load enemy torpedo"<<endl;
         success=false;
     }
-    enemy_shipObj=loadTexture("assets/slava.png");
+    enemy_shipObj=loadTexturewithKey("assets/slava.png");
     if(enemy_shipObj==NULL)
     {
         cout<<"Failed to load enemy ship"<<endl;
         success=false;
     }
+    
     enemy_mineObj=loadTexture("assets/sea mine.png");
     if(enemy_mineObj==NULL)
     {
@@ -139,33 +169,33 @@ bool loadMedia()
         success=false;
     }
 
-    missileL1=Mix_LoadWAV("assets/missilel1.wav");
-    if(missileL1==NULL)
+    missileL1_chunk=Mix_LoadWAV("assets/missilel1.wav");
+    if(missileL1_chunk==NULL)
     {
         cout<<"Failed to load missile launch 1 chunk"<<endl;
         success=false;
     }
-    missileL2=Mix_LoadWAV("assets/missilel2.wav");
-    if(missileL2==NULL)
+    missileL2_chunk=Mix_LoadWAV("assets/missilel2.wav");
+    if(missileL2_chunk==NULL)
     {
         cout<<"Failed to load missile launch 2 chunk"<<endl;
         success=false;
     }
-    torpL=Mix_LoadWAV("assets/torpedolaunch.wav");
-    if(torpL==NULL)
+    torpL_chunk=Mix_LoadWAV("assets/torpedolaunch.wav");
+    if(torpL_chunk==NULL)
     {
         cout<<"Failed to load torpedo launch chunk"<<endl;
         success=false;
     }
 
-    E_surface=Mix_LoadWAV("assets/surface_exp.wav");
-    if(E_surface==NULL)
+    explosion_surface_chunk=Mix_LoadWAV("assets/surface_exp.wav");
+    if(explosion_surface_chunk==NULL)
     {
         cout<<"Failed to load explosion1 chunk"<<endl;
         success=false;
     }
-    E_water=Mix_LoadWAV("assets/underwater_exp.wav");
-    if(E_water==NULL)
+    explosion_water_chunk=Mix_LoadWAV("assets/underwater_exp.wav");
+    if(explosion_water_chunk==NULL)
     {
         cout<<"Failed to load explosion2 chunk"<<endl;
         success=false;
@@ -206,16 +236,16 @@ void closeMedia()
     //free sound
     Mix_FreeMusic(gamemusic);
     gamemusic=NULL;
-    Mix_FreeChunk(missileL1);
-    missileL1=NULL;
-    Mix_FreeChunk(missileL2);
-    missileL2=NULL;
-    Mix_FreeChunk(torpL);
-    torpL=NULL;
-    Mix_FreeChunk(E_surface);
-    E_surface=NULL;
-    Mix_FreeChunk(E_water);
-    E_water=NULL;
+    Mix_FreeChunk(missileL1_chunk);
+    missileL1_chunk=NULL;
+    Mix_FreeChunk(missileL2_chunk);
+    missileL2_chunk=NULL;
+    Mix_FreeChunk(torpL_chunk);
+    torpL_chunk=NULL;
+    Mix_FreeChunk(explosion_surface_chunk);
+    explosion_surface_chunk=NULL;
+    Mix_FreeChunk(explosion_water_chunk);
+    explosion_water_chunk=NULL;
 }
 
 

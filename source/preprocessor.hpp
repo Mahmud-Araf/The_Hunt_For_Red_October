@@ -27,5 +27,6 @@ using namespace std;
 #define E_Sub_N  10
 #define E_Ship_N 5
 #define P_TORP_SPEED 7
+#define P_MISSILE_SPEED 14
 #endif
 
