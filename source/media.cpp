@@ -127,7 +127,7 @@ bool loadMedia()
         cout<<"Failed to load enemy submarine"<<endl;
         success=false;
     }
-    SDL_SetTextureColorMod(enemy_subObj, 200, 200, 200);
+    SDL_SetTextureColorMod(enemy_subObj, 230, 230, 230);
     enemy_torpObj=loadTexture("assets/enemytorpedo.png");
     if(enemy_torpObj==NULL)
     {

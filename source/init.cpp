@@ -66,4 +66,5 @@ void gameinit()
     init.init_music();
     init.init_ttf();
     init.init_renderer();
+    srand((unsigned)time(NULL));
 }

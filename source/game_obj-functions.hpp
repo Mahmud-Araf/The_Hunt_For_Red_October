@@ -15,15 +15,22 @@ struct Torpedo
 
     int xy_check;  //variable to fix torpedos' dimension after it is launched
     
-    //initializer
-    void init();
+    //initializer for player torps
+    void p_init();
+     //initializer for enemy torps
+    void e_init();
 
     //rendering
     void render();
+
     //player single torp launch
     void launch_single_ptorp();
 
+    //enemy single torp launch
+    void launch_single_etorp();
+
 };
+
 
 struct Missile
 {
@@ -50,7 +57,6 @@ struct Missile
 };
 
 
-
 struct Mine
 {
    SDL_Rect mine_dim;
@@ -68,7 +74,32 @@ struct Mine
 
     //rendering
     void render();
+
+    //enemy ship single mine drop
+    void drop_single_mine();
 };
+
+
+
+struct Background 
+{
+    SDL_Rect bg_dim[BG_N]; // rectangle to hold background for scrolling
+
+    int scrolling_perframe=0;
+
+    int bg_width;//a variable to store the width of gameBG texture
+    
+    //initiate background
+    void init();
+
+    //scrolls the background
+    void scroll();
+
+    //background rendering
+    void render();
+};
+extern Background background;
+
 
 struct Player
 {
@@ -85,13 +116,13 @@ struct Player
 
     int is_counting; //variable related to obj revival & explosion
 
-    int p_torp_launch_start;
+    int ptorp_launch_start;
                              //variables related to the time of player sub torpedo launching
-    int p_torp_launch_count;
+    int ptorp_launch_count;
 
-    int p_missile_launch_start;
+    int pmissile_launch_start;
                              //variables related to the time of player sub missile launching
-    int p_missile_launch_count;
+    int pmissile_launch_count;
 
     //initializer
     void init();
@@ -115,8 +146,8 @@ struct Player
     void launch_missiles();
 
 };
-
 extern Player player;
+
 
 struct Enemy_Sub
 {
@@ -130,25 +161,57 @@ struct Enemy_Sub
 
     int is_counting; //variable related to obj revival & explosion
 
-    int e_torp_launch_start;
+    int etorp_launch_start;
                              //variables related to the time of enemy sub torpedo launching
-    int e_torp_launch_count;
+    int etorp_launch_count;
 
-    //initializer
+    //rendering
+    void render();
+    
+    //single enemy_submarine torpedo firing
+    void single_sub_launch();
+
+};
+
+
+struct Enemy_Sub_Set
+{
+    Enemy_Sub e_sub[E_SUB_N];
+
+    int esub_speed[E_SUB_N];//array to store the speed of each submarine
+
+    int y_limit_check[E_SUB_N]={};
+    
+    //initialize
     void init();
 
     //rendering
     void render();
 
-};
+    // increases the number of sub after a certain time
+    void increment();
 
-extern Enemy_Sub enemy_sub[E_Sub_N];
+    //sets the speed of a enemy submarine in x axis
+    void xmove_setting();
+    
+    //moves the submarine in x axis
+    void xmove();
+
+    //moves the submarine in x axis
+    void ymove();
+
+    //enemy submarines torpedo firing
+    void launch_torps();
+    
+};
+extern Enemy_Sub_Set enemy_sub_set;
+
 
 struct Enemy_Ship
 {
     SDL_Rect eship_dim; //the rectangle of obj
 
-    Mine e_mines[E_MINE_N]; // structure for enemy mineset of a single ship
+    Mine emines[E_MINE_N]; // structure for enemy mineset of a single ship
 
     int is_exploded; //variable to check whether player is exploded or not
 
@@ -156,19 +219,42 @@ struct Enemy_Ship
 
     int is_counting; //variable related to obj revival & explosion
 
-    int e_mine_launch_start;
+    int emine_launch_start;
                              //variables related to the time of enemy ship mine launching
-    int e_mine_launch_count;
-
-    //initializer
-    void init();
+    int emine_launch_count;
 
     //rendering
     void render();
 
 };
 
-extern Enemy_Ship enemy_ship[E_Ship_N];
+struct Enemy_Ship_Set
+{
+    
+    Enemy_Ship e_ship[E_SHIP_N];
+
+    int eship_speed[E_SHIP_N];
+    
+    //initializing
+    void init();
+
+    //rendering
+    void render();
+
+    // increases the number of ship after a certain time
+    void increment();
+
+    //sets the speed of a enemy ship in x axis
+    void xmove_setting();
+    
+    //moves the submarine in x axis
+    void xmove();
+
+    //enemy ships mine dropping
+    void launch_mines();
+};
+
+extern Enemy_Ship_Set enemy_ship_set;
 
 
 #endif

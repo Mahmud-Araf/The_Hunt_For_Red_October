@@ -1,3 +1,4 @@
+//This header contains function to close and free the sdl2 functionalities
 #pragma once
 #include"preprocessor.hpp"
 extern SDL_Window *gameWindow;
