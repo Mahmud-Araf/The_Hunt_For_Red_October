@@ -11,6 +11,7 @@ Background background;
 Enemy_Sub_Set enemy_sub_set;
 Enemy_Ship_Set enemy_ship_set;
 
+
 //necessary variables
 SDL_Event e;
 int is_paused=0; // variable to pause the game
@@ -28,8 +29,12 @@ int esub_x_pos;
 int esub_y_pos;
 
 int eship_x_pos;
-
+                 //global variable to store the x and y co-ordinates of enemy ship
 int eship_y_pos;
+
+int eship_w;
+            //global variable to store the width and height of a enemy ship
+int eship_h;
 
 int total_sub=PRIMARY_ESUB_N;
 int esub_increment_start_time=0;
@@ -38,6 +43,14 @@ int esub_increment_count_time=0;
 int total_ship=PRIMARY_ESHIP_N;
 int eship_increment_start_time=0;
 int eship_increment_count_time=0;
+
+//global variable necessary for missile collision
+int mcollision_start[E_SHIP_N];
+int mcollision_count[E_SHIP_N];
+SDL_Rect mcollision_area[E_SHIP_N];
+SDL_Rect mcollision_source[S_COLLISION_N];
+int mcollision_sprite_num[E_SHIP_N];
+
 
 
 //functions
@@ -168,6 +181,16 @@ void Missile::render2()
 }
 
 
+void Missile::renewal()
+{
+    is_active=0;
+    xy_check=0;
+    x_check=0;
+    m1_dim.x=3000;
+    m2_dim.x=3000;
+
+}
+
 void Missile::launch_single_missile()
 {
     if(is_active)
@@ -236,6 +259,58 @@ void Mine::render()
 {
     SDL_RenderCopy(gameRenderer,enemy_mineObj,0,&mine_dim);
 }
+
+
+void Mine::drop_single_mine()
+{
+   if(is_active)
+   {
+      if(!xy_check)
+      {
+        mine_dim.x=eship_x_pos+eship_w/2-25;
+        mine_dim.y=eship_y_pos+eship_h/2+25;
+        xy_check=1;
+      }
+
+      render();
+
+      y_move_count=SDL_GetTicks()-y_move_start;
+
+      if(!is_paused)
+      {
+        if(mine_dim.y<=600)
+        {
+            mine_dim.y+=(E_MINE_SPEED/2);
+        }
+        else
+        {
+            mine_dim.x-=(E_MINE_SPEED/6)*5;
+            if(y_move_count>E_MINE_Y_DELAY)
+            {
+               if(mine_dim.y>player_y_pos+315)
+               {
+                 mine_dim.y-=6;
+                 y_move_start=SDL_GetTicks();
+               }
+               else if(mine_dim.y<player_y_pos+275)
+               {
+                 mine_dim.y+=6;
+                 y_move_start=SDL_GetTicks();
+               }
+            }
+        }
+        if(mine_dim.x<=-500)
+        {
+            is_active=0;
+            xy_check=0;
+            mine_dim.x=-3000;
+        }
+      }
+      
+   }
+}
+
+
 void Background::init()
 {
     SDL_QueryTexture(gameBG,0,0,&bg_width,0);
@@ -326,7 +401,7 @@ void Player::handle_event_movement()
         }
         if(!is_paused)
         {
-            if (e.key.keysym.sym == SDLK_DOWN)
+            if (e.key.keysym.sym == SDLK_DOWN || e.key.keysym.sym == SDLK_s)
             {
                 p_dim.y +=step;
                 if (p_dim.y >= 620)
@@ -334,7 +409,7 @@ void Player::handle_event_movement()
                     p_dim.y = 620;
                 }
             }
-            else if (e.key.keysym.sym == SDLK_UP)
+            else if (e.key.keysym.sym == SDLK_UP || e.key.keysym.sym == SDLK_w)
             {
                 p_dim.y -=step;
                 if (p_dim.y <= 330)
@@ -342,7 +417,7 @@ void Player::handle_event_movement()
                     p_dim.y = 330;
                 }
             }
-            else if (e.key.keysym.sym == SDLK_RIGHT)
+            else if (e.key.keysym.sym == SDLK_RIGHT || e.key.keysym.sym == SDLK_d)
             {
                 p_dim.x +=step;
 
@@ -351,7 +426,7 @@ void Player::handle_event_movement()
                     p_dim.x=WINDOW_WIDTH-160;
                 }
             }
-            else if (e.key.keysym.sym == SDLK_LEFT)
+            else if (e.key.keysym.sym == SDLK_LEFT || e.key.keysym.sym == SDLK_a)
             {
                 p_dim.x -=step;
                 if(p_dim.x<=-260)
@@ -450,7 +525,10 @@ void Player::launch_missiles()
 
 void Enemy_Sub::render()
 {
-  SDL_RenderCopyEx(gameRenderer,enemy_subObj,NULL,&esub_dim,0,0,SDL_FLIP_HORIZONTAL);
+  if(!is_exploded)
+  {
+    SDL_RenderCopyEx(gameRenderer,enemy_subObj,NULL,&esub_dim,0,0,SDL_FLIP_HORIZONTAL);
+  }
 }
 
 
@@ -473,13 +551,13 @@ void Enemy_Sub::single_sub_launch()
             etorp_launch_start=SDL_GetTicks();
         }
     }
-        esub_x_pos=esub_dim.x;
-        esub_y_pos=esub_dim.y;
+    esub_x_pos=esub_dim.x;
+    esub_y_pos=esub_dim.y;
 
-        for(int j=0;j<E_TORP_N;j++)
-        {
-            e_torps[j].launch_single_etorp();
-        }
+    for(int j=0;j<E_TORP_N;j++)
+    {
+        e_torps[j].launch_single_etorp();
+    }
     
 }
 
@@ -496,27 +574,27 @@ void Enemy_Sub_Set::init()
         switch (random)
         {
         case 0:
-            e_sub[i].esub_dim={WINDOW_WIDTH,380,(int)(w*0.8),(int)(h*0.8)};
+            e_sub[i].esub_dim={WINDOW_WIDTH+300,380,(int)(w*0.8),(int)(h*0.8)};
             break;
 
         case 1:
-            e_sub[i].esub_dim={WINDOW_WIDTH,450,(int)(w*0.8),(int)(h*0.8)};
+            e_sub[i].esub_dim={WINDOW_WIDTH+300,450,(int)(w*0.8),(int)(h*0.8)};
             break;
         
         case 2:
-            e_sub[i].esub_dim={WINDOW_WIDTH,500,(int)(w*0.8),(int)(h*0.8)};
+            e_sub[i].esub_dim={WINDOW_WIDTH+300,500,(int)(w*0.8),(int)(h*0.8)};
             break;
         
         case 3:
-            e_sub[i].esub_dim={WINDOW_WIDTH,550,(int)(w*0.8),(int)(h*0.8)};
+            e_sub[i].esub_dim={WINDOW_WIDTH+300,550,(int)(w*0.8),(int)(h*0.8)};
             break;
         
         case 4:
-            e_sub[i].esub_dim={WINDOW_WIDTH,600,(int)(w*0.8),(int)(h*0.8)};
+            e_sub[i].esub_dim={WINDOW_WIDTH+300,600,(int)(w*0.8),(int)(h*0.8)};
             break;
         
         case 5:
-            e_sub[i].esub_dim={WINDOW_WIDTH,630,(int)(w*0.8),(int)(h*0.8)};
+            e_sub[i].esub_dim={WINDOW_WIDTH+300,630,(int)(w*0.8),(int)(h*0.8)};
             break;
 
         default:
@@ -550,7 +628,7 @@ void Enemy_Sub_Set::increment()
 {
     esub_increment_count_time=SDL_GetTicks()-esub_increment_start_time;
 
-    if(esub_increment_count_time>INCREMENT_SUB && total_sub<E_SUB_N)
+    if(esub_increment_count_time>INCREMENT_SUB && total_sub<E_SUB_N && !is_paused)
     {
         total_sub++;
         esub_increment_start_time=SDL_GetTicks();
@@ -594,9 +672,9 @@ void Enemy_Sub_Set::xmove()
     {
         e_sub[i].esub_dim.x-=esub_speed[i];
 
-        if(e_sub[i].esub_dim.x<=-400)
+        if(e_sub[i].esub_dim.x<=-500)
         {
-                e_sub[i].esub_dim.x=WINDOW_WIDTH+200;
+                e_sub[i].esub_dim.x=WINDOW_WIDTH+300;
         }
     }
     }
@@ -681,7 +759,40 @@ void Enemy_Sub_Set::launch_torps()
 
 void Enemy_Ship::render()
 {
-   SDL_RenderCopyEx(gameRenderer,enemy_shipObj,NULL,&eship_dim,0,0,SDL_FLIP_HORIZONTAL);
+   if(!is_exploded)
+   {
+     SDL_RenderCopyEx(gameRenderer,enemy_shipObj,NULL,&eship_dim,0,0,SDL_FLIP_HORIZONTAL);
+   }
+}
+
+
+void Enemy_Ship::single_ship_drop()
+{
+    if(!is_paused)
+    {
+        emine_launch_count=SDL_GetTicks()-emine_launch_start;
+
+        if(emine_launch_count>E_MINE_DELAY && !is_exploded && eship_dim.x<=WINDOW_WIDTH-100)
+        {
+            for(int j=0;j<E_MINE_N;j++)
+            {
+                if(emines[j].is_active==0)
+                {
+                    emines[j].is_active=1;
+                    break;
+                }
+            }
+            emine_launch_start=SDL_GetTicks();
+        }
+    }
+    
+    eship_x_pos=eship_dim.x;
+    eship_y_pos=eship_dim.y;
+
+    for(int j=0;j<E_MINE_N;j++)
+    {
+        emines[j].drop_single_mine();
+    }
 }
 
 
@@ -689,11 +800,14 @@ void Enemy_Ship_Set::init()
 {
     int w=0,h=0;
     SDL_QueryTexture(enemy_shipObj,0,0,&w,&h);
+    
+    eship_w=(int)(w*0.25);
+    eship_h=(int)(h*0.25);
 
     for(int i=0;i<E_SHIP_N;i++)
     {
         
-        e_ship[i].eship_dim={WINDOW_WIDTH,495,(int)(w*0.25),(int)(h*0.25)};
+        e_ship[i].eship_dim={WINDOW_WIDTH+300,495,(int)(w*0.25),(int)(h*0.25)};
         
         for(int j=0;j<E_MINE_N;j++)
         {
@@ -707,6 +821,7 @@ void Enemy_Ship_Set::init()
 
     xmove_setting();
 }
+
 
 void Enemy_Ship_Set::xmove_setting()
 {
@@ -743,11 +858,12 @@ void Enemy_Ship_Set::render()
     }
 }
 
+
 void Enemy_Ship_Set::increment()
 {
     eship_increment_count_time=SDL_GetTicks()-eship_increment_start_time;
 
-    if(eship_increment_count_time>INCREMENT_SHIP && total_ship<E_SHIP_N)
+    if(eship_increment_count_time>INCREMENT_SHIP && total_ship<E_SHIP_N &&!is_paused)
     {
         total_ship++;
         eship_increment_start_time=SDL_GetTicks();
@@ -760,11 +876,90 @@ void Enemy_Ship_Set::xmove()
 {
     for(int i=0;i<total_ship;i++)
     {
-        e_ship[i].eship_dim.x-=eship_speed[i];
-
-        if(e_ship[i].eship_dim.x<=-400)
+        if(!is_paused)
         {
-           e_ship[i].eship_dim.x=WINDOW_WIDTH+200;
+          e_ship[i].eship_dim.x-=eship_speed[i];
         }
+        if(e_ship[i].eship_dim.x<=-500)
+        {
+           e_ship[i].eship_dim.x=WINDOW_WIDTH+300;
+           e_ship[i].is_exploded=0;
+        }
+    }
+}
+
+
+void Enemy_Ship_Set::launch_mines()
+{
+    for(int i=0;i<total_ship;i++)
+    {
+        e_ship[i].single_ship_drop();
+    }
+}
+
+
+void missile_collision_init()
+{
+    mcollision_source[0]={0,0,240,560};
+    mcollision_source[1]={240,0,300,560};
+    mcollision_source[2]={540,0,360,560};
+    mcollision_source[3]={900,0,480,560};
+    for(int i=0;i<E_SHIP_N;i++)
+    {
+        mcollision_area[i]={0,0,250,270};
+        mcollision_sprite_num[i]=0;
+    }
+}
+
+
+void missile_collision_for_eship()
+{
+    for(int i=0;i<total_ship;i++)
+    {
+        for(int j=0;j<P_MISSILE_N;j++)
+        {
+            if(enemy_ship_set.e_ship[i].is_exploded==0 && enemy_ship_set.e_ship[i].eship_dim.x<=WINDOW_WIDTH+300)
+            {
+                if(enemy_ship_set.e_ship[i].eship_dim.x<=player.player_missiles[j].m2_dim.x && enemy_ship_set.e_ship[i].eship_dim.x+300>=player.player_missiles[j].m2_dim.x)
+                {
+                    enemy_ship_set.e_ship[i].is_exploded=1;
+                    player.player_missiles[j].renewal();
+                    mcollision_area[i].x=enemy_ship_set.e_ship[i].eship_dim.x+20;
+                    mcollision_area[i].y=enemy_ship_set.e_ship[i].eship_dim.y-145;
+                    mcollision_sprite_num[i]=0;
+                    Mix_PlayChannel(-1,explosion_surface_chunk,0);
+                    mcollision_start[i]=SDL_GetTicks();
+                    score++;
+                    break;
+                }
+            }
+        }
+        if(enemy_ship_set.e_ship[i].is_exploded==1 && mcollision_sprite_num[i]<=3)
+        {
+           mcollision_count[i]=SDL_GetTicks()-mcollision_start[i];
+           if(mcollision_count[i]<=EXP_DELAY)
+           {
+                SDL_RenderCopy(gameRenderer,explo_surfaceObj,&mcollision_source[mcollision_sprite_num[i]],&mcollision_area[i]);
+                if(!is_paused)
+                {
+                    mcollision_area[i].x-=EXP_SPEED;
+                }
+           }
+           else if(mcollision_count[i]>EXP_DELAY && is_paused==1)
+           {
+             SDL_RenderCopy(gameRenderer,explo_surfaceObj,&mcollision_source[mcollision_sprite_num[i]],&mcollision_area[i]);
+             mcollision_start[i]=SDL_GetTicks();
+           }
+           else
+           { 
+                mcollision_sprite_num[i]++;
+                if(mcollision_sprite_num[i]<=3)
+                {
+                Mix_PlayChannel(-1,explosion_surface_chunk,0);
+                }
+                mcollision_start[i]=SDL_GetTicks();
+           }
+        }
+        
     }
 }

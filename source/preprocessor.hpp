@@ -35,12 +35,18 @@ using namespace std;
 #define E_TORP_DELAY 5000
 #define E_SHIP_N 5
 #define PRIMARY_ESHIP_N 1
-#define INCREMENT_SHIP 90000
-#define E_MINE_SPEED 
-#define E_MINE_DELAY 8000
+#define INCREMENT_SHIP 40000
+#define E_MINE_SPEED 6
+#define E_MINE_DELAY 7000
+#define E_MINE_Y_DELAY 200
+#define S_COLLISION_N 4
+#define EXP_SPEED 3
+#define EXP_DELAY 300
 #define BG_N 2
 #define SPF  3
 #define FSW 1980
 #define FSH 1080
+#define FPS 40
+
 #endif
 

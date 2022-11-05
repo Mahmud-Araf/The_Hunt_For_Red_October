@@ -10,5 +10,6 @@
 #include"media.hpp"
 #include"close.hpp"
 #include"game_obj-functions.hpp"
+#include"game_utilities.hpp"
 
 #endif

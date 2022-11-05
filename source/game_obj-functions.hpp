@@ -6,6 +6,12 @@
 
 extern SDL_Event e;
 
+//collision variable for player missile explosion
+extern int mcollision_start[E_SHIP_N];
+extern int mcollision_count[E_SHIP_N];
+extern SDL_Rect mcollision_area[E_SHIP_N];
+extern SDL_Rect mcollision_source[S_COLLISION_N];
+extern int mcollision_sprite_num[E_SHIP_N];
 
 struct Torpedo
 {
@@ -51,6 +57,9 @@ struct Missile
     void render1(); //rendering for missile type 1
 
     void render2();//rendering for missile type 2
+
+    //initialize necessary missile variable
+    void renewal();
 
     //player missile launch
     void launch_single_missile();
@@ -102,13 +111,14 @@ extern Background background;
 
 
 struct Player
-{
+{   
+ 
     SDL_Rect p_dim; //the rectangle of obj
 
     Torpedo player_torps[P_TORP_N]; // Torpedo structure for player torpedo
 
     Missile player_missiles[P_MISSILE_N]; // Missile1 structure for player missile type 1 & 2
-    
+
     int step; //variable to move player up,down,left and right;
     int is_exploded; //variable to check whether player is exploded or not
 
@@ -176,12 +186,13 @@ struct Enemy_Sub
 
 struct Enemy_Sub_Set
 {
+    
     Enemy_Sub e_sub[E_SUB_N];
 
     int esub_speed[E_SUB_N];//array to store the speed of each submarine
 
     int y_limit_check[E_SUB_N]={};
-    
+
     //initialize
     void init();
 
@@ -226,6 +237,9 @@ struct Enemy_Ship
     //rendering
     void render();
 
+    //single enemy ship mine dropping
+    void single_ship_drop();
+
 };
 
 struct Enemy_Ship_Set
@@ -255,6 +269,11 @@ struct Enemy_Ship_Set
 };
 
 extern Enemy_Ship_Set enemy_ship_set;
+
+void missile_collision_init(); // initializing missile collision variables
+
+void missile_collision_for_eship();//function for rendering and detecting missile collision
+
 
 
 #endif

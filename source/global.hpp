@@ -20,6 +20,10 @@ extern int esub_y_pos;
 extern int eship_x_pos;
 extern int eship_y_pos;
 
+extern int eship_w;
+extern int eship_h;
+
+
 
 extern int is_paused;
 
@@ -30,6 +34,9 @@ extern int esub_increment_count_time;
 extern int total_ship;
 extern int eship_increment_start_time;
 extern int eship_increment_count_time;
+
+
+extern int score;
 
 
 #endif
