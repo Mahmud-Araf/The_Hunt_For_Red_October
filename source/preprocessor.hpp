@@ -21,12 +21,12 @@ using namespace std;
 #define WINDOW_TITLE "The Hunt For Red October"
 #define RENDERER_FLAGS SDL_RENDERER_ACCELERATED
 #define P_TORP_N 15
-#define P_MISSILE_N 5
+#define P_MISSILE_N 10
 #define E_TORP_N 5
 #define E_MINE_N 5
 #define E_SUB_N  10
 #define PRIMARY_ESUB_N 2
-#define INCREMENT_SUB 60000
+#define INCREMENT_SUB 30000
 #define P_TORP_SPEED 7
 #define P_TORP_DELAY 500
 #define P_MISSILE_SPEED 14
@@ -35,13 +35,15 @@ using namespace std;
 #define E_TORP_DELAY 5000
 #define E_SHIP_N 5
 #define PRIMARY_ESHIP_N 1
-#define INCREMENT_SHIP 40000
+#define INCREMENT_SHIP 120000
 #define E_MINE_SPEED 6
 #define E_MINE_DELAY 7000
 #define E_MINE_Y_DELAY 200
-#define S_COLLISION_N 4
+#define MISSILE_COLLISION_SN 4
+#define TORP_COLLISION_SN 9
 #define EXP_SPEED 3
-#define EXP_DELAY 300
+#define EXP_DELAY_SURFACE 150
+#define EXP_DELAY_WATER 100
 #define BG_N 2
 #define SPF  3
 #define FSW 1980

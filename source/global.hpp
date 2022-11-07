@@ -38,6 +38,8 @@ extern int eship_increment_count_time;
 
 extern int score;
 
+extern int frameN;
+
 
 #endif
 

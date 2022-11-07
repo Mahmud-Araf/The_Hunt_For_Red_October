@@ -13,7 +13,9 @@ Enemy_Ship_Set enemy_ship_set;
 
 
 //necessary variables
-SDL_Event e;
+
+SDL_Event e; // variable for event handling
+
 int is_paused=0; // variable to pause the game
 
 int first_time_torp_launch=0;  
@@ -36,11 +38,11 @@ int eship_w;
             //global variable to store the width and height of a enemy ship
 int eship_h;
 
-int total_sub=PRIMARY_ESUB_N;
+int total_sub=PRIMARY_ESUB_N;  // variable for storing number of current enemy subs that will render
 int esub_increment_start_time=0;
 int esub_increment_count_time=0;
 
-int total_ship=PRIMARY_ESHIP_N;
+int total_ship=PRIMARY_ESHIP_N; // variable for storing number of current enemy ships that will render
 int eship_increment_start_time=0;
 int eship_increment_count_time=0;
 
@@ -48,10 +50,15 @@ int eship_increment_count_time=0;
 int mcollision_start[E_SHIP_N];
 int mcollision_count[E_SHIP_N];
 SDL_Rect mcollision_area[E_SHIP_N];
-SDL_Rect mcollision_source[S_COLLISION_N];
+SDL_Rect mcollision_source[MISSILE_COLLISION_SN];
 int mcollision_sprite_num[E_SHIP_N];
 
-
+//global variable necessary for player torpedo collision
+int ptorp_collision_start[E_SUB_N];
+int ptorp_collision_count[E_SUB_N];
+SDL_Rect ptorp_collision_area[E_SUB_N];
+SDL_Rect ptorp_collision_source[TORP_COLLISION_SN];
+int ptorp_collision_sprite_num[E_SUB_N];
 
 //functions
 
@@ -71,6 +78,7 @@ void Torpedo::p_init()
     xy_check=0;
 }
 
+
 void Torpedo::e_init()
 {
     SDL_QueryTexture(player_torpObj,0,0,&t_dim.w,&t_dim.h);
@@ -86,9 +94,18 @@ void Torpedo::e_init()
     xy_check=0;
 }
 
+
 void Torpedo::render()
 {
     SDL_RenderCopy(gameRenderer,player_torpObj,NULL,&t_dim);
+}
+
+
+void Torpedo::renewal()
+{
+    is_active=0;
+    xy_check=0;
+    t_dim.x=3000;
 }
 
 
@@ -119,6 +136,7 @@ void Torpedo::launch_single_ptorp()
 
     }
 }
+
 
 void Torpedo::launch_single_etorp()
 {
@@ -175,6 +193,7 @@ void Missile::render1()
     SDL_RenderCopy(gameRenderer,player_missile1Obj,0,&m1_dim);
 }
 
+
 void Missile::render2()
 {
     SDL_RenderCopy(gameRenderer,player_missile2Obj,0,&m2_dim);
@@ -190,6 +209,7 @@ void Missile::renewal()
     m2_dim.x=3000;
 
 }
+
 
 void Missile::launch_single_missile()
 {
@@ -341,11 +361,13 @@ void Background::scroll()
 
 }
 
+
 void Background::render()
 {
     SDL_RenderCopy(gameRenderer,gameBG,0,&bg_dim[0]);
     SDL_RenderCopy(gameRenderer,gameBG,0,&bg_dim[1]);
 }
+
 
 void Player::init()
 {
@@ -437,10 +459,6 @@ void Player::handle_event_movement()
         }
         
     }
-    
-        
-    
-
 }
 
 
@@ -456,7 +474,7 @@ void Player::handle_event_torps()
         {
             if (is_exploded== 0)
             {
-                for (int i = 0; i < 15; i++)
+                for (int i = 0; i <P_TORP_N; i++)
                 {
                     if (player_torps[i].is_active== 0)
                     {
@@ -486,7 +504,7 @@ void Player::handle_event_missiles()
 
                 if (is_exploded == 0)
                 {
-                    for (int i = 0; i < 10; i++)
+                    for (int i = 0; i < P_MISSILE_N; i++)
                     {
                         if (player_missiles[i].is_active== 0)
                         {
@@ -606,9 +624,12 @@ void Enemy_Sub_Set::init()
         {
             e_sub[i].e_torps[j].e_init();
         }
+
         e_sub[i].is_started=0;
         e_sub[i].is_counting=0;
         e_sub[i].is_exploded=0;
+
+        y_limit_check[i]=0;
 
     }
 
@@ -675,6 +696,7 @@ void Enemy_Sub_Set::xmove()
         if(e_sub[i].esub_dim.x<=-500)
         {
                 e_sub[i].esub_dim.x=WINDOW_WIDTH+300;
+                e_sub[i].is_exploded=0;
         }
     }
     }
@@ -907,7 +929,27 @@ void missile_collision_init()
     for(int i=0;i<E_SHIP_N;i++)
     {
         mcollision_area[i]={0,0,250,270};
-        mcollision_sprite_num[i]=0;
+        mcollision_sprite_num[i]=MISSILE_COLLISION_SN;
+    }
+}
+
+
+void ptorp_collision_init()
+{
+    ptorp_collision_source[0]={0,0,208,139};
+    ptorp_collision_source[1]={208,0,208,139};
+    ptorp_collision_source[2]={416,0,208,139};
+    ptorp_collision_source[3]={0,139,208,139};
+    ptorp_collision_source[4]={208,139,208,139};
+    ptorp_collision_source[5]={416,139,208,139};
+    ptorp_collision_source[6]={0,278,208,139};
+    ptorp_collision_source[7]={208,278,208,139};
+    ptorp_collision_source[8]={416,278,208,139};
+
+    for(int i=0;i<E_SUB_N;i++)
+    {
+        ptorp_collision_area[i]={0,0,200,215};
+        ptorp_collision_sprite_num[i]=TORP_COLLISION_SN;
     }
 }
 
@@ -916,28 +958,33 @@ void missile_collision_for_eship()
 {
     for(int i=0;i<total_ship;i++)
     {
-        for(int j=0;j<P_MISSILE_N;j++)
+        if(enemy_ship_set.e_ship[i].is_exploded==0)
         {
-            if(enemy_ship_set.e_ship[i].is_exploded==0 && enemy_ship_set.e_ship[i].eship_dim.x<=WINDOW_WIDTH+300)
+            for(int j=0;j<P_MISSILE_N;j++)
             {
-                if(enemy_ship_set.e_ship[i].eship_dim.x<=player.player_missiles[j].m2_dim.x && enemy_ship_set.e_ship[i].eship_dim.x+300>=player.player_missiles[j].m2_dim.x)
+                if( player.player_missiles[j].is_active==1 && enemy_ship_set.e_ship[i].eship_dim.x<=WINDOW_WIDTH+300)
                 {
-                    enemy_ship_set.e_ship[i].is_exploded=1;
-                    player.player_missiles[j].renewal();
-                    mcollision_area[i].x=enemy_ship_set.e_ship[i].eship_dim.x+20;
-                    mcollision_area[i].y=enemy_ship_set.e_ship[i].eship_dim.y-145;
-                    mcollision_sprite_num[i]=0;
-                    Mix_PlayChannel(-1,explosion_surface_chunk,0);
-                    mcollision_start[i]=SDL_GetTicks();
-                    score++;
-                    break;
+                    if(enemy_ship_set.e_ship[i].eship_dim.x<=player.player_missiles[j].m2_dim.x && enemy_ship_set.e_ship[i].eship_dim.x+250>=player.player_missiles[j].m2_dim.x)
+                    {
+                        enemy_ship_set.e_ship[i].is_exploded=1;
+                        player.player_missiles[j].renewal();
+                        mcollision_area[i].x=enemy_ship_set.e_ship[i].eship_dim.x+20;
+                        mcollision_area[i].y=enemy_ship_set.e_ship[i].eship_dim.y-145;
+                        mcollision_sprite_num[i]=0;
+                        Mix_PlayChannel(-1,explosion_surface_chunk,0);
+                        mcollision_start[i]=SDL_GetTicks();
+                        score++;
+                        break;
+                    }
                 }
             }
         }
-        if(enemy_ship_set.e_ship[i].is_exploded==1 && mcollision_sprite_num[i]<=3)
+
+        if(mcollision_sprite_num[i]<MISSILE_COLLISION_SN)
         {
            mcollision_count[i]=SDL_GetTicks()-mcollision_start[i];
-           if(mcollision_count[i]<=EXP_DELAY)
+
+           if(mcollision_count[i]<=EXP_DELAY_SURFACE)
            {
                 SDL_RenderCopy(gameRenderer,explo_surfaceObj,&mcollision_source[mcollision_sprite_num[i]],&mcollision_area[i]);
                 if(!is_paused)
@@ -945,19 +992,68 @@ void missile_collision_for_eship()
                     mcollision_area[i].x-=EXP_SPEED;
                 }
            }
-           else if(mcollision_count[i]>EXP_DELAY && is_paused==1)
+           else if(is_paused==0)
            {
-             SDL_RenderCopy(gameRenderer,explo_surfaceObj,&mcollision_source[mcollision_sprite_num[i]],&mcollision_area[i]);
-             mcollision_start[i]=SDL_GetTicks();
+              mcollision_sprite_num[i]++;
+              mcollision_start[i]=SDL_GetTicks();
            }
            else
            { 
-                mcollision_sprite_num[i]++;
-                if(mcollision_sprite_num[i]<=3)
+             SDL_RenderCopy(gameRenderer,explo_surfaceObj,&mcollision_source[mcollision_sprite_num[i]],&mcollision_area[i]);
+           }
+        }
+        
+    }
+}
+
+
+void ptorp_collision_for_esub()
+{
+    for(int i=0;i<total_sub;i++)
+    {
+        if(enemy_sub_set.e_sub[i].is_exploded==0)
+        {
+            for(int j=0;j<P_TORP_N;j++)
+            {
+                if(player.player_torps[j].is_active==1 && enemy_sub_set.e_sub[i].esub_dim.x<=WINDOW_WIDTH+300)
                 {
-                Mix_PlayChannel(-1,explosion_surface_chunk,0);
+                    if(enemy_sub_set.e_sub[i].esub_dim.x-20<=player.player_torps[j].t_dim.x && enemy_sub_set.e_sub[i].esub_dim.x+250>=player.player_torps[j].t_dim.x && enemy_sub_set.e_sub[i].esub_dim.y-10<=player.player_torps[j].t_dim.y && enemy_sub_set.e_sub[i].esub_dim.y+40>=player.player_torps[j].t_dim.y)
+                    {
+                        enemy_sub_set.e_sub[i].is_exploded=1;
+                        player.player_torps[j].renewal();
+                        ptorp_collision_area[i].x=enemy_sub_set.e_sub[i].esub_dim.x+240;
+                        ptorp_collision_area[i].y=enemy_sub_set.e_sub[i].esub_dim.y+130;
+                        ptorp_collision_sprite_num[i]=0;
+                        Mix_PlayChannel(-1,explosion_water_chunk,0);
+                        ptorp_collision_start[i]=SDL_GetTicks();
+                        score++;
+                        break;
+                    }
                 }
-                mcollision_start[i]=SDL_GetTicks();
+            }
+        }
+
+        if(ptorp_collision_sprite_num[i]<TORP_COLLISION_SN)
+        {
+           ptorp_collision_count[i]=SDL_GetTicks()-ptorp_collision_start[i];
+
+           if(ptorp_collision_count[i]<=EXP_DELAY_WATER)
+           {
+                SDL_RenderCopy(gameRenderer,explo_waterObj,&ptorp_collision_source[ptorp_collision_sprite_num[i]],&ptorp_collision_area[i]);
+                if(!is_paused)
+                {
+                    ptorp_collision_area[i].x-=EXP_SPEED;
+                }
+           }
+           else if(is_paused==0)
+           {
+             ptorp_collision_sprite_num[i]++;
+             ptorp_collision_start[i]=SDL_GetTicks();
+             
+           }
+           else
+           { 
+                SDL_RenderCopy(gameRenderer,explo_waterObj,&ptorp_collision_source[ptorp_collision_sprite_num[i]],&ptorp_collision_area[i]);
            }
         }
         

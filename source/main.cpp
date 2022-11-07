@@ -12,7 +12,9 @@ int main()
         background.init();
         enemy_sub_set.init();
         enemy_ship_set.init();
+        font_init();
         missile_collision_init();
+        ptorp_collision_init();
         start_music();
         while(1)
         {
@@ -24,6 +26,7 @@ int main()
             background.scroll();
             player.render();
             missile_collision_for_eship();
+            ptorp_collision_for_esub();
             player.handle_event_movement();
             player.handle_event_torps();
             player.handle_event_missiles();
@@ -34,13 +37,13 @@ int main()
             enemy_ship_set.render();
             enemy_ship_set.increment();
             enemy_ship_set.xmove();
-         
             enemy_sub_set.launch_torps();
             enemy_ship_set.launch_mines();
             player.launch_torps();
             player.launch_missiles();
-            
-            
+            fps_show();
+            time_show();
+            score_board();
         if(e.type==SDL_QUIT)
         {
             break;
@@ -51,6 +54,7 @@ int main()
         
     }
     closeMedia();
+    closeFont();
     gameclose();
 
 

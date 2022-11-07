@@ -173,7 +173,7 @@ bool loadMedia()
     }
 
 
-    explo_waterObj=loadTexture("assets/underwaterexplosion.png");
+    explo_waterObj=loadTexture("assets/uw_explosion_sprite.png");
     if(explo_waterObj==NULL)
     {
         cout<<"Failed to load explosion2"<<endl;

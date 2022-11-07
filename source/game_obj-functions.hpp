@@ -4,14 +4,21 @@
 
 #include"preprocessor.hpp"
 
-extern SDL_Event e;
+extern SDL_Event e; // variable for event handling
 
 //collision variable for player missile explosion
 extern int mcollision_start[E_SHIP_N];
 extern int mcollision_count[E_SHIP_N];
 extern SDL_Rect mcollision_area[E_SHIP_N];
-extern SDL_Rect mcollision_source[S_COLLISION_N];
+extern SDL_Rect mcollision_source[MISSILE_COLLISION_SN];
 extern int mcollision_sprite_num[E_SHIP_N];
+
+//collision variable for player torp explosion
+extern int ptorp_collision_start[E_SUB_N];
+extern int ptorp_collision_count[E_SUB_N];
+extern SDL_Rect ptorp_collision_area[E_SUB_N];
+extern SDL_Rect ptorp_collision_source[TORP_COLLISION_SN];
+extern int ptorp_collision_sprite_num[E_SUB_N];
 
 struct Torpedo
 {
@@ -28,6 +35,8 @@ struct Torpedo
 
     //rendering
     void render();
+
+    void renewal();
 
     //player single torp launch
     void launch_single_ptorp();
@@ -191,7 +200,7 @@ struct Enemy_Sub_Set
 
     int esub_speed[E_SUB_N];//array to store the speed of each submarine
 
-    int y_limit_check[E_SUB_N]={};
+    int y_limit_check[E_SUB_N];
 
     //initialize
     void init();
@@ -270,9 +279,14 @@ struct Enemy_Ship_Set
 
 extern Enemy_Ship_Set enemy_ship_set;
 
+
 void missile_collision_init(); // initializing missile collision variables
 
 void missile_collision_for_eship();//function for rendering and detecting missile collision
+
+void ptorp_collision_init(); // initializing player torpedo collision variables
+
+void ptorp_collision_for_esub();//function for rendering and detecting player torpedo collision
 
 
 
