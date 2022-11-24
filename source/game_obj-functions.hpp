@@ -67,7 +67,7 @@ struct Missile
 
     void render2();//rendering for missile type 2
 
-    //initialize necessary missile variable
+    //reinitialize necessary missile variable
     void renewal();
 
     //player missile launch
@@ -93,6 +93,9 @@ struct Mine
     //rendering
     void render();
 
+    //reinitialize necessary mine variable
+    void renewal();
+
     //enemy ship single mine drop
     void drop_single_mine();
 };
@@ -101,12 +104,12 @@ struct Mine
 
 struct Background 
 {
+    SDL_Texture *texBG; //texture to hold background textures;
+
     SDL_Rect bg_dim[BG_N]; // rectangle to hold background for scrolling
 
     int scrolling_perframe=0;
 
-    int bg_width;//a variable to store the width of gameBG texture
-    
     //initiate background
     void init();
 
@@ -128,12 +131,19 @@ struct Player
 
     Missile player_missiles[P_MISSILE_N]; // Missile1 structure for player missile type 1 & 2
 
+    int life; // variable to store life of player
+
     int step; //variable to move player up,down,left and right;
+
     int is_exploded; //variable to check whether player is exploded or not
 
     int is_started; // variable related to obj revival & explosion
 
     int is_counting; //variable related to obj revival & explosion
+
+    int vibing_counting; //variable related to player vibrating after collision
+
+    int vibing_started;  //variable related to player vibrating after collision
 
     int ptorp_launch_start;
                              //variables related to the time of player sub torpedo launching
@@ -164,6 +174,9 @@ struct Player
     //player missile launching
     void launch_missiles();
 
+    //function for detecting and rendering player collision 
+    void collision_for_player();
+
 };
 extern Player player;
 
@@ -174,11 +187,13 @@ struct Enemy_Sub
 
     Torpedo e_torps[E_TORP_N]; // structure for enemy torpedoset of a single submarine
 
-    int is_exploded; //variable to check whether player is exploded or not
+    int is_exploded; //variable to check whether enemy sub is exploded or not
 
     int is_started; // variable related to obj revival & explosion
 
     int is_counting; //variable related to obj revival & explosion
+
+    int revival=0;  // variable related to obj revival & explosion
 
     int etorp_launch_start;
                              //variables related to the time of enemy sub torpedo launching
@@ -198,7 +213,7 @@ struct Enemy_Sub_Set
     
     Enemy_Sub e_sub[E_SUB_N];
 
-    int esub_speed[E_SUB_N];//array to store the speed of each submarine
+    int esub_speed[E_SUB_N]; //array to store the speed of each submarine
 
     int y_limit_check[E_SUB_N];
 
@@ -233,11 +248,13 @@ struct Enemy_Ship
 
     Mine emines[E_MINE_N]; // structure for enemy mineset of a single ship
 
-    int is_exploded; //variable to check whether player is exploded or not
+    int is_exploded; //variable to check whether enemy ship is exploded or not
 
     int is_started; // variable related to obj revival & explosion
 
     int is_counting; //variable related to obj revival & explosion
+
+    int revival=0;  // variable related to obj revival & explosion
 
     int emine_launch_start;
                              //variables related to the time of enemy ship mine launching
@@ -288,6 +305,6 @@ void ptorp_collision_init(); // initializing player torpedo collision variables
 
 void ptorp_collision_for_esub();//function for rendering and detecting player torpedo collision
 
-
+void game_obj_func_init(); // function to initialize all game objects and functionalities
 
 #endif

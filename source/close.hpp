@@ -1,14 +1,12 @@
 //This header contains function to close and free the sdl2 functionalities
-#pragma once
+
+#ifndef CLOSE
+
+#define CLOSE
+
 #include"preprocessor.hpp"
+
 extern SDL_Window *gameWindow;
 extern SDL_Renderer*gameRenderer;
-void gameclose()
-{
-    IMG_Quit();
-    Mix_Quit();
-    TTF_Quit();
-    SDL_Quit();
-    SDL_DestroyRenderer(gameRenderer);
-    SDL_DestroyWindow(gameWindow);
-}
+void gameclose();
+#endif

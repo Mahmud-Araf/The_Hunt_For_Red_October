@@ -6,7 +6,8 @@
 
 //texture part
 SDL_Texture *introBG;
-SDL_Texture *gameBG;
+SDL_Texture *gameBG1;
+SDL_Texture *gameBG2;
 SDL_Texture *player_subObj;
 SDL_Texture *player_torpObj;
 SDL_Texture *player_missile1Obj;
@@ -91,9 +92,15 @@ bool loadMedia()
         success=false;
     }
 
+    gameBG1=loadTexture("assets/background1.png");
+    if(gameBG1==NULL)
+    {
+        cout<<"Failed to load game background"<<endl;
+        success=false;
+    }
 
-    gameBG=loadTexture("assets/background.png");
-    if(gameBG==NULL)
+    gameBG2=loadTexture("assets/background2.png");
+    if(gameBG2==NULL)
     {
         cout<<"Failed to load game background"<<endl;
         success=false;
@@ -238,8 +245,10 @@ void closeMedia()
     //free texture
     SDL_DestroyTexture(introBG);
     introBG=NULL;
-    SDL_DestroyTexture(gameBG);
-    gameBG=NULL;
+    SDL_DestroyTexture(gameBG1);
+    gameBG1=NULL;
+    SDL_DestroyTexture(gameBG2);
+    gameBG2=NULL;
     SDL_DestroyTexture(player_subObj);
     player_subObj=NULL;
     SDL_DestroyTexture(player_torpObj);

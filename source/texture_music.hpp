@@ -15,7 +15,8 @@ Text for texts
 
 //texture part
 extern SDL_Texture *introBG;
-extern SDL_Texture *gameBG;
+extern SDL_Texture *gameBG1;
+extern SDL_Texture *gameBG2;
 extern SDL_Texture *player_subObj;
 extern SDL_Texture *player_torpObj;
 extern SDL_Texture *player_missile1Obj;

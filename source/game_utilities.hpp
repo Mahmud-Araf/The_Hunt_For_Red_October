@@ -20,5 +20,6 @@ void score_board();
 
 void time_show();
 
+void life_show();
 
 #endif

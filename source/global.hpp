@@ -27,6 +27,8 @@ extern int eship_h;
 
 extern int is_paused;
 
+extern int pause_delay;
+
 extern int total_sub;
 extern int esub_increment_start_time;
 extern int esub_increment_count_time;
@@ -39,6 +41,8 @@ extern int eship_increment_count_time;
 extern int score;
 
 extern int frameN;
+
+extern bool is_running;
 
 
 #endif
