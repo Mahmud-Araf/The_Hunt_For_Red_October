@@ -4,7 +4,7 @@
 #define UTILITIES
 #include"preprocessor.hpp"
 #include"global.hpp"
-#include"texture_music.hpp"
+#include"media.hpp"
 
 void start_music();
 

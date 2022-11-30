@@ -1,6 +1,6 @@
-#include"game_utilities.hpp"
+#include"utilities.hpp"
 #include"font-color.hpp"
-#include"game_obj-functions.hpp"
+#include"obj-functions.hpp"
 int frameN=0;
 int score=0;
 

@@ -1,11 +1,10 @@
 #include "preprocessor.hpp"
 #include "init.hpp"
 #include "global.hpp"
-#include "texture_music.hpp"
 #include "media.hpp"
-#include "game_obj-functions.hpp"
-#include "game_utilities.hpp"
-#include "levels-interface.hpp"
+#include "obj-functions.hpp"
+#include "utilities.hpp"
+#include "stages.hpp"
 #include "font-color.hpp"
 // game object structures and variables
 
