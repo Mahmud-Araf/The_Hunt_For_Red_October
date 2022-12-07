@@ -10,7 +10,7 @@
 
 // game obj structures
 Player player;
-Background background;
+GameBackground gamebackground;
 Enemy_Sub_Set enemy_sub_set;
 Enemy_Ship_Set enemy_ship_set;
 
@@ -323,7 +323,7 @@ void Mine::drop_single_mine()
     }
 }
 
-void Background::init()
+void GameBackground::init()
 {
     texBG = NULL;
 
@@ -336,7 +336,7 @@ void Background::init()
     }
 }
 
-void Background::scroll()
+void GameBackground::scroll()
 {
     bg_dim[0].x = scrolling_perframe;
     bg_dim[1].x = scrolling_perframe + FSW;
@@ -351,7 +351,7 @@ void Background::scroll()
     }
 }
 
-void Background::render()
+void GameBackground::render()
 {
     if (score < L1_SCORE)
     {
@@ -1143,7 +1143,7 @@ void game_obj_func_init()
 
     font_init();
     player.init();
-    background.init();
+    gamebackground.init();
     enemy_sub_set.init();
     enemy_ship_set.init();
     missile_collision_init();

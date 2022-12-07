@@ -102,24 +102,24 @@ struct Mine
 
 
 
-struct Background 
+struct GameBackground 
 {
-    SDL_Texture *texBG; //texture to hold background textures;
+    SDL_Texture *texBG; //texture to hold game background textures;
 
-    SDL_Rect bg_dim[BG_N]; // rectangle to hold background for scrolling
+    SDL_Rect bg_dim[BG_N]; // rectangle to hold game background for scrolling
 
     int scrolling_perframe=0;
 
-    //initiate background
+    //initiate game background
     void init();
 
-    //scrolls the background
+    //scrolls the game background
     void scroll();
 
-    //background rendering
+    //game background rendering
     void render();
 };
-extern Background background;
+extern GameBackground gamebackground;
 
 
 struct Player

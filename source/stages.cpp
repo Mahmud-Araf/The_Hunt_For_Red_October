@@ -17,16 +17,13 @@ void GameLevels::run_levelOne()
     pause_music();
     resume_music();
 
-    background.render();
-    background.scroll();
+    gamebackground.render();
+    gamebackground.scroll();
 
     player.render();
     player.handle_event_movement();
     player.handle_event_torps();
-    player.collision_for_player();
-
-    missile_collision_for_eship();
-    ptorp_collision_for_esub();
+    
     
     enemy_sub_set.render();
     enemy_sub_set.increment();
@@ -35,6 +32,10 @@ void GameLevels::run_levelOne()
     enemy_sub_set.launch_torps();
 
     player.launch_torps();
+
+    player.collision_for_player();
+    missile_collision_for_eship();
+    ptorp_collision_for_esub();
 
     fps_show();
     time_show();
@@ -67,17 +68,14 @@ void GameLevels::run_levelTwo()
     pause_music();
     resume_music();
 
-    background.render();
-    background.scroll();
+    gamebackground.render();
+    gamebackground.scroll();
 
     player.render();
     player.handle_event_movement();
     player.handle_event_torps();
     player.handle_event_missiles();
-    player.collision_for_player();
-
-    missile_collision_for_eship();
-    ptorp_collision_for_esub();
+   
     
     enemy_sub_set.render();
     enemy_sub_set.increment();
@@ -93,6 +91,10 @@ void GameLevels::run_levelTwo()
 
     player.launch_torps();
     player.launch_missiles();
+
+    player.collision_for_player();
+    missile_collision_for_eship();
+    ptorp_collision_for_esub();
 
     fps_show();
     time_show();

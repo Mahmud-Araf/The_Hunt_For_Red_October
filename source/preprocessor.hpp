@@ -22,7 +22,7 @@ using namespace std;
 #define FSW 1980
 #define FSH 1080
 #define FPS 40
-#define L1_SCORE 50
+#define L1_SCORE 5
 #define L2_SCORE 150
 #define PLAYER_LIFE 5
 #define BG_N 2

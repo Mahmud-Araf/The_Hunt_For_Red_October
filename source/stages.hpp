@@ -8,7 +8,17 @@
 #include"utilities.hpp"
 #include"font-color.hpp"
 
+struct MainMenu
+{
+    static bool main_menu_running;
 
+   void run_main_menu();
+
+   void main_menu_event_handling();
+
+   void main_menu_init();
+
+};
 
 struct GameLevels
 {

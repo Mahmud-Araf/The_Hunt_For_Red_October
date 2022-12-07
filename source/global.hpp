@@ -24,7 +24,6 @@ extern int eship_w;
 extern int eship_h;
 
 
-
 extern int is_paused;
 
 extern int pause_delay;
