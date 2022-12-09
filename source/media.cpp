@@ -5,7 +5,11 @@
 
 
 //texture part
-SDL_Texture *introBG;
+SDL_Texture *mainmenuBG;
+SDL_Texture *startgameB1;
+SDL_Texture *startgameB2;
+SDL_Texture *exitB1;
+SDL_Texture *exitB2;
 SDL_Texture *gameBG1;
 SDL_Texture *gameBG2;
 SDL_Texture *player_subObj;
@@ -85,21 +89,49 @@ bool loadMedia()
 {
     bool success=true;
 
-    introBG=loadTexture("assets/intro.png");
-    if(introBG==NULL)
+    mainmenuBG=loadTexture("assets/obj & background/mainmenu.png");
+    if(mainmenuBG==NULL)
     {
-        cout<<"Failed to load intro background"<<endl;
+        cout<<"Failed to load mainmenu background"<<endl;
         success=false;
     }
 
-    gameBG1=loadTexture("assets/background1.png");
+    startgameB1=loadTexture("assets/button/start game1.png");
+    if(startgameB1==NULL)
+    {
+        cout<<"Failed to load startgame button 1 background"<<endl;
+        success=false;
+    }
+
+    startgameB2=loadTexture("assets/button/start game2.png");
+    if(startgameB2==NULL)
+    {
+        cout<<"Failed to load startgame button 2 background"<<endl;
+        success=false;
+    }
+
+    exitB1=loadTexture("assets/button/exit1.png");
+    if(exitB1==NULL)
+    {
+        cout<<"Failed to load exit button 1 background"<<endl;
+        success=false;
+    }
+
+    exitB2=loadTexture("assets/button/exit2.png");
+    if(exitB2==NULL)
+    {
+        cout<<"Failed to load exit button 2 background"<<endl;
+        success=false;
+    }
+
+    gameBG1=loadTexture("assets/obj & background/background1.png");
     if(gameBG1==NULL)
     {
         cout<<"Failed to load game background"<<endl;
         success=false;
     }
 
-    gameBG2=loadTexture("assets/background2.png");
+    gameBG2=loadTexture("assets/obj & background/background2.png");
     if(gameBG2==NULL)
     {
         cout<<"Failed to load game background"<<endl;
@@ -107,7 +139,7 @@ bool loadMedia()
     }
 
 
-    player_subObj=loadTexture("assets/redoctober.png");
+    player_subObj=loadTexture("assets/obj & background/redoctober.png");
     if(player_subObj==NULL)
     {
         cout<<"Failed to load player submarine"<<endl;
@@ -115,7 +147,7 @@ bool loadMedia()
     }
 
 
-    player_torpObj=loadTexture("assets/red_october_torpedo.png");
+    player_torpObj=loadTexture("assets/obj & background/red_october_torpedo.png");
     if(player_torpObj==NULL)
     {
         cout<<"Failed to load player torpedo"<<endl;
@@ -124,7 +156,7 @@ bool loadMedia()
     SDL_SetTextureColorMod(player_torpObj, 200, 255, 255);
 
 
-    player_missile1Obj=loadTexture("assets/missile1.png");
+    player_missile1Obj=loadTexture("assets/obj & background/missile1.png");
     if(player_missile1Obj==NULL)
     {
         cout<<"Failed to load player missile1"<<endl;
@@ -132,7 +164,7 @@ bool loadMedia()
     }
 
 
-    player_missile2Obj=loadTexture("assets/missile2.png");
+    player_missile2Obj=loadTexture("assets/obj & background/missile2.png");
     if(player_missile2Obj==NULL)
     {
         cout<<"Failed to load player missile2"<<endl;
@@ -140,7 +172,7 @@ bool loadMedia()
     }
 
 
-    enemy_subObj=loadTexture("assets/alfaclass.png");
+    enemy_subObj=loadTexture("assets/obj & background/alfaclass.png");
     if(enemy_subObj==NULL)
     {
         cout<<"Failed to load enemy submarine"<<endl;
@@ -148,7 +180,7 @@ bool loadMedia()
     }
 
 
-    enemy_torpObj=loadTexture("assets/enemytorpedo.png");
+    enemy_torpObj=loadTexture("assets/obj & background/enemytorpedo.png");
     if(enemy_torpObj==NULL)
     {
         cout<<"Failed to load enemy torpedo"<<endl;
@@ -156,7 +188,7 @@ bool loadMedia()
     }
 
 
-    enemy_shipObj=loadTexturewithKey("assets/slava.png",255,255,255);
+    enemy_shipObj=loadTexturewithKey("assets/obj & background/slava.png",255,255,255);
     if(enemy_shipObj==NULL)
     {
         cout<<"Failed to load enemy ship"<<endl;
@@ -164,7 +196,7 @@ bool loadMedia()
     }
     
 
-    enemy_mineObj=loadTexture("assets/sea mine.png");
+    enemy_mineObj=loadTexture("assets/obj & background/sea mine.png");
     if(enemy_mineObj==NULL)
     {
         cout<<"Failed to load enemy mine"<<endl;
@@ -172,7 +204,7 @@ bool loadMedia()
     }
 
     
-    explo_surfaceObj=loadTexture("assets/explosion_sprite.png");
+    explo_surfaceObj=loadTexture("assets/obj & background/explosion_sprite.png");
     if(explo_surfaceObj==NULL)
     {
         cout<<"Failed to load explosion1"<<endl;
@@ -180,7 +212,7 @@ bool loadMedia()
     }
 
 
-    explo_waterObj=loadTexture("assets/uw_explosion_sprite.png");
+    explo_waterObj=loadTexture("assets/obj & background/uw_explosion_sprite.png");
     if(explo_waterObj==NULL)
     {
         cout<<"Failed to load explosion2"<<endl;
@@ -189,7 +221,7 @@ bool loadMedia()
 
 
 
-    gamemusic=Mix_LoadMUS("assets/gmusic.mp3");
+    gamemusic=Mix_LoadMUS("assets/audio/gmusic.mp3");
     if(gamemusic==NULL)
     {
         cout<<"Failed to load game music"<<endl;
@@ -197,7 +229,7 @@ bool loadMedia()
     }
      
 
-    missileL1_chunk=Mix_LoadWAV("assets/missilel1.wav");
+    missileL1_chunk=Mix_LoadWAV("assets/audio/missilel1.wav");
     if(missileL1_chunk==NULL)
     {
         cout<<"Failed to load missile launch 1 chunk"<<endl;
@@ -205,7 +237,7 @@ bool loadMedia()
     }
 
 
-    missileL2_chunk=Mix_LoadWAV("assets/missilel2.wav");
+    missileL2_chunk=Mix_LoadWAV("assets/audio/missilel2.wav");
     if(missileL2_chunk==NULL)
     {
         cout<<"Failed to load missile launch 2 chunk"<<endl;
@@ -213,7 +245,7 @@ bool loadMedia()
     }
 
 
-    torpL_chunk=Mix_LoadWAV("assets/torpedolaunch.wav");
+    torpL_chunk=Mix_LoadWAV("assets/audio/torpedolaunch.wav");
     if(torpL_chunk==NULL)
     {
         cout<<"Failed to load torpedo launch chunk"<<endl;
@@ -221,7 +253,7 @@ bool loadMedia()
     }
 
 
-    explosion_surface_chunk=Mix_LoadWAV("assets/surface_exp.wav");
+    explosion_surface_chunk=Mix_LoadWAV("assets/audio/surface_exp.wav");
     if(explosion_surface_chunk==NULL)
     {
         cout<<"Failed to load explosion1 chunk"<<endl;
@@ -229,7 +261,7 @@ bool loadMedia()
     }
 
 
-    explosion_water_chunk=Mix_LoadWAV("assets/underwater_exp.wav");
+    explosion_water_chunk=Mix_LoadWAV("assets/audio/underwater_exp.wav");
     if(explosion_water_chunk==NULL)
     {
         cout<<"Failed to load explosion2 chunk"<<endl;
@@ -243,8 +275,16 @@ bool loadMedia()
 void closeMedia()
 {
     //free texture
-    SDL_DestroyTexture(introBG);
-    introBG=NULL;
+    SDL_DestroyTexture(mainmenuBG);
+    mainmenuBG=NULL;
+    SDL_DestroyTexture(startgameB1);
+    startgameB1=NULL; 
+    SDL_DestroyTexture(startgameB2);
+    startgameB2=NULL; 
+    SDL_DestroyTexture(exitB1);
+    exitB1=NULL;
+    SDL_DestroyTexture(exitB2);
+    exitB2=NULL;
     SDL_DestroyTexture(gameBG1);
     gameBG1=NULL;
     SDL_DestroyTexture(gameBG2);

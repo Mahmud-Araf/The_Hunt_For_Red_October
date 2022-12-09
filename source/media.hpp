@@ -19,7 +19,11 @@ void closeMedia();
 
 
 //texture part
-extern SDL_Texture *introBG;
+extern SDL_Texture *mainmenuBG;
+extern SDL_Texture *startgameB1;
+extern SDL_Texture *startgameB2;
+extern SDL_Texture *exitB1;
+extern SDL_Texture *exitB2;
 extern SDL_Texture *gameBG1;
 extern SDL_Texture *gameBG2;
 extern SDL_Texture *player_subObj;
@@ -34,7 +38,6 @@ extern SDL_Texture *explo_surfaceObj;
 extern SDL_Texture *explo_waterObj;
 
 //sound part
-
 extern Mix_Music *gamemusic;
 extern Mix_Chunk *missileL1_chunk;
 extern Mix_Chunk *missileL2_chunk;

@@ -3,11 +3,90 @@
 
 GameLevels gamelevels;
 
+MainMenu mainmenu;
+
 bool is_running=true;
+
+bool MainMenu::running=true;
 
 bool GameLevels::one_running=true;
 
-bool GameLevels::two_running=false;
+bool GameLevels::two_running=true;
+
+void MainMenu::init()
+{
+    Bw=300;
+    Bh=100;
+    Bspacing=40;
+    
+    //start button 
+    startgame.Bdest.x=200;
+    startgame.Bdest.y=100;
+    startgame.Bdest.w=Bw;
+    startgame.Bdest.h=Bh;
+    startgame.tex1=startgameB1;
+    startgame.tex2=startgameB2;
+
+
+    //exit button rect
+    exitgame.Bdest.x=200;
+    exitgame.Bdest.y=100+Bh+Bspacing;
+    exitgame.Bdest.w=Bw;
+    exitgame.Bdest.h=Bh;
+    exitgame.tex1=exitB1;
+    exitgame.tex2=exitB2;
+
+}
+
+
+void MainMenu::render()
+{
+    SDL_RenderCopy(gameRenderer,mainmenuBG,NULL,NULL);
+
+    startgame.render();
+    exitgame.render();
+}
+
+void MainMenu::handle_event()
+{
+    SDL_PollEvent(&e);
+    
+    int x,y;
+
+    SDL_GetMouseState(&x,&y);
+
+    if(startgame.check_inside(x,y))
+    {   
+        if(e.type==SDL_MOUSEBUTTONDOWN)
+        {
+           running=false;
+        }
+    }
+    if(exitgame.check_inside(x,y))
+    {
+        if(e.type==SDL_MOUSEBUTTONDOWN)
+        {
+           running=false;
+           is_running=false;
+        }
+    }
+    
+}
+
+void MainMenu::run()
+{
+     render();
+     
+     handle_event();
+
+     if(e.type==SDL_QUIT)
+     {
+        is_running=false;
+     }
+
+     SDL_RenderPresent(gameRenderer);
+}
+
 
 void GameLevels::run_levelOne()
 {
@@ -51,13 +130,12 @@ void GameLevels::run_levelOne()
     {
         cout<<"You have Completed level one"<<endl;
         one_running=false;
-        two_running=true;
         game_obj_func_init();
         player.life=PLAYER_LIFE;
         total_sub=PRIMARY_ESHIP_N;
     }
     SDL_RenderPresent(gameRenderer);
-    frame_controlling();
+    framerate_controlling();
 }
 
 void GameLevels::run_levelTwo()
@@ -112,7 +190,7 @@ void GameLevels::run_levelTwo()
         is_running=false;
     }
     SDL_RenderPresent(gameRenderer);
-    frame_controlling();
+    framerate_controlling();
 }
 
 

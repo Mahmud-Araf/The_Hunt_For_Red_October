@@ -73,8 +73,8 @@ void Torpedo::p_init()
     // torpedo dimension
     t_dim.x = 3000;
     t_dim.y = 3000;
-    t_dim.w = (int)t_dim.w * 0.8;
-    t_dim.h = (int)t_dim.h * 0.8;
+    t_dim.w = (int)t_dim.w * 0.2;
+    t_dim.h = (int)t_dim.h * 0.2;
 
     // torpedo variable initialization
     is_active = 0;
@@ -83,13 +83,13 @@ void Torpedo::p_init()
 
 void Torpedo::e_init()
 {
-    SDL_QueryTexture(player_torpObj, 0, 0, &t_dim.w, &t_dim.h);
+    SDL_QueryTexture(enemy_torpObj,0, 0, &t_dim.w, &t_dim.h);
 
     // torpedo dimension
     t_dim.x = 3000;
     t_dim.y = 3000;
-    t_dim.w = (int)t_dim.w * 0.7;
-    t_dim.h = (int)t_dim.h * 0.7;
+    t_dim.w = (int)t_dim.w * 0.175;
+    t_dim.h = (int)t_dim.h * 0.175;
 
     // torpedo variable initialization
     is_active = 0;
@@ -370,8 +370,8 @@ void Player::init()
     SDL_QueryTexture(player_subObj, 0, 0, &p_dim.w, &p_dim.h);
     player_x_pos = p_dim.x = -260;
     player_y_pos = p_dim.y = (int)(WINDOW_HEIGHT * 0.35);
-    p_dim.w = (int)p_dim.w * 0.4;
-    p_dim.h = (int)p_dim.h * 0.4;
+    p_dim.w = (int)p_dim.w * 0.2;
+    p_dim.h = (int)p_dim.h * 0.2;
 
     life = PLAYER_LIFE;
 
@@ -646,43 +646,43 @@ void Enemy_Sub_Set::init()
         switch (i)
         {
         case 0:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 390, (int)(w * 0.8), (int)(h * 0.8)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 390, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         case 2:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 430, (int)(w * 0.8), (int)(h * 0.8)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 430, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         case 4:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 480, (int)(w * 0.8), (int)(h * 0.8)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 480, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         case 6:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 510, (int)(w * 0.8), (int)(h * 0.8)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 510, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         case 8:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 550, (int)(w * 0.8), (int)(h * 0.8)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 550, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         case 9:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 450, (int)(w * 0.8), (int)(h * 0.8)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 450, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         case 7:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 650, (int)(w * 0.8), (int)(h * 0.8)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 650, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         case 5:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 670, (int)(w * 0.8), (int)(h * 0.8)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 670, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         case 3:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 580, (int)(w * 0.8), (int)(h * 0.8)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 580, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         default:
-            e_sub[i].esub_dim = {WINDOW_WIDTH, 600, (int)(w * 0.8), (int)(h * 0.8)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH, 600, (int)(w * 0.4), (int)(h * 0.4)};
             break;
         }
 
@@ -1136,12 +1136,6 @@ void ptorp_collision_for_esub()
 
 void game_obj_func_init()
 {
-    if (!loadMedia())
-    {
-        cout << "Media is not loaded" << endl;
-    }
-
-    font_init();
     player.init();
     gamebackground.init();
     enemy_sub_set.init();

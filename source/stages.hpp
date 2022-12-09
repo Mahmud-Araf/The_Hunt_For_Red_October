@@ -10,15 +10,27 @@
 
 struct MainMenu
 {
-    static bool main_menu_running;
+   static bool running;
 
-   void run_main_menu();
+   int Bw;
+   int Bh;
+   int Bspacing;
 
-   void main_menu_event_handling();
+   Button startgame;
 
-   void main_menu_init();
+   Button exitgame;
+
+   void run();
+
+   void handle_event();
+
+   void render();
+
+   void init();
 
 };
+
+extern MainMenu mainmenu;
 
 struct GameLevels
 {

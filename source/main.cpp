@@ -6,11 +6,23 @@ int main()
     
     
     gameinit();
+    if(!loadMedia())
+    {
+        cout<<"Failed to load Media"<<endl;
+    }
+
+    mainmenu.init();
+    utilities_init();
     game_obj_func_init();
 
+
     while(is_running)
-    {
-        if(gamelevels.one_running)
+    {   
+        if(mainmenu.running)
+        {
+            mainmenu.run();
+        }
+        else if(gamelevels.one_running)
         {
             gamelevels.run_levelOne();
         }

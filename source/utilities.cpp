@@ -1,8 +1,39 @@
 #include"utilities.hpp"
 #include"font-color.hpp"
 #include"obj-functions.hpp"
+
 int frameN=0;
 int score=0;
+
+void utilities_init()
+{
+    font_init();
+    start_music();
+}
+
+void Button::render()
+{   if(!is_inside)
+    {
+      SDL_RenderCopy(gameRenderer,tex1,&Bsource,&Bdest);
+    }
+    else
+    {
+      SDL_RenderCopy(gameRenderer,tex2,&Bsource,&Bdest);
+    }
+}
+
+bool Button::check_inside(int x,int y)
+{
+    if(x>=Bdest.x && x<=Bdest.x+Bdest.w && y>=Bdest.y && y<=Bdest.y+Bdest.h)
+    {
+        is_inside=true;
+        return true;
+    }
+    else
+    {   is_inside=false;
+        return false;
+    }
+}
 
 void start_music()
 {
@@ -26,7 +57,7 @@ void resume_music()
 }
 
 
-void frame_controlling()
+void framerate_controlling()
 {
     int start_frame=SDL_GetTicks();
     
