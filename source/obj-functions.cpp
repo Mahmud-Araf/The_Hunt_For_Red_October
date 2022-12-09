@@ -73,8 +73,8 @@ void Torpedo::p_init()
     // torpedo dimension
     t_dim.x = 3000;
     t_dim.y = 3000;
-    t_dim.w = (int)t_dim.w * 0.2;
-    t_dim.h = (int)t_dim.h * 0.2;
+    t_dim.w = (int)t_dim.w * 0.8;
+    t_dim.h = (int)t_dim.h * 0.8;
 
     // torpedo variable initialization
     is_active = 0;
@@ -88,8 +88,8 @@ void Torpedo::e_init()
     // torpedo dimension
     t_dim.x = 3000;
     t_dim.y = 3000;
-    t_dim.w = (int)t_dim.w * 0.175;
-    t_dim.h = (int)t_dim.h * 0.175;
+    t_dim.w = (int)t_dim.w * 0.7;
+    t_dim.h = (int)t_dim.h * 0.7;
 
     // torpedo variable initialization
     is_active = 0;
@@ -370,8 +370,8 @@ void Player::init()
     SDL_QueryTexture(player_subObj, 0, 0, &p_dim.w, &p_dim.h);
     player_x_pos = p_dim.x = -260;
     player_y_pos = p_dim.y = (int)(WINDOW_HEIGHT * 0.35);
-    p_dim.w = (int)p_dim.w * 0.2;
-    p_dim.h = (int)p_dim.h * 0.2;
+    p_dim.w = (int)p_dim.w * 0.4;
+    p_dim.h = (int)p_dim.h * 0.4;
 
     life = PLAYER_LIFE;
 
