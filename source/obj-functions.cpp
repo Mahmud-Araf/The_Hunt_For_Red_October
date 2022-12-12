@@ -751,7 +751,7 @@ void Enemy_Sub_Set::xmove_setting()
             esub_speed[i] = 7;
             break;
         default:
-            esub_speed[i] = 5;
+            esub_speed[i] = 8;
             break;
         }
     }
@@ -917,19 +917,19 @@ void Enemy_Ship_Set::xmove_setting()
         switch (r)
         {
         case 0:
-            eship_speed[i] = 4;
-            break;
-        case 1:
             eship_speed[i] = 5;
             break;
-        case 2:
+        case 1:
             eship_speed[i] = 6;
             break;
-        case 3:
+        case 2:
             eship_speed[i] = 7;
             break;
+        case 3:
+            eship_speed[i] = 8;
+            break;
         default:
-            eship_speed[i] = 6;
+            eship_speed[i] = 7;
             break;
         }
     }
