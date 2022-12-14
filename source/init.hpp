@@ -1,7 +1,8 @@
 /*This header contains necessary variable and function to initiate the game*/
 
 
-#pragma once
+#ifndef GINIT
+#define GINIT
 #include"preprocessor.hpp"
 
 extern SDL_Window *gameWindow;
@@ -22,4 +23,4 @@ extern Init init;
 
 void gameinit();
 
-
+#endif

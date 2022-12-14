@@ -30,15 +30,17 @@ void pause_music();
 
 void resume_music();
 
+void music_handle_event();
+
 void framerate_controlling();
 
 void fps_show();
 
+void life_show();
+
 void score_board();
 
 void time_show();
-
-void life_show();
 
 
 

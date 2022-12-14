@@ -1,17 +1,21 @@
 #include"stages.hpp"
 
+bool is_running=true;
 
-GameLevels gamelevels;
+Uint32 mainmenu_delay=0;
+enum STAGE stage;
 
 MainMenu mainmenu;
 
-bool is_running=true;
+GameLevels gamelevels;
 
-bool MainMenu::running=true;
+Controls controls;
 
-bool GameLevels::one_running=true;
+Credit credit;
 
-bool GameLevels::two_running=true;
+Button backBS;
+
+
 
 void MainMenu::init()
 {
@@ -20,22 +24,52 @@ void MainMenu::init()
     Bspacing=40;
     
     //start button 
-    startgame.Bdest.x=200;
-    startgame.Bdest.y=100;
-    startgame.Bdest.w=Bw;
-    startgame.Bdest.h=Bh;
-    startgame.tex1=startgameB1;
-    startgame.tex2=startgameB2;
+    startgameBS.Bdest.x=200;
+    startgameBS.Bdest.y=100;
+    startgameBS.Bdest.w=Bw;
+    startgameBS.Bdest.h=Bh;
+    startgameBS.tex1=startgameB1;
+    startgameBS.tex2=startgameB2;
 
+    //controls button
+    controlsBS.Bdest.x=200;
+    controlsBS.Bdest.y=100+Bh+Bspacing;
+    controlsBS.Bdest.w=Bw;
+    controlsBS.Bdest.h=Bh;
+    controlsBS.tex1=controlsB1;
+    controlsBS.tex2=controlsB2;
 
-    //exit button rect
-    exitgame.Bdest.x=200;
-    exitgame.Bdest.y=100+Bh+Bspacing;
-    exitgame.Bdest.w=Bw;
-    exitgame.Bdest.h=Bh;
-    exitgame.tex1=exitB1;
-    exitgame.tex2=exitB2;
+    //highscores button
+    highscoresBS.Bdest.x=200;
+    highscoresBS.Bdest.y=100+2*Bh+2*Bspacing;
+    highscoresBS.Bdest.w=Bw;
+    highscoresBS.Bdest.h=Bh;
+    highscoresBS.tex1=hscoresB1;
+    highscoresBS.tex2=hscoresB2;
 
+    //credit button
+    creditBS.Bdest.x=200;
+    creditBS.Bdest.y=100+3*Bh+3*Bspacing;
+    creditBS.Bdest.w=Bw;
+    creditBS.Bdest.h=Bh;
+    creditBS.tex1=creditB1;
+    creditBS.tex2=creditB2;
+
+    //exit button 
+    exitgameBS.Bdest.x=200;
+    exitgameBS.Bdest.y=100+4*Bh+4*Bspacing;
+    exitgameBS.Bdest.w=Bw;
+    exitgameBS.Bdest.h=Bh;
+    exitgameBS.tex1=exitB1;
+    exitgameBS.tex2=exitB2;
+
+    //back button
+    backBS.Bdest.x=50;
+    backBS.Bdest.y=FSH-250;
+    backBS.Bdest.w=Bw;
+    backBS.Bdest.h=Bh;
+    backBS.tex1=backB1;
+    backBS.tex2=backB2;
 }
 
 
@@ -43,9 +77,14 @@ void MainMenu::render()
 {
     SDL_RenderCopy(gameRenderer,mainmenuBG,NULL,NULL);
 
-    startgame.render();
-    exitgame.render();
+    startgameBS.render();
+    controlsBS.render();
+    highscoresBS.render();
+    creditBS.render();
+    exitgameBS.render();
+
 }
+
 
 void MainMenu::handle_event()
 {
@@ -55,36 +94,78 @@ void MainMenu::handle_event()
 
     SDL_GetMouseState(&x,&y);
 
-    if(startgame.check_inside(x,y))
+    if(startgameBS.check_inside(x,y))
     {   
         if(e.type==SDL_MOUSEBUTTONDOWN)
         {
-           running=false;
+           stage=LEVEL1;
         }
     }
-    if(exitgame.check_inside(x,y))
+    if(controlsBS.check_inside(x,y))
+    {   
+        if(e.type==SDL_MOUSEBUTTONDOWN)
+        {
+           stage=CONTROLS;
+        }
+    }
+    if(highscoresBS.check_inside(x,y))
+    {   
+        if(e.type==SDL_MOUSEBUTTONDOWN)
+        {
+           
+        }
+    }
+    if(creditBS.check_inside(x,y))
+    {   
+        if(e.type==SDL_MOUSEBUTTONDOWN)
+        {
+           stage=CREDIT;
+        }
+    }
+    if(exitgameBS.check_inside(x,y))
     {
         if(e.type==SDL_MOUSEBUTTONDOWN)
         {
-           running=false;
            is_running=false;
         }
     }
     
 }
 
+
 void MainMenu::run()
 {
-     render();
-     
+    SDL_SetRenderDrawColor(gameRenderer,255,255,255,255);
+    SDL_RenderClear(gameRenderer);
+
      handle_event();
+
+     render();
+
+     music_handle_event();
+     pause_music();
+     resume_music();
 
      if(e.type==SDL_QUIT)
      {
         is_running=false;
      }
 
+     mainmenu_delay=SDL_GetTicks();
+     
      SDL_RenderPresent(gameRenderer);
+}
+
+
+void GameLevels::game_obj_func_init()
+{
+    player.init();
+    gamebackground.init();
+    enemy_sub_set.init();
+    enemy_ship_set.init();
+    missile_collision_init();
+    ptorp_collision_init();
+    start_music();
 }
 
 
@@ -93,6 +174,7 @@ void GameLevels::run_levelOne()
     SDL_SetRenderDrawColor(gameRenderer,255,255,255,255);
     SDL_RenderClear(gameRenderer);
 
+    music_handle_event();
     pause_music();
     resume_music();
 
@@ -119,8 +201,8 @@ void GameLevels::run_levelOne()
     fps_show();
     time_show();
     score_board();
-    
     life_show();
+
     if(e.type==SDL_QUIT || player.life==0)
     {
        cout<<"You have been hunted"<<endl;
@@ -129,7 +211,7 @@ void GameLevels::run_levelOne()
     else if(score==L1_SCORE)
     {
         cout<<"You have Completed level one"<<endl;
-        one_running=false;
+        stage=LEVEL2;
         game_obj_func_init();
         player.life=PLAYER_LIFE;
         total_sub=PRIMARY_ESHIP_N;
@@ -138,11 +220,13 @@ void GameLevels::run_levelOne()
     framerate_controlling();
 }
 
+
 void GameLevels::run_levelTwo()
 {
     SDL_SetRenderDrawColor(gameRenderer,255,255,255,255);
     SDL_RenderClear(gameRenderer);
 
+    music_handle_event();
     pause_music();
     resume_music();
 
@@ -194,3 +278,68 @@ void GameLevels::run_levelTwo()
 }
 
 
+void Controls::render()
+{
+    SDL_RenderCopy(gameRenderer,controlsBG,NULL,NULL);
+
+    backBS.render();
+}
+
+void Controls::run()
+{
+    SDL_SetRenderDrawColor(gameRenderer,255,255,255,255);
+    SDL_RenderClear(gameRenderer);
+    
+    render();
+
+    back_handle_event();
+    music_handle_event();
+    pause_music();
+    resume_music();
+
+    SDL_RenderPresent(gameRenderer);
+}
+
+void Credit::render()
+{
+    SDL_RenderCopy(gameRenderer,creditBG,NULL,NULL);
+
+    backBS.render();
+}
+
+void Credit::run()
+{
+    SDL_SetRenderDrawColor(gameRenderer,255,255,255,255);
+    SDL_RenderClear(gameRenderer);
+
+    render();
+
+    back_handle_event();
+    music_handle_event();
+    pause_music();
+    resume_music();
+
+    SDL_RenderPresent(gameRenderer);
+}
+
+void back_handle_event()
+{
+    SDL_PollEvent(&e);
+    
+    int x,y;
+
+    SDL_GetMouseState(&x,&y);
+
+    if(backBS.check_inside(x,y))
+    {   
+        if(e.type==SDL_MOUSEBUTTONDOWN)
+        {
+           stage=MAIN_MENU;
+        }
+    }
+
+    if(e.type==SDL_QUIT)
+    {
+        is_running=false;
+    }
+}

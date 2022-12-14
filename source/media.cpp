@@ -1,15 +1,25 @@
 /*This are the textures that are used in the game*/
-/*All the necessary variable used here are stored in global*/
+
 
 #include"media.hpp"
 
 
 //texture part
 SDL_Texture *mainmenuBG;
+SDL_Texture *controlsBG;
+SDL_Texture *creditBG;
 SDL_Texture *startgameB1;
 SDL_Texture *startgameB2;
+SDL_Texture *controlsB1;
+SDL_Texture *controlsB2;
+SDL_Texture *hscoresB1;
+SDL_Texture *hscoresB2;
+SDL_Texture *creditB1;
+SDL_Texture *creditB2;
 SDL_Texture *exitB1;
 SDL_Texture *exitB2;
+SDL_Texture *backB1;
+SDL_Texture *backB2;
 SDL_Texture *gameBG1;
 SDL_Texture *gameBG2;
 SDL_Texture *player_subObj;
@@ -89,10 +99,24 @@ bool loadMedia()
 {
     bool success=true;
 
-    mainmenuBG=loadTexture("assets/obj & background/mainmenu.png");
+    mainmenuBG=loadTexture("assets/obj & background/mainmenubg.png");
     if(mainmenuBG==NULL)
     {
         cout<<"Failed to load mainmenu background"<<endl;
+        success=false;
+    }
+
+    controlsBG=loadTexture("assets/obj & background/controlsbg.png");
+    if(controlsBG==NULL)
+    {
+        cout<<"Failed to load controls background"<<endl;
+        success=false;
+    }
+
+    creditBG=loadTexture("assets/obj & background/creditbg.png");
+    if(creditBG==NULL)
+    {
+        cout<<"Failed to load credit background"<<endl;
         success=false;
     }
 
@@ -110,6 +134,48 @@ bool loadMedia()
         success=false;
     }
 
+    controlsB1=loadTexture("assets/button/controls1.png");
+    if(controlsB1==NULL)
+    {
+        cout<<"Failed to load controls button 1 background"<<endl;
+        success=false;
+    }
+
+    controlsB2=loadTexture("assets/button/controls2.png");
+    if(controlsB2==NULL)
+    {
+        cout<<"Failed to load controls button 2 background"<<endl;
+        success=false;
+    }
+
+    hscoresB1=loadTexture("assets/button/highscores1.png");
+    if(hscoresB1==NULL)
+    {
+        cout<<"Failed to load hscores button 1 background"<<endl;
+        success=false;
+    }
+
+    hscoresB2=loadTexture("assets/button/highscores2.png");
+    if(hscoresB2==NULL)
+    {
+        cout<<"Failed to load hscores button 2 background"<<endl;
+        success=false;
+    }
+
+    creditB1=loadTexture("assets/button/credit1.png");
+    if(creditB1==NULL)
+    {
+        cout<<"Failed to load credit button 1 background"<<endl;
+        success=false;
+    }
+
+    creditB2=loadTexture("assets/button/credit2.png");
+    if(creditB2==NULL)
+    {
+        cout<<"Failed to load credit button 2 background"<<endl;
+        success=false;
+    }
+
     exitB1=loadTexture("assets/button/exit1.png");
     if(exitB1==NULL)
     {
@@ -121,6 +187,20 @@ bool loadMedia()
     if(exitB2==NULL)
     {
         cout<<"Failed to load exit button 2 background"<<endl;
+        success=false;
+    }
+
+    backB1=loadTexture("assets/button/back1.png");
+    if(backB1==NULL)
+    {
+        cout<<"Failed to load back button 1 background"<<endl;
+        success=false;
+    }
+
+    backB2=loadTexture("assets/button/back2.png");
+    if(backB2==NULL)
+    {
+        cout<<"Failed to load back button 2 background"<<endl;
         success=false;
     }
 
@@ -277,14 +357,38 @@ void closeMedia()
     //free texture
     SDL_DestroyTexture(mainmenuBG);
     mainmenuBG=NULL;
+    SDL_DestroyTexture(controlsBG);
+    controlsBG=NULL;
+    SDL_DestroyTexture(creditBG);
+    creditBG=NULL;
     SDL_DestroyTexture(startgameB1);
     startgameB1=NULL; 
     SDL_DestroyTexture(startgameB2);
-    startgameB2=NULL; 
+    startgameB2=NULL;
+    SDL_DestroyTexture(controlsB1);
+    controlsB1=NULL; 
+    SDL_DestroyTexture(controlsB2);
+    controlsB2=NULL; 
+    SDL_DestroyTexture(hscoresB1);
+    hscoresB1=NULL;
+    SDL_DestroyTexture(hscoresB2);
+    hscoresB2=NULL;
+    SDL_DestroyTexture(hscoresB1);
+    hscoresB1=NULL;
+    SDL_DestroyTexture(hscoresB2);
+    hscoresB2=NULL;
+    SDL_DestroyTexture(creditB1);
+    creditB1=NULL;
+    SDL_DestroyTexture(creditB2);
+    creditB2=NULL;
     SDL_DestroyTexture(exitB1);
     exitB1=NULL;
     SDL_DestroyTexture(exitB2);
     exitB2=NULL;
+    SDL_DestroyTexture(backB1);
+    backB1=NULL;
+    SDL_DestroyTexture(backB2);
+    backB2=NULL;
     SDL_DestroyTexture(gameBG1);
     gameBG1=NULL;
     SDL_DestroyTexture(gameBG2);

@@ -8,11 +8,12 @@ extern SDL_Color white;
 extern SDL_Color black;
 extern SDL_Color red;
 
-extern TTF_Font *Bold1;
-extern TTF_Font *Bold2;
-extern TTF_Font *Bold3;
-extern TTF_Font *Norm1;
-extern TTF_Font *Digital;
+extern TTF_Font *Bold1F;
+extern TTF_Font *Bold2F;
+extern TTF_Font *Bold3F;
+extern TTF_Font *Bold4F;
+extern TTF_Font *Bold5F;
+extern TTF_Font *DigitalF;
 
 
 void loadTextSurface(std::string path,TTF_Font *font,SDL_Color color,SDL_Rect area);

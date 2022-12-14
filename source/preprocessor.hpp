@@ -21,9 +21,9 @@ using namespace std;
 #define RENDERER_FLAGS SDL_RENDERER_ACCELERATED
 #define FSW 1980
 #define FSH 1080
-#define FPS 40
-#define L1_SCORE 10
-#define L2_SCORE 30
+#define FPS 45
+#define L1_SCORE 1
+#define L2_SCORE 100
 #define PLAYER_LIFE 10
 #define BG_N 2
 #define P_TORP_N 15

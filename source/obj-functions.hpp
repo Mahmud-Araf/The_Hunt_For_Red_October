@@ -7,15 +7,15 @@
 extern SDL_Event e; // variable for event handling
 
 //collision variable for player missile explosion
-extern int mcollision_start[E_SHIP_N];
-extern int mcollision_count[E_SHIP_N];
+extern Uint32 mcollision_start[E_SHIP_N];
+extern Uint32 mcollision_count[E_SHIP_N];
 extern SDL_Rect mcollision_area[E_SHIP_N];
 extern SDL_Rect mcollision_source[MISSILE_COLLISION_SN];
 extern int mcollision_sprite_num[E_SHIP_N];
 
 //collision variable for player torp explosion
-extern int ptorp_collision_start[E_SUB_N];
-extern int ptorp_collision_count[E_SUB_N];
+extern Uint32 ptorp_collision_start[E_SUB_N];
+extern Uint32 ptorp_collision_count[E_SUB_N];
 extern SDL_Rect ptorp_collision_area[E_SUB_N];
 extern SDL_Rect ptorp_collision_source[TORP_COLLISION_SN];
 extern int ptorp_collision_sprite_num[E_SUB_N];
@@ -30,7 +30,8 @@ struct Torpedo
     
     //initializer for player torps
     void p_init();
-     //initializer for enemy torps
+
+    //initializer for enemy torps
     void e_init();
 
     //rendering
@@ -83,9 +84,9 @@ struct Mine
 
    int xy_check; //variable to fix mines' dimension after it is launched
 
-   int y_move_start;
+   Uint32 y_move_start;
                      //variables to count and set the time for mines to track player
-   int y_move_count;
+   Uint32 y_move_count;
 
    //initializer
     void init();
@@ -137,21 +138,21 @@ struct Player
 
     int is_exploded; //variable to check whether player is exploded or not
 
-    int is_started; // variable related to obj revival & explosion
+    Uint32 is_started; // variable related to obj revival & explosion
 
-    int is_counting; //variable related to obj revival & explosion
+    Uint32 is_counting; //variable related to obj revival & explosion
 
-    int vibing_counting; //variable related to player vibrating after collision
+    Uint32 vibing_started;  //variable related to player vibrating after collision
 
-    int vibing_started;  //variable related to player vibrating after collision
+    Uint32 vibing_counting; //variable related to player vibrating after collision
 
-    int ptorp_launch_start;
+    Uint32 ptorp_launch_start;
                              //variables related to the time of player sub torpedo launching
-    int ptorp_launch_count;
+    Uint32 ptorp_launch_count;
 
-    int pmissile_launch_start;
+    Uint32 pmissile_launch_start;
                              //variables related to the time of player sub missile launching
-    int pmissile_launch_count;
+    Uint32 pmissile_launch_count;
 
     //initializer
     void init();
@@ -189,15 +190,15 @@ struct Enemy_Sub
 
     int is_exploded; //variable to check whether enemy sub is exploded or not
 
-    int is_started; // variable related to obj revival & explosion
+    Uint32 is_started; // variable related to obj revival & explosion
 
-    int is_counting; //variable related to obj revival & explosion
+    Uint32 is_counting; //variable related to obj revival & explosion
 
     int revival=0;  // variable related to obj revival & explosion
 
-    int etorp_launch_start;
+    Uint32 etorp_launch_start;
                              //variables related to the time of enemy sub torpedo launching
-    int etorp_launch_count;
+    Uint32 etorp_launch_count;
 
     //rendering
     void render();
@@ -250,15 +251,15 @@ struct Enemy_Ship
 
     int is_exploded; //variable to check whether enemy ship is exploded or not
 
-    int is_started; // variable related to obj revival & explosion
+    Uint32 is_started; // variable related to obj revival & explosion
 
-    int is_counting; //variable related to obj revival & explosion
+    Uint32 is_counting; //variable related to obj revival & explosion
 
     int revival=0;  // variable related to obj revival & explosion
 
-    int emine_launch_start;
+    Uint32 emine_launch_start;
                              //variables related to the time of enemy ship mine launching
-    int emine_launch_count;
+    Uint32 emine_launch_count;
 
     //rendering
     void render();
@@ -305,6 +306,5 @@ void ptorp_collision_init(); // initializing player torpedo collision variables
 
 void ptorp_collision_for_esub();//function for rendering and detecting player torpedo collision
 
-void game_obj_func_init(); // function to initialize all game objects and functionalities
 
 #endif

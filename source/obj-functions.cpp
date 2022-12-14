@@ -1,11 +1,5 @@
-#include "preprocessor.hpp"
-#include "init.hpp"
-#include "global.hpp"
-#include "media.hpp"
-#include "obj-functions.hpp"
-#include "utilities.hpp"
-#include "stages.hpp"
-#include "font-color.hpp"
+#include"header.hpp"
+
 // game object structures and variables
 
 // game obj structures
@@ -20,11 +14,11 @@ SDL_Event e; // variable for event handling
 
 int is_paused = 0; // variable to pause the game
 
-int pause_delay = SDL_GetTicks(); // variable related to game pausing
+Uint32 delay_event = SDL_GetTicks(); // variable related to delaying event
 
-int first_time_torp_launch = 0;
+Uint32 first_time_torp_launch = 0;
 // variables to make sure that first torp or missile launch doesn't cause time delay
-int first_time_missile_launch = 0;
+Uint32 first_time_missile_launch = 0;
 
 int player_x_pos;
 // global variable to store the x and y co-ordinates of player submarine
@@ -43,23 +37,23 @@ int eship_w;
 int eship_h;
 
 int total_sub = PRIMARY_ESUB_N; // variable for storing number of current enemy subs that will render
-int esub_increment_start_time = 0;
-int esub_increment_count_time = 0;
+Uint32 esub_increment_start_time = 0;
+Uint32 esub_increment_count_time = 0;
 
 int total_ship = PRIMARY_ESHIP_N; // variable for storing number of current enemy ships that will render
-int eship_increment_start_time = 0;
-int eship_increment_count_time = 0;
+Uint32 eship_increment_start_time = 0;
+Uint32 eship_increment_count_time = 0;
 
 // global variable necessary for missile collision
-int mcollision_start[E_SHIP_N];
-int mcollision_count[E_SHIP_N];
+Uint32 mcollision_start[E_SHIP_N];
+Uint32 mcollision_count[E_SHIP_N];
 SDL_Rect mcollision_area[E_SHIP_N];
 SDL_Rect mcollision_source[MISSILE_COLLISION_SN];
 int mcollision_sprite_num[E_SHIP_N];
 
 // global variable necessary for player torpedo collision
-int ptorp_collision_start[E_SUB_N];
-int ptorp_collision_count[E_SUB_N];
+Uint32 ptorp_collision_start[E_SUB_N];
+Uint32 ptorp_collision_count[E_SUB_N];
 SDL_Rect ptorp_collision_area[E_SUB_N];
 SDL_Rect ptorp_collision_source[TORP_COLLISION_SN];
 int ptorp_collision_sprite_num[E_SUB_N];
@@ -424,7 +418,7 @@ void Player::handle_event_movement()
 
     if (e.type == SDL_KEYDOWN)
     {
-        if (SDL_GetTicks() - pause_delay > 500)
+        if (SDL_GetTicks() - delay_event > 500)
         {
             if (e.key.keysym.sym == SDLK_ESCAPE && is_paused == 0)
             {
@@ -435,7 +429,7 @@ void Player::handle_event_movement()
                 is_paused = 0;
             }
 
-            pause_delay = SDL_GetTicks();
+            delay_event = SDL_GetTicks();
         }
         if (!is_paused)
         {
@@ -484,7 +478,7 @@ void Player::handle_event_torps()
     {
         ptorp_launch_count = SDL_GetTicks() - ptorp_launch_start;
 
-        if (e.button.button == SDL_BUTTON_LEFT && (ptorp_launch_count > P_TORP_DELAY || first_time_torp_launch == 0))
+        if (e.button.button == SDL_BUTTON_LEFT && (ptorp_launch_count > P_TORP_DELAY || first_time_torp_launch == 0) && (SDL_GetTicks()-mainmenu_delay>1000))
         {
             if (is_exploded == 0)
             {
@@ -708,22 +702,22 @@ void Enemy_Sub_Set::render()
 
 void Enemy_Sub_Set::increment()
 {
-    esub_increment_count_time = SDL_GetTicks() - esub_increment_start_time;
+    esub_increment_count_time = current_time - esub_increment_start_time;
 
-    if (gamelevels.one_running)
+    if (stage==LEVEL1)
     {
         if (esub_increment_count_time > INCREMENT_SUB_LONE && total_sub < E_SUB_N && !is_paused)
         {
             total_sub++;
-            esub_increment_start_time = SDL_GetTicks();
+            esub_increment_start_time = current_time;
         }
     }
-    else
+    else if(stage==LEVEL2)
     {
         if (esub_increment_count_time > INCREMENT_SUB_LTWO && total_sub < E_SUB_N && !is_paused)
         {
             total_sub++;
-            esub_increment_start_time = SDL_GetTicks();
+            esub_increment_start_time = current_time;
         }
     }
 }
@@ -945,12 +939,12 @@ void Enemy_Ship_Set::render()
 
 void Enemy_Ship_Set::increment()
 {
-    eship_increment_count_time = SDL_GetTicks() - eship_increment_start_time;
+    eship_increment_count_time = current_time- eship_increment_start_time;
 
     if (eship_increment_count_time > INCREMENT_SHIP && total_ship < E_SHIP_N && !is_paused)
     {
         total_ship++;
-        eship_increment_start_time = SDL_GetTicks();
+        eship_increment_start_time = current_time;
     }
 }
 
@@ -1134,13 +1128,3 @@ void ptorp_collision_for_esub()
     }
 }
 
-void game_obj_func_init()
-{
-    player.init();
-    gamebackground.init();
-    enemy_sub_set.init();
-    enemy_ship_set.init();
-    missile_collision_init();
-    ptorp_collision_init();
-    start_music();
-}

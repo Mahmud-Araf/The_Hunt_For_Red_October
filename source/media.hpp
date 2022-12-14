@@ -20,10 +20,20 @@ void closeMedia();
 
 //texture part
 extern SDL_Texture *mainmenuBG;
+extern SDL_Texture *controlsBG;
+extern SDL_Texture *creditBG;
 extern SDL_Texture *startgameB1;
 extern SDL_Texture *startgameB2;
+extern SDL_Texture *controlsB1;
+extern SDL_Texture *controlsB2;
+extern SDL_Texture *hscoresB1;
+extern SDL_Texture *hscoresB2;
+extern SDL_Texture *creditB1;
+extern SDL_Texture *creditB2;
 extern SDL_Texture *exitB1;
 extern SDL_Texture *exitB2;
+extern SDL_Texture *backB1;
+extern SDL_Texture *backB2;
 extern SDL_Texture *gameBG1;
 extern SDL_Texture *gameBG2;
 extern SDL_Texture *player_subObj;
