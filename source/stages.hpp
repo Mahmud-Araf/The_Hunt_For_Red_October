@@ -18,6 +18,8 @@ struct MainMenu
    int Bh;
    int Bspacing;
 
+   bool levelmenuflag;
+
    Button startgameBS;
 
    Button controlsBS;
@@ -25,6 +27,10 @@ struct MainMenu
    Button highscoresBS;
 
    Button creditBS;
+
+   Button level1BS;
+
+   Button level2BS;
 
    Button exitgameBS;
 

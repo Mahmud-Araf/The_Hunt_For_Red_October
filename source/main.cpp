@@ -11,8 +11,7 @@ int main()
 
     mainmenu.init();
     utilities_init();
-    gamelevels.game_obj_func_init();
-
+    
     stage=MAIN_MENU;
     
     while(is_running)

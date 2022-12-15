@@ -6,6 +6,7 @@
 
 //texture part
 SDL_Texture *mainmenuBG;
+SDL_Texture *levelmenuBG;
 SDL_Texture *controlsBG;
 SDL_Texture *creditBG;
 SDL_Texture *startgameB1;
@@ -20,6 +21,13 @@ SDL_Texture *exitB1;
 SDL_Texture *exitB2;
 SDL_Texture *backB1;
 SDL_Texture *backB2;
+SDL_Texture *level1B1;
+SDL_Texture *level1B2;
+SDL_Texture *level2B1;
+SDL_Texture *level2B2;
+SDL_Texture *lifeObj;
+SDL_Texture *scoreObj;
+SDL_Texture *clockObj;
 SDL_Texture *gameBG1;
 SDL_Texture *gameBG2;
 SDL_Texture *player_subObj;
@@ -103,6 +111,13 @@ bool loadMedia()
     if(mainmenuBG==NULL)
     {
         cout<<"Failed to load mainmenu background"<<endl;
+        success=false;
+    }
+
+    levelmenuBG=loadTexture("assets/obj & background/level_menu.png");
+    if(levelmenuBG==NULL)
+    {
+        cout<<"Failed to load levelmenu background"<<endl;
         success=false;
     }
 
@@ -201,6 +216,55 @@ bool loadMedia()
     if(backB2==NULL)
     {
         cout<<"Failed to load back button 2 background"<<endl;
+        success=false;
+    }
+
+    level1B1=loadTexture("assets/button/easy1.png");
+    if(level1B1==NULL)
+    {
+        cout<<"Failed to load level1 button 1 background"<<endl;
+        success=false;
+    }
+
+    level1B2=loadTexture("assets/button/easy2.png");
+    if(level1B2==NULL)
+    {
+        cout<<"Failed to load level1 button 2 background"<<endl;
+        success=false;
+    }
+
+    level2B1=loadTexture("assets/button/hard1.png");
+    if(level2B1==NULL)
+    {
+        cout<<"Failed to load level2 button 1 background"<<endl;
+        success=false;
+    }
+
+    level2B2=loadTexture("assets/button/hard2.png");
+    if(level2B2==NULL)
+    {
+        cout<<"Failed to load level2 button 2 background"<<endl;
+        success=false;
+    }
+
+    lifeObj=loadTexture("assets/obj & background/mechanic life.png");
+    if(lifeObj==NULL)
+    {
+        cout<<"Failed to load life symbol"<<endl;
+        success=false;
+    }
+
+    scoreObj=loadTexture("assets/obj & background/trophy.png");
+    if(scoreObj==NULL)
+    {
+        cout<<"Failed to load score symbol"<<endl;
+        success=false;
+    }
+
+    clockObj=loadTexture("assets/obj & background/clock.png");
+    if(clockObj==NULL)
+    {
+        cout<<"Failed to load clock symbol"<<endl;
         success=false;
     }
 
@@ -357,6 +421,8 @@ void closeMedia()
     //free texture
     SDL_DestroyTexture(mainmenuBG);
     mainmenuBG=NULL;
+    SDL_DestroyTexture(levelmenuBG);
+    levelmenuBG=NULL;
     SDL_DestroyTexture(controlsBG);
     controlsBG=NULL;
     SDL_DestroyTexture(creditBG);
@@ -389,6 +455,20 @@ void closeMedia()
     backB1=NULL;
     SDL_DestroyTexture(backB2);
     backB2=NULL;
+    SDL_DestroyTexture(level1B1);
+    level1B1=NULL;
+    SDL_DestroyTexture(level1B2);
+    level1B2=NULL;
+    SDL_DestroyTexture(level2B1);
+    level2B1=NULL;
+    SDL_DestroyTexture(level2B2);
+    level2B2=NULL;
+    SDL_DestroyTexture(lifeObj);
+    lifeObj=NULL;
+    SDL_DestroyTexture(scoreObj);
+    scoreObj=NULL;
+    SDL_DestroyTexture(clockObj);
+    clockObj=NULL;
     SDL_DestroyTexture(gameBG1);
     gameBG1=NULL;
     SDL_DestroyTexture(gameBG2);

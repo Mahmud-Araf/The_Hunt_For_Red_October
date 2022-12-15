@@ -33,37 +33,37 @@ void loadTextSurface(std::string path,TTF_Font *font,SDL_Color color,SDL_Rect ar
 
 void font_init()
 {
-    Bold1F=TTF_OpenFont("ttf_fonts/ChunkFive-Regular.otf",50);
+    Bold1F=TTF_OpenFont("assets/ttf_fonts/ChunkFive-Regular.otf",50);
     if(Bold1F==NULL)
     {
         cout<<"TTF Error: "<<TTF_GetError()<<endl;
     }
 
-    Bold2F=TTF_OpenFont("ttf_fonts/hemi head bd it.ttf",50);
+    Bold2F=TTF_OpenFont("assets/ttf_fonts/hemi head bd it.ttf",50);
     if(Bold2F==NULL)
     {
         cout<<"TTF Error: "<<TTF_GetError()<<endl;
     }
 
-    Bold3F=TTF_OpenFont("ttf_fonts/OpenSans-ExtraBold.ttf",50);
+    Bold3F=TTF_OpenFont("assets/ttf_fonts/OpenSans-ExtraBold.ttf",50);
     if(Bold3F==NULL)
     {
         cout<<"TTF Error: "<<TTF_GetError()<<endl;
     }
 
-    Bold4F=TTF_OpenFont("ttf_fonts/SourceSansPro-BlackIt.otf",50);
+    Bold4F=TTF_OpenFont("assets/ttf_fonts/SourceSansPro-BlackIt.otf",50);
     if(Bold4F==NULL)
     {
         cout<<"TTF Error: "<<TTF_GetError()<<endl;
     }
 
-    Bold5F=TTF_OpenFont("ttf_fonts/X.Template-font-stencil.ttf",50);
+    Bold5F=TTF_OpenFont("assets/ttf_fonts/X.Template-font-stencil.ttf",50);
     if(Bold5F==NULL)
     {
         cout<<"TTF Error: "<<TTF_GetError()<<endl;
     }
 
-    DigitalF=TTF_OpenFont("ttf_fonts/digital-7.ttf",50);
+    DigitalF=TTF_OpenFont("assets/ttf_fonts/digital-7.ttf",50);
     if(DigitalF==NULL)
     {
         cout<<"TTF Error: "<<TTF_GetError()<<endl;

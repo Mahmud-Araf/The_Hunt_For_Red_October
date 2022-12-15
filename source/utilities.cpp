@@ -101,38 +101,50 @@ void fps_show()
 
 void life_show()
 {
-    SDL_Rect surface={50,0+20,150,100-30};
+    SDL_Rect surface={115,20,170,70};
 
     SDL_SetRenderDrawColor(gameRenderer,255,0,0,0);
 
     SDL_RenderFillRect(gameRenderer,&surface);
 
+    SDL_Rect life_dim={20,0,100,100};
+
+    SDL_RenderCopy(gameRenderer,lifeObj,NULL,&life_dim);
+
     string s="Life : "+to_string(player.life);
     
-    loadTextSurface(s,Bold4F,black,SDL_Rect{50,0,150,100});
+    loadTextSurface(s,Bold4F,black,SDL_Rect{120,0,150,100});
 
 }
 
 void score_board()
 {
-    SDL_Rect surface={50,150+20,150,100-30};
+    SDL_Rect surface={115,170,170,70};
 
     SDL_SetRenderDrawColor(gameRenderer,255,0,0,0);
 
     SDL_RenderFillRect(gameRenderer,&surface);
 
+    SDL_Rect score_dim={20,150,100,100};
+
+    SDL_RenderCopy(gameRenderer,scoreObj,NULL,&score_dim);
+
     string s="Score : "+ to_string(score);
 
-    loadTextSurface(s,Bold4F,black,SDL_Rect{50,150,150,100});
+    loadTextSurface(s,Bold4F,black,SDL_Rect{120,150,150,100});
 }
 
 void time_show()
 {
-    SDL_Rect surface={FSW/2-75,10+20,150,100-30};
+    SDL_Rect surface={FSW/2-90,30,170,70};
 
     SDL_SetRenderDrawColor(gameRenderer,255,0,0,0);
 
     SDL_RenderFillRect(gameRenderer,&surface);
+
+    SDL_Rect clock_dim={FSW/2-195,10,100,100};
+
+    SDL_RenderCopy(gameRenderer,clockObj,NULL,&clock_dim);
 
     if(!is_paused && !timerflag)
     {

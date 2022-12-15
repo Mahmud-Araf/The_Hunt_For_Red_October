@@ -292,7 +292,7 @@ void Mine::drop_single_mine()
             }
             else
             {
-                mine_dim.x -= (E_MINE_SPEED / 6) * 5;
+                mine_dim.x -= (E_MINE_SPEED / 7) * 4;
                 if (y_move_count > E_MINE_Y_DELAY)
                 {
                     if (mine_dim.y > player_y_pos + 315)
@@ -347,11 +347,11 @@ void GameBackground::scroll()
 
 void GameBackground::render()
 {
-    if (score < L1_SCORE)
+    if (stage==LEVEL1)
     {
         texBG = gameBG1;
     }
-    else
+    else if(stage==LEVEL2)
     {
         texBG = gameBG2;
     }
@@ -436,9 +436,9 @@ void Player::handle_event_movement()
             if (e.key.keysym.sym == SDLK_DOWN || e.key.keysym.sym == SDLK_s)
             {
                 p_dim.y += step;
-                if (p_dim.y >= 620)
+                if (p_dim.y >=740)
                 {
-                    p_dim.y = 620;
+                    p_dim.y = 740;
                 }
             }
             else if (e.key.keysym.sym == SDLK_UP || e.key.keysym.sym == SDLK_w)
@@ -644,7 +644,7 @@ void Enemy_Sub_Set::init()
             break;
 
         case 2:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 430, (int)(w * 0.4), (int)(h * 0.4)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 435, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         case 4:
@@ -652,31 +652,31 @@ void Enemy_Sub_Set::init()
             break;
 
         case 6:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 510, (int)(w * 0.4), (int)(h * 0.4)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 525, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         case 8:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 550, (int)(w * 0.4), (int)(h * 0.4)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 570, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         case 9:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 450, (int)(w * 0.4), (int)(h * 0.4)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 615, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         case 7:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 650, (int)(w * 0.4), (int)(h * 0.4)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 660, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         case 5:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 670, (int)(w * 0.4), (int)(h * 0.4)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 705, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         case 3:
-            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 580, (int)(w * 0.4), (int)(h * 0.4)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH + 300, 750, (int)(w * 0.4), (int)(h * 0.4)};
             break;
 
         default:
-            e_sub[i].esub_dim = {WINDOW_WIDTH, 600, (int)(w * 0.4), (int)(h * 0.4)};
+            e_sub[i].esub_dim = {WINDOW_WIDTH,795, (int)(w * 0.4), (int)(h * 0.4)};
             break;
         }
 
@@ -730,11 +730,11 @@ void Enemy_Sub_Set::xmove_setting()
         {
         case 0:
         case 3:
-            esub_speed[i] = 4;
+            esub_speed[i] = 7;
             break;
         case 1:
         case 4:
-            esub_speed[i] = 5;
+            esub_speed[i] = 4;
             break;
         case 2:
         case 5:
@@ -742,10 +742,10 @@ void Enemy_Sub_Set::xmove_setting()
             break;
         case 6:
         case 9:
-            esub_speed[i] = 7;
+            esub_speed[i] = 5;
             break;
         default:
-            esub_speed[i] = 8;
+            esub_speed[i] = 6;
             break;
         }
     }
@@ -775,7 +775,7 @@ void Enemy_Sub_Set::ymove()
     {
         for (int i = 0; i < total_sub; i++)
         {
-            if (e_sub[i].esub_dim.y >= 670)
+            if (e_sub[i].esub_dim.y >=800)
             {
                 y_limit_check[i] = 1;
             }

@@ -22,6 +22,7 @@ void MainMenu::init()
     Bw=300;
     Bh=100;
     Bspacing=40;
+    levelmenuflag=false;
     
     //start button 
     startgameBS.Bdest.x=200;
@@ -63,9 +64,25 @@ void MainMenu::init()
     exitgameBS.tex1=exitB1;
     exitgameBS.tex2=exitB2;
 
+    //level1 easy button
+    level1BS.Bdest.x=FSW/2-250;
+    level1BS.Bdest.y=FSH/2-250;
+    level1BS.Bdest.w=500;
+    level1BS.Bdest.h=Bh+50;
+    level1BS.tex1=level1B1;
+    level1BS.tex2=level1B2;
+
+    //level2 hard button
+    level2BS.Bdest.x=FSW/2-250;
+    level2BS.Bdest.y=FSH/2+100;
+    level2BS.Bdest.w=500;
+    level2BS.Bdest.h=Bh+50;
+    level2BS.tex1=level2B1;
+    level2BS.tex2=level2B2;
+
     //back button
     backBS.Bdest.x=50;
-    backBS.Bdest.y=FSH-250;
+    backBS.Bdest.y=FSH-150;
     backBS.Bdest.w=Bw;
     backBS.Bdest.h=Bh;
     backBS.tex1=backB1;
@@ -75,13 +92,22 @@ void MainMenu::init()
 
 void MainMenu::render()
 {
-    SDL_RenderCopy(gameRenderer,mainmenuBG,NULL,NULL);
-
-    startgameBS.render();
-    controlsBS.render();
-    highscoresBS.render();
-    creditBS.render();
-    exitgameBS.render();
+    if(!levelmenuflag)
+    {
+        SDL_RenderCopy(gameRenderer,mainmenuBG,NULL,NULL);
+        startgameBS.render();
+        controlsBS.render();
+        highscoresBS.render();
+        creditBS.render();
+        exitgameBS.render();
+    }
+    else
+    {
+        SDL_RenderCopy(gameRenderer,levelmenuBG,NULL,NULL);
+        level1BS.render();
+        level2BS.render();
+        backBS.render();
+    }
 
 }
 
@@ -94,40 +120,70 @@ void MainMenu::handle_event()
 
     SDL_GetMouseState(&x,&y);
 
-    if(startgameBS.check_inside(x,y))
-    {   
-        if(e.type==SDL_MOUSEBUTTONDOWN)
-        {
-           stage=LEVEL1;
-        }
-    }
-    if(controlsBS.check_inside(x,y))
-    {   
-        if(e.type==SDL_MOUSEBUTTONDOWN)
-        {
-           stage=CONTROLS;
-        }
-    }
-    if(highscoresBS.check_inside(x,y))
-    {   
-        if(e.type==SDL_MOUSEBUTTONDOWN)
-        {
-           
-        }
-    }
-    if(creditBS.check_inside(x,y))
-    {   
-        if(e.type==SDL_MOUSEBUTTONDOWN)
-        {
-           stage=CREDIT;
-        }
-    }
-    if(exitgameBS.check_inside(x,y))
+    if(!levelmenuflag)
     {
-        if(e.type==SDL_MOUSEBUTTONDOWN)
-        {
-           is_running=false;
+        if(startgameBS.check_inside(x,y))
+        {   
+            if(e.type==SDL_MOUSEBUTTONDOWN)
+            {
+                levelmenuflag=true;
+            }
         }
+        else if(controlsBS.check_inside(x,y))
+        {   
+            if(e.type==SDL_MOUSEBUTTONDOWN)
+            {
+                stage=CONTROLS;
+            }
+        }
+        else if(highscoresBS.check_inside(x,y))
+        {   
+            if(e.type==SDL_MOUSEBUTTONDOWN)
+            {
+            
+            }
+        }
+        else if(creditBS.check_inside(x,y))
+        {   
+            if(e.type==SDL_MOUSEBUTTONDOWN)
+            {
+                stage=CREDIT;
+            }
+        }
+        else if(exitgameBS.check_inside(x,y))
+        {
+            if(e.type==SDL_MOUSEBUTTONDOWN)
+            {
+                is_running=false;
+            }
+        }
+    }
+    else
+    {
+        if(level1BS.check_inside(x,y))
+        {   
+            if(e.type==SDL_MOUSEBUTTONDOWN)
+            {
+                stage=LEVEL1;
+
+                score=0;
+
+                gamelevels.game_obj_func_init();
+            }
+        }
+        else if(level2BS.check_inside(x,y))
+        {   
+            if(e.type==SDL_MOUSEBUTTONDOWN)
+            {
+                stage=LEVEL2;
+
+                score=0;
+
+                gamelevels.game_obj_func_init();
+            }
+        }
+
+        back_handle_event();
     }
     
 }
@@ -163,6 +219,13 @@ void GameLevels::game_obj_func_init()
     gamebackground.init();
     enemy_sub_set.init();
     enemy_ship_set.init();
+    esub_increment_start_time=0;
+    esub_increment_count_time=0;
+    eship_increment_start_time=0;
+    eship_increment_count_time=0;
+    total_sub=PRIMARY_ESUB_N;
+    total_ship=PRIMARY_ESHIP_N;
+    current_time=0;
     missile_collision_init();
     ptorp_collision_init();
     start_music();
@@ -208,14 +271,15 @@ void GameLevels::run_levelOne()
        cout<<"You have been hunted"<<endl;
        is_running=false;
     }
-    else if(score==L1_SCORE)
+    else if(e.type==SDL_KEYDOWN)
     {
-        cout<<"You have Completed level one"<<endl;
-        stage=LEVEL2;
-        game_obj_func_init();
-        player.life=PLAYER_LIFE;
-        total_sub=PRIMARY_ESHIP_N;
+        if(e.key.keysym.sym==SDLK_BACKSPACE)
+        {
+            stage=MAIN_MENU;
+            mainmenu.levelmenuflag=false;
+        }
     }
+
     SDL_RenderPresent(gameRenderer);
     framerate_controlling();
 }
@@ -268,11 +332,15 @@ void GameLevels::run_levelTwo()
        cout<<"You have been hunted"<<endl;
        is_running=false;
     }
-    else if(score==L2_SCORE)
+    else if(e.type==SDL_KEYDOWN)
     {
-        cout<<"You have Won"<<endl;
-        is_running=false;
+        if(e.key.keysym.sym==SDLK_BACKSPACE)
+        {
+            stage=MAIN_MENU;
+            mainmenu.levelmenuflag=false;
+        }
     }
+
     SDL_RenderPresent(gameRenderer);
     framerate_controlling();
 }
@@ -335,6 +403,7 @@ void back_handle_event()
         if(e.type==SDL_MOUSEBUTTONDOWN)
         {
            stage=MAIN_MENU;
+           mainmenu.levelmenuflag=false;
         }
     }
 

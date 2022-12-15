@@ -20,6 +20,7 @@ void closeMedia();
 
 //texture part
 extern SDL_Texture *mainmenuBG;
+extern SDL_Texture *levelmenuBG;
 extern SDL_Texture *controlsBG;
 extern SDL_Texture *creditBG;
 extern SDL_Texture *startgameB1;
@@ -34,6 +35,13 @@ extern SDL_Texture *exitB1;
 extern SDL_Texture *exitB2;
 extern SDL_Texture *backB1;
 extern SDL_Texture *backB2;
+extern SDL_Texture *level1B1;
+extern SDL_Texture *level1B2;
+extern SDL_Texture *level2B1;
+extern SDL_Texture *level2B2;
+extern SDL_Texture *lifeObj;
+extern SDL_Texture *scoreObj;
+extern SDL_Texture *clockObj;
 extern SDL_Texture *gameBG1;
 extern SDL_Texture *gameBG2;
 extern SDL_Texture *player_subObj;

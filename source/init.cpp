@@ -19,7 +19,7 @@ void Init::init_sdl()
 
 void Init::init_window()
 {
-    gameWindow=SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_RESIZABLE);
+    gameWindow=SDL_CreateWindow(WINDOW_TITLE, SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, WINDOW_WIDTH, WINDOW_HEIGHT, WINDOW_FLAG);
     if(!gameWindow)
     {
         cout<<"Window Error: "<<SDL_GetError()<<endl;
@@ -51,7 +51,7 @@ void Init::init_music()
 
 void Init::init_renderer()
 {
-   gameRenderer= SDL_CreateRenderer(gameWindow, -1, RENDERER_FLAGS);
+   gameRenderer= SDL_CreateRenderer(gameWindow, -1, RENDERER_FLAG);
    if(!gameRenderer)
    {
       cout<<"Renderer Error: "<<SDL_GetError()<<endl;
