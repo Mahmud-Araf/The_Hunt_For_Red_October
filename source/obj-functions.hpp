@@ -98,7 +98,7 @@ struct Mine
     void renewal();
 
     //enemy ship single mine drop
-    void drop_single_mine();
+    void drop_single_mine(int a);
 };
 
 
@@ -274,7 +274,7 @@ struct Enemy_Ship_Set
     
     Enemy_Ship e_ship[E_SHIP_N];
 
-    int eship_speed[E_SHIP_N];
+    int reset_pos[E_SHIP_N];
     
     //initializing
     void init();
@@ -285,8 +285,6 @@ struct Enemy_Ship_Set
     // increases the number of ship after a certain time
     void increment();
 
-    //sets the speed of a enemy ship in x axis
-    void xmove_setting();
     
     //moves the submarine in x axis
     void xmove();

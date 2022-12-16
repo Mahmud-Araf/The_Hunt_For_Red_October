@@ -269,7 +269,7 @@ void Mine::renewal()
     mine_dim.x = -3000;
 }
 
-void Mine::drop_single_mine()
+void Mine::drop_single_mine(int a)
 {
     if (is_active)
     {
@@ -288,26 +288,33 @@ void Mine::drop_single_mine()
         {
             if (mine_dim.y <= 600)
             {
-                mine_dim.y += (E_MINE_SPEED / 2);
+                mine_dim.y +=E_MINE_SPEED;
             }
             else
             {
-                mine_dim.x -= (E_MINE_SPEED / 7) * 4;
+                if(a&1)
+                {
+                   mine_dim.x -= (E_MINE_SPEED / 7);
+                }
+                else
+                {
+                   mine_dim.x += (E_MINE_SPEED / 14) ;
+                }
                 if (y_move_count > E_MINE_Y_DELAY)
                 {
                     if (mine_dim.y > player_y_pos + 315)
                     {
-                        mine_dim.y -= 6;
+                        mine_dim.y -= E_MINE_SPEED/2;
                         y_move_start = SDL_GetTicks();
                     }
                     else if (mine_dim.y < player_y_pos + 275)
                     {
-                        mine_dim.y += 6;
+                        mine_dim.y +=E_MINE_SPEED/2;
                         y_move_start = SDL_GetTicks();
                     }
                 }
             }
-            if (mine_dim.x <= -500)
+            if (mine_dim.x <= -500||mine_dim.x>=FSW+100)
             {
                 is_active = 0;
                 xy_check = 0;
@@ -870,7 +877,7 @@ void Enemy_Ship::single_ship_drop()
 
     for (int j = 0; j < E_MINE_N; j++)
     {
-        emines[j].drop_single_mine();
+        emines[j].drop_single_mine(j);
     }
 }
 
@@ -895,33 +902,11 @@ void Enemy_Ship_Set::init()
         e_ship[i].is_exploded = 0;
     }
 
-    xmove_setting();
-}
-
-void Enemy_Ship_Set::xmove_setting()
-{
-    for (int i = 0; i < E_SHIP_N; i++)
-    {
-        int r = i % 5;
-        switch (r)
-        {
-        case 0:
-            eship_speed[i] = 5;
-            break;
-        case 1:
-            eship_speed[i] = 6;
-            break;
-        case 2:
-            eship_speed[i] = 7;
-            break;
-        case 3:
-            eship_speed[i] = 8;
-            break;
-        default:
-            eship_speed[i] = 7;
-            break;
-        }
-    }
+    reset_pos[0]=WINDOW_WIDTH+300;
+    reset_pos[1]=WINDOW_WIDTH+300-450;
+    reset_pos[2]=WINDOW_WIDTH+300-450*2;
+    reset_pos[3]=WINDOW_WIDTH+300-450*3;
+    reset_pos[4]=WINDOW_WIDTH+300-450*4; 
 }
 
 void Enemy_Ship_Set::render()
@@ -940,6 +925,11 @@ void Enemy_Ship_Set::increment()
     {
         total_ship++;
         eship_increment_start_time = current_time;
+
+        for(int i=0;i<total_ship;i++)
+        {
+            e_ship[i].eship_dim.x=reset_pos[i];
+        }
     }
 }
 
@@ -949,7 +939,7 @@ void Enemy_Ship_Set::xmove()
     {
         if (!is_paused)
         {
-            e_ship[i].eship_dim.x -= eship_speed[i];
+            e_ship[i].eship_dim.x -= ESHIP_SPEED;
         }
         if (e_ship[i].eship_dim.x <= -500)
         {
@@ -1056,7 +1046,11 @@ void missile_collision_for_eship()
         {
             enemy_ship_set.e_ship[i].revival = 1;
             enemy_ship_set.e_ship[i].is_exploded = 0;
-            enemy_ship_set.e_ship[i].eship_dim.x = WINDOW_WIDTH + 300;
+
+            for(int i=0;i<total_ship;i++)
+            {
+            enemy_ship_set.e_ship[i].eship_dim.x = enemy_ship_set.reset_pos[i];
+            }
         }
     }
 }

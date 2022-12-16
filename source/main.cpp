@@ -30,12 +30,10 @@ int main()
             case LEVEL1:
                            gamelevels.run_levelOne();
                            break;
-                    
             case LEVEL2:
                            gamelevels.run_levelTwo();
                            break;
-        }
-        
+        } 
     }
 
     closeMedia();
