@@ -411,69 +411,65 @@ void Player::render()
 
 void Player::handle_event_movement()
 {
-    SDL_PollEvent(&e);
-
+    
     player_x_pos = p_dim.x;
     player_y_pos = p_dim.y;
 
-    if (e.type == SDL_KEYDOWN)
+    if (SDL_GetTicks() - delay_event > 500)
     {
-        if (SDL_GetTicks() - delay_event > 500)
+        if (keystate[SDL_SCANCODE_ESCAPE] && is_paused == 0)
         {
-            if (e.key.keysym.sym == SDLK_ESCAPE && is_paused == 0)
-            {
-                is_paused = 1;
-            }
-            else if (e.key.keysym.sym == SDLK_ESCAPE && is_paused == 1)
-            {
-                is_paused = 0;
-            }
-
-            delay_event = SDL_GetTicks();
+            is_paused = 1;
         }
-        if (!is_paused)
+        else if (keystate[SDL_SCANCODE_ESCAPE] && is_paused == 1)
         {
-            if (e.key.keysym.sym == SDLK_DOWN || e.key.keysym.sym == SDLK_s)
-            {
-                p_dim.y += step;
-                if (p_dim.y >=740)
-                {
-                    p_dim.y = 740;
-                }
-            }
-            else if (e.key.keysym.sym == SDLK_UP || e.key.keysym.sym == SDLK_w)
-            {
-                p_dim.y -= step;
-                if (p_dim.y <= 330)
-                {
-                    p_dim.y = 330;
-                }
-            }
-            else if (e.key.keysym.sym == SDLK_RIGHT || e.key.keysym.sym == SDLK_d)
-            {
-                p_dim.x += step;
-
-                if (p_dim.x >= WINDOW_WIDTH - 160)
-                {
-                    p_dim.x = WINDOW_WIDTH - 160;
-                }
-            }
-            else if (e.key.keysym.sym == SDLK_LEFT || e.key.keysym.sym == SDLK_a)
-            {
-                p_dim.x -= step;
-                if (p_dim.x <= -260)
-                {
-                    p_dim.x = -260;
-                }
-            }
+            is_paused = 0;
         }
+
+        delay_event = SDL_GetTicks();
     }
+    if (!is_paused)
+    {
+        if (keystate[SDL_SCANCODE_DOWN] || keystate[SDL_SCANCODE_S])
+        {
+            p_dim.y += step;
+            if (p_dim.y >=740)
+            {
+                p_dim.y = 740;
+            }
+        }
+        else if (keystate[SDL_SCANCODE_UP]|| keystate[SDL_SCANCODE_W])
+        {
+            p_dim.y -= step;
+            if (p_dim.y <= 330)
+            {
+                p_dim.y = 330;
+            }
+        }
+        else if (keystate[SDL_SCANCODE_RIGHT] || keystate[SDL_SCANCODE_D])
+        {
+            p_dim.x += step;
+
+            if (p_dim.x >= WINDOW_WIDTH - 160)
+            {
+                p_dim.x = WINDOW_WIDTH - 160;
+            }
+        }
+        else if (keystate[SDL_SCANCODE_LEFT] || keystate[SDL_SCANCODE_A])
+        {
+            p_dim.x -= step;
+            if (p_dim.x <= -260)
+            {
+                p_dim.x = -260;
+            }
+        }
+        }
+    
 }
 
 void Player::handle_event_torps()
 {
-    SDL_PollEvent(&e);
-
+    
     if (e.type == SDL_MOUSEBUTTONDOWN && is_paused == 0)
     {
         ptorp_launch_count = SDL_GetTicks() - ptorp_launch_start;
@@ -500,8 +496,7 @@ void Player::handle_event_torps()
 
 void Player::handle_event_missiles()
 {
-    SDL_PollEvent(&e);
-
+    
     if (e.type == SDL_MOUSEBUTTONDOWN && is_paused == 0)
     {
         pmissile_launch_count = SDL_GetTicks() - pmissile_launch_start;

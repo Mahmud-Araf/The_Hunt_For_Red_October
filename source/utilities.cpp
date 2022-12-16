@@ -7,6 +7,8 @@ bool music_paused=false;
 Uint32 current_time=0,paused_time=0,pause_start=0,pause_count=0;
 bool timerflag=false;
 
+const Uint8 *keystate=SDL_GetKeyboardState(NULL);
+
 void utilities_init()
 {
     font_init();
@@ -60,19 +62,15 @@ void resume_music()
 
 void music_handle_event()
 {
-    SDL_PollEvent(&e);
-    
-    if(e.type==SDL_KEYDOWN && SDL_GetTicks()-delay_event>500)
+    if( keystate[SDL_SCANCODE_F1] && SDL_GetTicks()-delay_event>500)
     {
-        if(e.key.keysym.sym==SDLK_F1)
-        {
-            if(!music_paused)
-            music_paused=true;
-            else
-            music_paused=false;
+        if(!music_paused)
+        music_paused=true;
+        else
+        music_paused=false;
+
+        delay_event=SDL_GetTicks();
         
-            delay_event=SDL_GetTicks();
-        }
     }
 }
 

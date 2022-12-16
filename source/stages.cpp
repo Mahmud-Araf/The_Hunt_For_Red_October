@@ -271,13 +271,10 @@ void GameLevels::run_levelOne()
        cout<<"You have been hunted"<<endl;
        is_running=false;
     }
-    else if(e.type==SDL_KEYDOWN)
+    else if(keystate[SDL_SCANCODE_BACKSPACE])
     {
-        if(e.key.keysym.sym==SDLK_BACKSPACE)
-        {
-            stage=MAIN_MENU;
-            mainmenu.levelmenuflag=false;
-        }
+        stage=MAIN_MENU;
+        mainmenu.levelmenuflag=false;
     }
 
     SDL_RenderPresent(gameRenderer);
@@ -332,13 +329,10 @@ void GameLevels::run_levelTwo()
        cout<<"You have been hunted"<<endl;
        is_running=false;
     }
-    else if(e.type==SDL_KEYDOWN)
+    else if(keystate[SDL_SCANCODE_BACKSPACE])
     {
-        if(e.key.keysym.sym==SDLK_BACKSPACE)
-        {
-            stage=MAIN_MENU;
-            mainmenu.levelmenuflag=false;
-        }
+        stage=MAIN_MENU;
+        mainmenu.levelmenuflag=false;
     }
 
     SDL_RenderPresent(gameRenderer);

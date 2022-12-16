@@ -11,11 +11,11 @@ int main()
 
     mainmenu.init();
     utilities_init();
-    
     stage=MAIN_MENU;
     
     while(is_running)
     {   
+        SDL_PollEvent(&e);
         switch(stage)
         {
             case MAIN_MENU:
@@ -41,8 +41,6 @@ int main()
     closeMedia();
     closeFont();
     gameclose();
-
-
 
     return 0;
 }

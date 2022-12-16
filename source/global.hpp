@@ -49,4 +49,6 @@ extern bool is_running;
 
 extern bool music_paused;
 
+extern const Uint8 *keystate;
+
 #endif
