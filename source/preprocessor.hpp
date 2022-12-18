@@ -24,6 +24,7 @@ using namespace std;
 #define FSH 1080
 #define FPS 45
 #define PLAYER_LIFE 10
+#define PLAYER_N_HSCORE 5
 #define BG_N 2
 #define SPF  3
 #define P_TORP_N 15
@@ -40,7 +41,7 @@ using namespace std;
 #define P_TORP_SPEED 7
 #define P_TORP_DELAY 500
 #define P_MISSILE_SPEED 14
-#define P_MISSILE_DELAY 2500
+#define P_MISSILE_DELAY 1000
 #define E_TORP_SPEED 8
 #define E_TORP_DELAY 5000
 #define E_SHIP_N 5
@@ -49,7 +50,7 @@ using namespace std;
 #define INCREMENT_SHIP 50000
 #define E_SHIP_REVIVAL_DELAY 3000
 #define E_MINE_SPEED 14
-#define E_MINE_DELAY 3000
+#define E_MINE_DELAY 5000
 #define E_MINE_Y_DELAY 150
 #define MISSILE_COLLISION_SN 4
 #define TORP_COLLISION_SN 9

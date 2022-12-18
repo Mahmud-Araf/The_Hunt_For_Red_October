@@ -13,7 +13,21 @@ Controls controls;
 
 Credit credit;
 
+HighScores highscores;
+
+GameOver gameover;
+
+Button mainmenuBS;
+
+Button playagainBS;
+
 Button backBS;
+
+Button level1BS;
+
+Button level2BS;
+
+Button refreshBS;
 
 
 
@@ -80,9 +94,33 @@ void MainMenu::init()
     level2BS.tex1=level2B1;
     level2BS.tex2=level2B2;
 
+    // mainmenu button
+    mainmenuBS.Bdest.x=50;
+    mainmenuBS.Bdest.y=FSH-120;
+    mainmenuBS.Bdest.w=Bw;
+    mainmenuBS.Bdest.h=Bh;
+    mainmenuBS.tex1=mainmenuB1;
+    mainmenuBS.tex2=mainmenuB2;
+
+    //playagain button
+    playagainBS.Bdest.x=FSW-400;
+    playagainBS.Bdest.y=FSH-120;
+    playagainBS.Bdest.w=Bw;
+    playagainBS.Bdest.h=Bh;
+    playagainBS.tex1=playagainB1;
+    playagainBS.tex2=playagainB2;
+
+    //refresh button
+    refreshBS.Bdest.x=FSW-400;
+    refreshBS.Bdest.y=FSH-120;
+    refreshBS.Bdest.w=Bw;
+    refreshBS.Bdest.h=Bh;
+    refreshBS.tex1=refreshB1;
+    refreshBS.tex2=refreshB2;
+
     //back button
     backBS.Bdest.x=50;
-    backBS.Bdest.y=FSH-150;
+    backBS.Bdest.y=FSH-120;
     backBS.Bdest.w=Bw;
     backBS.Bdest.h=Bh;
     backBS.tex1=backB1;
@@ -114,8 +152,7 @@ void MainMenu::render()
 
 void MainMenu::handle_event()
 {
-    SDL_PollEvent(&e);
-    
+
     int x,y;
 
     SDL_GetMouseState(&x,&y);
@@ -140,7 +177,7 @@ void MainMenu::handle_event()
         {   
             if(e.type==SDL_MOUSEBUTTONDOWN)
             {
-            
+                stage=HIGHSCORES;
             }
         }
         else if(creditBS.check_inside(x,y))
@@ -166,6 +203,8 @@ void MainMenu::handle_event()
             {
                 stage=LEVEL1;
 
+                gamelevels.levelmode=1;
+
                 score=0;
 
                 gamelevels.game_obj_func_init();
@@ -176,6 +215,8 @@ void MainMenu::handle_event()
             if(e.type==SDL_MOUSEBUTTONDOWN)
             {
                 stage=LEVEL2;
+
+                gamelevels.levelmode=2;
 
                 score=0;
 
@@ -194,22 +235,28 @@ void MainMenu::run()
     SDL_SetRenderDrawColor(gameRenderer,255,255,255,255);
     SDL_RenderClear(gameRenderer);
 
-     handle_event();
+    handle_event();
 
-     render();
+    render();
 
-     music_handle_event();
-     pause_music();
-     resume_music();
+    music_handle_event();
+    pause_music();
+    resume_music();
 
-     if(e.type==SDL_QUIT)
-     {
-        is_running=false;
-     }
+    if(e.type==SDL_QUIT)
+    {
+    is_running=false;
+    }
 
-     mainmenu_delay=SDL_GetTicks();
-     
-     SDL_RenderPresent(gameRenderer);
+    mainmenu_delay=SDL_GetTicks();
+
+    if(SDL_GetTicks()-start_frame>1000/FPS)
+    {
+        frameN++;
+        start_frame=SDL_GetTicks();
+    }
+    
+    SDL_RenderPresent(gameRenderer);
 }
 
 
@@ -266,14 +313,13 @@ void GameLevels::run_levelOne()
     score_board();
     life_show();
 
-    if(e.type==SDL_QUIT || player.life==0)
+    if(player.life==0)
     {
-       cout<<"You have been hunted"<<endl;
-       is_running=false;
+       stage=GAME_OVER;
     }
     else if(keystate[SDL_SCANCODE_BACKSPACE])
     {
-        stage=MAIN_MENU;
+        stage=GAME_OVER;
         mainmenu.levelmenuflag=false;
     }
 
@@ -324,14 +370,13 @@ void GameLevels::run_levelTwo()
     score_board();
     life_show();
 
-    if(e.type==SDL_QUIT || player.life==0)
+    if(player.life==0)
     {
-       cout<<"You have been hunted"<<endl;
-       is_running=false;
+       stage=GAME_OVER;
     }
     else if(keystate[SDL_SCANCODE_BACKSPACE])
     {
-        stage=MAIN_MENU;
+        stage=GAME_OVER;
         mainmenu.levelmenuflag=false;
     }
 
@@ -359,6 +404,17 @@ void Controls::run()
     pause_music();
     resume_music();
 
+    if(e.type==SDL_QUIT)
+    {
+        is_running=false;
+    }
+
+    if(SDL_GetTicks()-start_frame>1000/FPS)
+    {
+        frameN++;
+        start_frame=SDL_GetTicks();
+    }
+
     SDL_RenderPresent(gameRenderer);
 }
 
@@ -381,12 +437,472 @@ void Credit::run()
     pause_music();
     resume_music();
 
+    if(e.type==SDL_QUIT)
+    {
+        is_running=false;
+    }
+
+    if(SDL_GetTicks()-start_frame>1000/FPS)
+    {
+        frameN++;
+        start_frame=SDL_GetTicks();
+    }
+
     SDL_RenderPresent(gameRenderer);
 }
 
+
+void HighScores::scan_highscores()
+{
+    l1_file=fopen("assets/IO/level1hscores.txt","r");
+
+    if(l1_file==NULL)
+    {
+        cout<<"LEVEL 1 Highscores file is failed to open"<<endl;
+    }
+
+    l2_file=fopen("assets/IO/level2hscores.txt","r");
+
+    if(l2_file==NULL)
+    {
+        cout<<"LEVEL 2 Highscores file is failed to open"<<endl;
+    }
+
+    for(int i=0;i<PLAYER_N_HSCORE;i++)
+    {
+        char c;
+        p_namel1[i]="";
+        while((c=fgetc(l1_file))!='\n')
+        {
+            p_namel1[i]+=c;
+        }
+    }
+
+    for(int i=0;i<PLAYER_N_HSCORE;i++)
+    {
+        char c;
+        p_namel2[i]="";
+        while((c=fgetc(l2_file))!='\n')
+        {
+            p_namel2[i]+=c;
+        }
+    }
+
+    for(int i=0;i<PLAYER_N_HSCORE;i++)
+    {
+        fscanf(l1_file,"%d",&p_scorel1[i]);
+    }
+
+    for(int i=0;i<PLAYER_N_HSCORE;i++)
+    {
+        fscanf(l2_file,"%d",&p_scorel2[i]);
+    }
+
+
+    fclose(l1_file);
+    fclose(l2_file);
+
+}
+
+
+void HighScores::print_highscores(string p_name[],int p_score[])
+{
+    int x_spacing=500;
+    int y_spacing=80;
+    int width=200;
+    int height=150;
+
+    loadTextSurfacewithRect("SERIAL",Bold1F,white,SDL_Rect{150,50,width,height});
+    loadTextSurfacewithRect("NAME",Bold1F,white,SDL_Rect{150+x_spacing+width,50,width,height});
+    loadTextSurfacewithRect("SCORE",Bold1F,white,SDL_Rect{150+2*x_spacing+width*2,50,width,height});
+    
+    for(int i=1;i<=PLAYER_N_HSCORE;i++)
+    {
+       loadTextSurface(to_string(i)+".",DigitalF,white,150,200+i*y_spacing+(i-1)*(height-100));
+       loadTextSurface(p_name[PLAYER_N_HSCORE-i],Bold2F,white,150+x_spacing+width,200+i*y_spacing+(i-1)*(height-100));
+       loadTextSurface(to_string(p_score[PLAYER_N_HSCORE-i]),DigitalF,white,150+2*x_spacing+2*width,200+i*y_spacing+(i-1)*(height-100));
+    }
+}
+
+
+void HighScores::save_highscores(string name, int score)
+{
+    
+    if(gamelevels.levelmode==1)
+    {
+        if(score>p_scorel1[0])
+        {
+            p_scorel1[0]=score;
+
+            if(name==" " || name=="")
+            {
+               p_namel1[0]="Anonymous";
+            }
+            else
+            {
+               p_namel1[0]=name;
+            }
+            
+
+            //selection sort
+            for(int i=0;i<PLAYER_N_HSCORE-1;i++)
+            {
+                for(int j=i+1;j<PLAYER_N_HSCORE;j++)
+                {
+                    if(p_scorel1[i]>p_scorel1[j])
+                    {
+                        swap(p_scorel1[i],p_scorel1[j]);
+                        swap(p_namel1[i],p_namel1[j]);
+
+                    }
+                }
+            }
+
+            l1_file=fopen("assets/IO/level1hscores.txt","w");
+
+            if(l1_file==NULL)
+            {
+                cout<<"LEVEL 1 Highscores file is failed to open"<<endl;
+            }
+
+            for(auto i:p_namel1)
+            {
+                fprintf(l1_file,"%s\n",(char*)i.c_str());
+            }
+            for(auto i:p_scorel1)
+            {
+                fprintf(l1_file,"%d\n",i);
+            }
+
+            fclose(l1_file);
+        }
+    }
+
+    else if(gamelevels.levelmode==2)
+    {
+        if(score>p_scorel2[0])
+        {
+            p_scorel2[0]=score;
+
+            if(name==" "|| name=="")
+            {
+               p_namel2[0]="Anonymous";
+            }
+            else
+            {
+               p_namel2[0]=name;
+            }
+
+            //selection sort
+            for(int i=0;i<PLAYER_N_HSCORE-1;i++)
+            {
+                for(int j=i+1;j<PLAYER_N_HSCORE;j++)
+                {
+                    if(p_scorel2[i]>p_scorel2[j])
+                    {
+                        swap(p_scorel2[i],p_scorel2[j]);
+                        swap(p_namel2[i],p_namel2[j]);
+                    }
+                }
+            }
+
+            l2_file=fopen("assets/IO/level2hscores.txt","w");
+  
+            if(l2_file==NULL)
+            {
+                cout<<"LEVEL 2 Highscores file is failed to open"<<endl;
+            }
+
+            for(auto i:p_namel2)
+            {
+                fprintf(l2_file,"%s\n",(char*)i.c_str());
+            }
+            for(auto i:p_scorel2)
+            {
+                fprintf(l2_file,"%d\n",i);
+            }
+
+            fclose(l2_file);
+        }
+    }
+}
+
+void HighScores::refresh_highscores(int x)
+{
+    if(x==1)
+    {
+        for(int i=0;i<PLAYER_N_HSCORE;i++)
+        {
+            p_namel1[i]="empty";
+            p_scorel1[i]=0;
+        }
+
+        l1_file=fopen("assets/IO/level1hscores.txt","w");
+
+        if(l1_file==NULL)
+        {
+            cout<<"LEVEL 1 Highscores file is failed to open"<<endl;
+        }
+
+        for(auto i:p_namel1)
+        {
+            fprintf(l1_file,"%s\n",(char*)i.c_str());
+        }
+        for(auto i:p_scorel1)
+        {
+            fprintf(l1_file,"%d\n",i);
+        }
+
+        fclose(l1_file);
+    }
+    else if(x==2)
+    {
+        for(int i=0;i<PLAYER_N_HSCORE;i++)
+        {
+            p_namel2[i]="empty";
+            p_scorel2[i]=0;
+        }
+
+        l2_file=fopen("assets/IO/level2hscores.txt","w");
+
+        if(l2_file==NULL)
+        {
+            cout<<"LEVEL 2 Highscores file is failed to open"<<endl;
+        }
+
+        for(auto i:p_namel2)
+        {
+            fprintf(l2_file,"%s\n",(char*)i.c_str());
+        }
+        for(auto i:p_scorel2)
+        {
+            fprintf(l2_file,"%d\n",i);
+        }
+
+        fclose(l2_file);
+    }
+}
+
+
+void HighScores::render()
+{
+    if(!levelmenuflag)
+    {
+        SDL_RenderCopy(gameRenderer,hscoresBG1,NULL,NULL);
+
+        level1BS.render();
+        level2BS.render();
+        backBS.render();
+    }
+    else
+    {
+        SDL_RenderCopy(gameRenderer,hscoresBG2,NULL,NULL);
+
+        backBS.render();
+        refreshBS.render();
+
+        if(levelmode==1)
+        {
+            print_highscores(p_namel1,p_scorel1);
+        }
+        else if(levelmode==2)
+        {
+            print_highscores(p_namel2,p_scorel2); 
+        }
+    }
+}
+
+
+void HighScores::handle_event()
+{
+   int x,y;
+
+   SDL_GetMouseState(&x,&y);
+
+   if(!levelmenuflag)
+   {
+       
+       if(level1BS.check_inside(x,y))
+        {   
+            if(e.type==SDL_MOUSEBUTTONDOWN)
+            {
+                levelmenuflag=true;
+                levelmode=1;
+            }
+        }
+        else if(level2BS.check_inside(x,y))
+        {   
+            if(e.type==SDL_MOUSEBUTTONDOWN)
+            {
+                levelmenuflag=true;
+                levelmode=2;
+            }
+        }
+   }
+   else
+   {
+        if(refreshBS.check_inside(x,y))
+        {   
+            if(e.type==SDL_MOUSEBUTTONDOWN)
+            {
+                refresh_highscores(levelmode);
+            }
+        }
+   }
+}
+
+
+void HighScores::run()
+{
+    SDL_SetRenderDrawColor(gameRenderer,255,255,255,255);
+    SDL_RenderClear(gameRenderer);
+    
+    handle_event();
+    back_handle_event();
+    music_handle_event();
+    pause_music();
+    resume_music();
+
+    render();
+
+    if(e.type==SDL_QUIT)
+    {
+       is_running=false;
+    }
+
+    if(SDL_GetTicks()-start_frame>1000/FPS)
+    {
+        frameN++;
+        start_frame=SDL_GetTicks();
+    }
+
+
+    SDL_RenderPresent(gameRenderer);
+}
+
+
+void GameOver::render()
+{
+    SDL_RenderCopy(gameRenderer,gameoverBG,NULL,NULL);
+
+    loadTextSurfacewithRect("Your Score",Bold1F,black,SDL_Rect{FSW/2-200,200,400,150});
+    
+    loadTextSurfacewithRect(to_string(score),DigitalF,black,SDL_Rect{FSW/2-40,350,80,150});
+
+    loadTextSurfacewithRect("Enter Your Name:",Bold1F,black,SDL_Rect{FSW/2-250,500,500,150});
+
+    loadTextSurfacewithBG(name_input,Bold2F,red,FSW/2,650);
+
+    mainmenuBS.render();
+
+    playagainBS.render();
+}
+
+
+void GameOver::handle_event()
+{
+    SDL_StartTextInput();
+    int x,y;
+
+    SDL_GetMouseState(&x,&y);
+
+    if(mainmenuBS.check_inside(x,y))
+    {   
+        if(e.type==SDL_MOUSEBUTTONDOWN)
+        {
+            stage=MAIN_MENU;
+
+            highscores.save_highscores(name_input,score);
+            highscores.scan_highscores();
+
+            SDL_StopTextInput();
+
+            name_input=" ";
+            mainmenu.levelmenuflag=false;
+        }
+    }
+
+    else if(playagainBS.check_inside(x,y))
+    {   
+        if(e.type==SDL_MOUSEBUTTONDOWN)
+        {
+            stage=MAIN_MENU;
+
+            highscores.save_highscores(name_input,score);
+            highscores.scan_highscores();
+
+            SDL_StopTextInput();
+
+            name_input=" ";
+            mainmenu.levelmenuflag=true;
+        }
+    }
+
+    else if(keystate[SDL_SCANCODE_RETURN])
+    {
+        stage=MAIN_MENU;
+
+        highscores.save_highscores(name_input,score);
+        highscores.scan_highscores();
+
+        SDL_StopTextInput();
+
+        name_input=" ";
+        mainmenu.levelmenuflag=false;
+    }
+    
+    if(e.type==SDL_TEXTINPUT)
+    {
+        if(name_input==" ")
+        {
+            name_input.pop_back();
+        }
+
+        name_input+=e.text.text;
+    }
+
+    if(keystate[SDL_SCANCODE_BACKSPACE] && (SDL_GetTicks()-delay_event)>100)
+    {
+        name_input.pop_back();
+        if(name_input.size()==0)
+        {
+            name_input=" ";
+        }
+        delay_event=SDL_GetTicks();
+    }
+
+    
+}
+
+void GameOver::run()
+{
+    SDL_SetRenderDrawColor(gameRenderer,255,255,255,255);
+    SDL_RenderClear(gameRenderer);
+    
+    handle_event();
+    music_handle_event();
+    pause_music();
+    resume_music();
+
+    render();
+
+    if(e.type==SDL_QUIT)
+    {
+       is_running=false;
+    }
+
+    if(SDL_GetTicks()-start_frame>1000/FPS)
+    {
+        frameN++;
+        start_frame=SDL_GetTicks();
+    }
+
+    SDL_RenderPresent(gameRenderer);
+}
+
+
 void back_handle_event()
 {
-    SDL_PollEvent(&e);
     
     int x,y;
 
@@ -394,11 +910,22 @@ void back_handle_event()
 
     if(backBS.check_inside(x,y))
     {   
+        
         if(e.type==SDL_MOUSEBUTTONDOWN)
         {
-           stage=MAIN_MENU;
-           mainmenu.levelmenuflag=false;
+            if(!highscores.levelmenuflag)
+            {
+                stage=MAIN_MENU;
+                mainmenu.levelmenuflag=false;
+            }
+
+            else if(highscores.levelmenuflag)
+            {
+                stage=HIGHSCORES;
+                highscores.levelmenuflag=false;
+            }
         }
+        
     }
 
     if(e.type==SDL_QUIT)

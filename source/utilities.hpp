@@ -7,6 +7,8 @@
 #include"global.hpp"
 #include"media.hpp"
 
+extern Uint32 start_frame;
+
 struct Button
 {
    SDL_Rect Bsource={350,262,585,202};

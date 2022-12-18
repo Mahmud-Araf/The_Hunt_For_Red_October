@@ -14,7 +14,7 @@ SDL_Event e; // variable for event handling
 
 int is_paused = 0; // variable to pause the game
 
-Uint32 delay_event = SDL_GetTicks(); // variable related to delaying event
+Uint32 delay_event = 0; // variable related to delaying event
 
 Uint32 first_time_torp_launch = 0;
 // variables to make sure that first torp or missile launch doesn't cause time delay
@@ -294,7 +294,7 @@ void Mine::drop_single_mine(int a)
             {
                 if(a&1)
                 {
-                   mine_dim.x -= (E_MINE_SPEED / 7);
+                   mine_dim.x -= (E_MINE_SPEED / 14)*5;
                 }
                 else
                 {
@@ -481,7 +481,7 @@ void Player::handle_event_torps()
     {
         ptorp_launch_count = SDL_GetTicks() - ptorp_launch_start;
 
-        if (e.button.button == SDL_BUTTON_LEFT && (ptorp_launch_count > P_TORP_DELAY || first_time_torp_launch == 0) && (SDL_GetTicks()-mainmenu_delay>1000))
+        if (e.button.button == SDL_BUTTON_LEFT && (ptorp_launch_count > P_TORP_DELAY || first_time_torp_launch == 0) && (SDL_GetTicks()-mainmenu_delay>500))
         {
             if (is_exploded == 0)
             {

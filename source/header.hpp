@@ -7,7 +7,7 @@
 #include"init.hpp"
 #include"global.hpp"
 #include"media.hpp"
-#include"font-color.hpp"
+#include"text.hpp"
 #include"obj-functions.hpp"
 #include"utilities.hpp"
 #include"stages.hpp"

@@ -11,12 +11,13 @@ extern SDL_Color red;
 extern TTF_Font *Bold1F;
 extern TTF_Font *Bold2F;
 extern TTF_Font *Bold3F;
-extern TTF_Font *Bold4F;
-extern TTF_Font *Bold5F;
 extern TTF_Font *DigitalF;
 
+void loadTextSurface(std::string path,TTF_Font *font,SDL_Color color,int x,int y);
 
-void loadTextSurface(std::string path,TTF_Font *font,SDL_Color color,SDL_Rect area);
+void loadTextSurfacewithRect(std::string path,TTF_Font *font,SDL_Color color,SDL_Rect area);
+
+void loadTextSurfacewithBG(std::string path,TTF_Font *font,SDL_Color color,int x,int y);
 
 void font_init();
 

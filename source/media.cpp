@@ -9,6 +9,9 @@ SDL_Texture *mainmenuBG;
 SDL_Texture *levelmenuBG;
 SDL_Texture *controlsBG;
 SDL_Texture *creditBG;
+SDL_Texture *hscoresBG1;
+SDL_Texture *hscoresBG2;
+SDL_Texture *gameoverBG;
 SDL_Texture *startgameB1;
 SDL_Texture *startgameB2;
 SDL_Texture *controlsB1;
@@ -21,10 +24,16 @@ SDL_Texture *exitB1;
 SDL_Texture *exitB2;
 SDL_Texture *backB1;
 SDL_Texture *backB2;
+SDL_Texture *mainmenuB1;
+SDL_Texture *mainmenuB2;
+SDL_Texture *playagainB1;
+SDL_Texture *playagainB2;
 SDL_Texture *level1B1;
 SDL_Texture *level1B2;
 SDL_Texture *level2B1;
 SDL_Texture *level2B2;
+SDL_Texture *refreshB1;
+SDL_Texture *refreshB2;
 SDL_Texture *lifeObj;
 SDL_Texture *scoreObj;
 SDL_Texture *clockObj;
@@ -135,6 +144,27 @@ bool loadMedia()
         success=false;
     }
 
+    hscoresBG1=loadTexture("assets/obj & background/highscorebg1.png");
+    if(hscoresBG1==NULL)
+    {
+        cout<<"Failed to load highscores 1 background"<<endl;
+        success=false;
+    }
+
+    hscoresBG2=loadTexture("assets/obj & background/highscorebg2.png");
+    if(hscoresBG2==NULL)
+    {
+        cout<<"Failed to load highscores 2 background"<<endl;
+        success=false;
+    }
+
+    gameoverBG=loadTexture("assets/obj & background/hunted.png");
+    if(gameoverBG==NULL)
+    {
+        cout<<"Failed to load gameover  background"<<endl;
+        success=false;
+    }
+
     startgameB1=loadTexture("assets/button/start game1.png");
     if(startgameB1==NULL)
     {
@@ -219,6 +249,34 @@ bool loadMedia()
         success=false;
     }
 
+    mainmenuB1=loadTexture("assets/button/mainmenu1.png");
+    if(mainmenuB1==NULL)
+    {
+        cout<<"Failed to load mainmenu button 1 background"<<endl;
+        success=false;
+    }
+
+    mainmenuB2=loadTexture("assets/button/mainmenu2.png");
+    if(mainmenuB2==NULL)
+    {
+        cout<<"Failed to load mainmenu button 2 background"<<endl;
+        success=false;
+    }
+
+    playagainB1=loadTexture("assets/button/playagain1.png");
+    if(playagainB1==NULL)
+    {
+        cout<<"Failed to load playagain button 1 background"<<endl;
+        success=false;
+    }
+
+    playagainB2=loadTexture("assets/button/playagain2.png");
+    if(playagainB2==NULL)
+    {
+        cout<<"Failed to load playagain button 2 background"<<endl;
+        success=false;
+    }
+
     level1B1=loadTexture("assets/button/easy1.png");
     if(level1B1==NULL)
     {
@@ -244,6 +302,20 @@ bool loadMedia()
     if(level2B2==NULL)
     {
         cout<<"Failed to load level2 button 2 background"<<endl;
+        success=false;
+    }
+
+    refreshB1=loadTexture("assets/button/refresh1.png");
+    if(refreshB1==NULL)
+    {
+        cout<<"Failed to load refresh button 1 background"<<endl;
+        success=false;
+    }
+
+    refreshB2=loadTexture("assets/button/refresh2.png");
+    if(refreshB2==NULL)
+    {
+        cout<<"Failed to load refresh button 2 background"<<endl;
         success=false;
     }
 
@@ -363,8 +435,6 @@ bool loadMedia()
         success=false;
     }
 
-
-
     gamemusic=Mix_LoadMUS("assets/audio/gmusic.mp3");
     if(gamemusic==NULL)
     {
@@ -427,6 +497,12 @@ void closeMedia()
     controlsBG=NULL;
     SDL_DestroyTexture(creditBG);
     creditBG=NULL;
+    SDL_DestroyTexture(hscoresBG1);
+    hscoresBG1=NULL;
+    SDL_DestroyTexture(hscoresBG2);
+    hscoresBG2=NULL;
+    SDL_DestroyTexture(gameoverBG);
+    gameoverBG=NULL;
     SDL_DestroyTexture(startgameB1);
     startgameB1=NULL; 
     SDL_DestroyTexture(startgameB2);
@@ -435,10 +511,6 @@ void closeMedia()
     controlsB1=NULL; 
     SDL_DestroyTexture(controlsB2);
     controlsB2=NULL; 
-    SDL_DestroyTexture(hscoresB1);
-    hscoresB1=NULL;
-    SDL_DestroyTexture(hscoresB2);
-    hscoresB2=NULL;
     SDL_DestroyTexture(hscoresB1);
     hscoresB1=NULL;
     SDL_DestroyTexture(hscoresB2);
@@ -455,6 +527,14 @@ void closeMedia()
     backB1=NULL;
     SDL_DestroyTexture(backB2);
     backB2=NULL;
+    SDL_DestroyTexture(mainmenuB1);
+    mainmenuB1=NULL;
+    SDL_DestroyTexture(mainmenuB2);
+    mainmenuB2=NULL;
+    SDL_DestroyTexture(playagainB1);
+    playagainB1=NULL;
+    SDL_DestroyTexture(playagainB2);
+    playagainB2=NULL;
     SDL_DestroyTexture(level1B1);
     level1B1=NULL;
     SDL_DestroyTexture(level1B2);
@@ -463,6 +543,10 @@ void closeMedia()
     level2B1=NULL;
     SDL_DestroyTexture(level2B2);
     level2B2=NULL;
+    SDL_DestroyTexture(refreshB1);
+    refreshB1=NULL;
+    SDL_DestroyTexture(refreshB2);
+    refreshB2=NULL;
     SDL_DestroyTexture(lifeObj);
     lifeObj=NULL;
     SDL_DestroyTexture(scoreObj);

@@ -3,7 +3,7 @@
 int frameN=0;
 int score=0;
 bool music_paused=false;
-
+Uint32 start_frame=0;
 Uint32 current_time=0,paused_time=0,pause_start=0,pause_count=0;
 bool timerflag=false;
 
@@ -77,7 +77,7 @@ void music_handle_event()
 
 void framerate_controlling()
 {
-    int start_frame=SDL_GetTicks();
+    start_frame=SDL_GetTicks();
     
     for(;SDL_GetTicks()-start_frame<=1000/FPS;);
 }
@@ -92,7 +92,7 @@ void fps_show()
 
     string s=to_string((int)(frameN/(SDL_GetTicks()/1000.0)));
 
-    loadTextSurface(s,DigitalF,black,SDL_Rect{FSW-125,10,50,50});
+    loadTextSurfacewithRect(s,DigitalF,black,SDL_Rect{FSW-125,10,50,50});
 
     frameN++;
 }
@@ -111,7 +111,7 @@ void life_show()
 
     string s="Life : "+to_string(player.life);
     
-    loadTextSurface(s,Bold4F,black,SDL_Rect{120,0,150,100});
+    loadTextSurfacewithRect(s,Bold3F,black,SDL_Rect{120,0,150,100});
 
 }
 
@@ -129,7 +129,7 @@ void score_board()
 
     string s="Score : "+ to_string(score);
 
-    loadTextSurface(s,Bold4F,black,SDL_Rect{120,150,150,100});
+    loadTextSurfacewithRect(s,Bold3F,black,SDL_Rect{120,150,150,100});
 }
 
 void time_show()
@@ -164,6 +164,6 @@ void time_show()
     string s="Time : "+to_string((int)(current_time/1000.0));
     s+="s";
 
-    loadTextSurface(s,Bold4F,black,SDL_Rect{FSW/2-75,10,150,100});
+    loadTextSurfacewithRect(s,Bold3F,black,SDL_Rect{FSW/2-75,10,150,100});
 }
 
