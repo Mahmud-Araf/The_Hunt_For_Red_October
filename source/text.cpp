@@ -1,11 +1,13 @@
 #include"text.hpp"
 #include"global.hpp"
 
+//ttf_fonts
 TTF_Font *Bold1F;
 TTF_Font *Bold2F;
 TTF_Font *Bold3F;
 TTF_Font *DigitalF;
 
+//colors
 SDL_Color white={255,255,255};
 SDL_Color black={0,0,0};
 SDL_Color red={255,0,0};
@@ -56,6 +58,7 @@ void loadTextSurfacewithRect(std::string path,TTF_Font *font,SDL_Color color, SD
     SDL_RenderCopy(gameRenderer,newTexture,0,&area);
 }
 
+
 void loadTextSurfacewithBG(std::string path,TTF_Font *font,SDL_Color color,int x,int y)
 {
     SDL_Texture *newTexture=NULL;
@@ -86,6 +89,7 @@ void loadTextSurfacewithBG(std::string path,TTF_Font *font,SDL_Color color,int x
 
     SDL_RenderCopy(gameRenderer,newTexture,0,&area);
 }
+
 
 void font_init()
 {

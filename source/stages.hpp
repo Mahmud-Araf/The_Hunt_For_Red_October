@@ -1,5 +1,7 @@
+/*This file contains all game stage structures and functions*/
 
 #ifndef GSTAGES
+
 #define GSTAGES
 
 #include"preprocessor.hpp"
@@ -56,8 +58,8 @@ struct MainMenu
    void init();
 
 };
-
 extern MainMenu mainmenu;
+
 
 struct GameLevels
 {
@@ -69,8 +71,8 @@ struct GameLevels
      
      void run_levelTwo();
 };
-
 extern  GameLevels gamelevels;
+
 
 struct Controls
 {
@@ -78,8 +80,8 @@ struct Controls
 
     void run();
 };
-
 extern Controls controls;
+
 
 struct Credit
 {
@@ -87,8 +89,8 @@ struct Credit
 
     void run();
 };
-
 extern Credit credit;
+
 
 struct HighScores
 {
@@ -121,7 +123,6 @@ struct HighScores
 
     void run();
 };
-
 extern HighScores highscores;
 
 
@@ -135,7 +136,6 @@ struct GameOver
 
    void run();
 };
-
 extern GameOver gameover;
 
 void back_handle_event();

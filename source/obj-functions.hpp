@@ -1,3 +1,5 @@
+/*This file contains all structures of game objects and game functionalities*/
+
 #ifndef OBJ_FUNCTIONS
 
 #define OBJ_FUNCTIONS
@@ -19,6 +21,7 @@ extern Uint32 ptorp_collision_count[E_SUB_N];
 extern SDL_Rect ptorp_collision_area[E_SUB_N];
 extern SDL_Rect ptorp_collision_source[TORP_COLLISION_SN];
 extern int ptorp_collision_sprite_num[E_SUB_N];
+
 
 struct Torpedo
 {
@@ -100,7 +103,6 @@ struct Mine
     //enemy ship single mine drop
     void drop_single_mine(int a);
 };
-
 
 
 struct GameBackground 
@@ -269,6 +271,7 @@ struct Enemy_Ship
 
 };
 
+
 struct Enemy_Ship_Set
 {
     
@@ -292,17 +295,14 @@ struct Enemy_Ship_Set
     //enemy ships mine dropping
     void launch_mines();
 };
-
 extern Enemy_Ship_Set enemy_ship_set;
 
+void missile_collision_init();      // initializing missile collision variables
 
-void missile_collision_init(); // initializing missile collision variables
+void missile_collision_for_eship(); // function for rendering and detecting missile collision
 
-void missile_collision_for_eship();//function for rendering and detecting missile collision
+void ptorp_collision_init();        // initializing player torpedo collision variables
 
-void ptorp_collision_init(); // initializing player torpedo collision variables
-
-void ptorp_collision_for_esub();//function for rendering and detecting player torpedo collision
-
+void ptorp_collision_for_esub();    // function for rendering and detecting player torpedo collision
 
 #endif

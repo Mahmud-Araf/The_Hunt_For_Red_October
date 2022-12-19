@@ -1,6 +1,3 @@
-/*This are the textures that are used in the game*/
-
-
 #include"media.hpp"
 
 
@@ -50,8 +47,8 @@ SDL_Texture *enemy_mineObj;
 SDL_Texture *explo_surfaceObj;
 SDL_Texture *explo_waterObj;
 
-//sound part
 
+//sound part
 Mix_Music *gamemusic;
 Mix_Chunk *missileL1_chunk;
 Mix_Chunk *missileL2_chunk;
@@ -85,6 +82,7 @@ SDL_Texture* loadTexture(std::string path)
       return newTexture;
 }
 
+
 SDL_Texture* loadTexturewithKey(std::string path,int r,int g,int b) 
 {
       SDL_Texture* newTexture = NULL;
@@ -111,6 +109,7 @@ SDL_Texture* loadTexturewithKey(std::string path,int r,int g,int b)
       }
       return newTexture;
 }
+
 
 bool loadMedia()
 {
@@ -354,14 +353,12 @@ bool loadMedia()
         success=false;
     }
 
-
     player_subObj=loadTexture("assets/obj & background/redoctober.png");
     if(player_subObj==NULL)
     {
         cout<<"Failed to load player submarine"<<endl;
         success=false;
     }
-
 
     player_torpObj=loadTexture("assets/obj & background/red_october_torpedo.png");
     if(player_torpObj==NULL)
@@ -371,14 +368,12 @@ bool loadMedia()
     }
     SDL_SetTextureColorMod(player_torpObj, 200, 255, 255);
 
-
     player_missile1Obj=loadTexture("assets/obj & background/missile1.png");
     if(player_missile1Obj==NULL)
     {
         cout<<"Failed to load player missile1"<<endl;
         success=false;
     }
-
 
     player_missile2Obj=loadTexture("assets/obj & background/missile2.png");
     if(player_missile2Obj==NULL)
@@ -387,14 +382,12 @@ bool loadMedia()
         success=false;
     }
 
-
     enemy_subObj=loadTexture("assets/obj & background/alfaclass.png");
     if(enemy_subObj==NULL)
     {
         cout<<"Failed to load enemy submarine"<<endl;
         success=false;
     }
-
 
     enemy_torpObj=loadTexture("assets/obj & background/enemytorpedo.png");
     if(enemy_torpObj==NULL)
@@ -403,7 +396,6 @@ bool loadMedia()
         success=false;
     }
 
-
     enemy_shipObj=loadTexturewithKey("assets/obj & background/slava.png",255,255,255);
     if(enemy_shipObj==NULL)
     {
@@ -411,7 +403,6 @@ bool loadMedia()
         success=false;
     }
     
-
     enemy_mineObj=loadTexture("assets/obj & background/sea mine.png");
     if(enemy_mineObj==NULL)
     {
@@ -419,14 +410,12 @@ bool loadMedia()
         success=false;
     }
 
-    
     explo_surfaceObj=loadTexture("assets/obj & background/explosion_sprite.png");
     if(explo_surfaceObj==NULL)
     {
         cout<<"Failed to load explosion1"<<endl;
         success=false;
     }
-
 
     explo_waterObj=loadTexture("assets/obj & background/uw_explosion_sprite.png");
     if(explo_waterObj==NULL)
@@ -442,14 +431,12 @@ bool loadMedia()
         success=false;
     }
      
-
     missileL1_chunk=Mix_LoadWAV("assets/audio/missilel1.wav");
     if(missileL1_chunk==NULL)
     {
         cout<<"Failed to load missile launch 1 chunk"<<endl;
         success=false;
     }
-
 
     missileL2_chunk=Mix_LoadWAV("assets/audio/missilel2.wav");
     if(missileL2_chunk==NULL)
@@ -458,7 +445,6 @@ bool loadMedia()
         success=false;
     }
 
-
     torpL_chunk=Mix_LoadWAV("assets/audio/torpedolaunch.wav");
     if(torpL_chunk==NULL)
     {
@@ -466,14 +452,12 @@ bool loadMedia()
         success=false;
     }
 
-
     explosion_surface_chunk=Mix_LoadWAV("assets/audio/surface_exp.wav");
     if(explosion_surface_chunk==NULL)
     {
         cout<<"Failed to load explosion1 chunk"<<endl;
         success=false;
     }
-
 
     explosion_water_chunk=Mix_LoadWAV("assets/audio/underwater_exp.wav");
     if(explosion_water_chunk==NULL)
@@ -483,11 +467,11 @@ bool loadMedia()
     }
 
     return success;
-
 }
 
 void closeMedia()
 {
+    
     //free texture
     SDL_DestroyTexture(mainmenuBG);
     mainmenuBG=NULL;
@@ -578,6 +562,7 @@ void closeMedia()
     SDL_DestroyTexture(explo_waterObj);
     explo_waterObj=NULL;
     
+
     //free sound
     Mix_FreeMusic(gamemusic);
     gamemusic=NULL;

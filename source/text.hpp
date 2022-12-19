@@ -1,3 +1,5 @@
+/*This file contains functions and varibale related to text rendering*/
+
 #ifndef FONT_COLOR
 
 #define FONT_COLOR

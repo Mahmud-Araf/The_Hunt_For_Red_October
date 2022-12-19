@@ -30,7 +30,6 @@ Button level2BS;
 Button refreshBS;
 
 
-
 void MainMenu::init()
 {
     Bw=300;
@@ -255,7 +254,7 @@ void MainMenu::run()
         frameN++;
         start_frame=SDL_GetTicks();
     }
-    
+
     SDL_RenderPresent(gameRenderer);
 }
 
@@ -392,6 +391,7 @@ void Controls::render()
     backBS.render();
 }
 
+
 void Controls::run()
 {
     SDL_SetRenderDrawColor(gameRenderer,255,255,255,255);
@@ -418,12 +418,14 @@ void Controls::run()
     SDL_RenderPresent(gameRenderer);
 }
 
+
 void Credit::render()
 {
     SDL_RenderCopy(gameRenderer,creditBG,NULL,NULL);
 
     backBS.render();
 }
+
 
 void Credit::run()
 {
@@ -626,6 +628,7 @@ void HighScores::save_highscores(string name, int score)
         }
     }
 }
+
 
 void HighScores::refresh_highscores(int x)
 {
@@ -873,6 +876,7 @@ void GameOver::handle_event()
 
     
 }
+
 
 void GameOver::run()
 {

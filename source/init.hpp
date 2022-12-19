@@ -2,7 +2,9 @@
 
 
 #ifndef GINIT
+
 #define GINIT
+
 #include"preprocessor.hpp"
 
 extern SDL_Window *gameWindow;

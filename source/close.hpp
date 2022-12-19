@@ -1,4 +1,4 @@
-//This header contains function to close and free the sdl2 functionalities
+/*This header contains function to close and free the sdl2 functionalities*/
 
 #ifndef CLOSE
 

@@ -44,6 +44,7 @@ extern bool timerflag;
 extern int score;
 
 extern int frameN;
+extern Uint32 start_frame;
 
 extern bool is_running;
 

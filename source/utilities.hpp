@@ -1,3 +1,4 @@
+/*This file contains functions and variable related to time show ,frame rate calculaion,score show ,music & button structures*/
 
 #ifndef UTILITIES
 
@@ -6,8 +7,6 @@
 #include"preprocessor.hpp"
 #include"global.hpp"
 #include"media.hpp"
-
-extern Uint32 start_frame;
 
 struct Button
 {
@@ -26,6 +25,7 @@ struct Button
 };
 
 void utilities_init();
+
 void start_music();
 
 void pause_music();

@@ -1,3 +1,5 @@
+/*This file contains all textures and related functions used in the program*/
+
 #ifndef Media
 
 #define Media
@@ -10,11 +12,10 @@ SDL_Texture *loadTexture(std::string path);
 
 SDL_Texture *loadTexturewithKey(std::string path);
 
-
 //loads texure and sound
 bool loadMedia();
 
-//destroys texture and files from memory, closes all systems and shuts down
+//destroys texture and files from memory to free memory
 void closeMedia();
 
 
@@ -63,6 +64,7 @@ extern SDL_Texture *enemy_shipObj;
 extern SDL_Texture *enemy_mineObj;
 extern SDL_Texture *explo_surfaceObj;
 extern SDL_Texture *explo_waterObj;
+
 
 //sound part
 extern Mix_Music *gamemusic;

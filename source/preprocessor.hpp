@@ -1,11 +1,10 @@
 
-/*including SDL2,SDL2_image,SDL2_ttf,SDL2_mixer and standard C++ library functions that
+/*This file includes SDL2,SDL2_image,SDL2_ttf,SDL2_mixer and standard C++ library functions that
 will be necessary to call standard C++ and SDL2 functions*/
 
 #ifndef Preprocessor
 
 #define Preprocessor
-
 
 #include <bits/stdc++.h>
 #include <SDL2/SDL.h>
@@ -57,7 +56,6 @@ using namespace std;
 #define EXP_SPEED 3
 #define EXP_DELAY_SURFACE 150
 #define EXP_DELAY_WATER 100
-
 
 #endif
 

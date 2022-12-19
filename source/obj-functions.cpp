@@ -59,7 +59,6 @@ SDL_Rect ptorp_collision_source[TORP_COLLISION_SN];
 int ptorp_collision_sprite_num[E_SUB_N];
 
 // functions
-
 void Torpedo::p_init()
 {
     SDL_QueryTexture(player_torpObj, 0, 0, &t_dim.w, &t_dim.h);
@@ -74,6 +73,7 @@ void Torpedo::p_init()
     is_active = 0;
     xy_check = 0;
 }
+
 
 void Torpedo::e_init()
 {
@@ -90,10 +90,12 @@ void Torpedo::e_init()
     xy_check = 0;
 }
 
+
 void Torpedo::render()
 {
     SDL_RenderCopy(gameRenderer, player_torpObj, NULL, &t_dim);
 }
+
 
 void Torpedo::renewal()
 {
@@ -101,6 +103,7 @@ void Torpedo::renewal()
     xy_check = 0;
     t_dim.x = 3000;
 }
+
 
 void Torpedo::launch_single_ptorp()
 {
@@ -128,6 +131,7 @@ void Torpedo::launch_single_ptorp()
     }
 }
 
+
 void Torpedo::launch_single_etorp()
 {
     if (is_active)
@@ -154,6 +158,7 @@ void Torpedo::launch_single_etorp()
     }
 }
 
+
 void Missile::init()
 {
     SDL_QueryTexture(player_missile1Obj, 0, 0, &m1_dim.w, &m1_dim.h);
@@ -176,15 +181,18 @@ void Missile::init()
     x_check = 0;
 }
 
+
 void Missile::render1()
 {
     SDL_RenderCopy(gameRenderer, player_missile1Obj, 0, &m1_dim);
 }
 
+
 void Missile::render2()
 {
     SDL_RenderCopy(gameRenderer, player_missile2Obj, 0, &m2_dim);
 }
+
 
 void Missile::renewal()
 {
@@ -194,6 +202,7 @@ void Missile::renewal()
     m1_dim.x = 3000;
     m2_dim.x = 3000;
 }
+
 
 void Missile::launch_single_missile()
 {
@@ -242,6 +251,7 @@ void Missile::launch_single_missile()
     }
 }
 
+
 void Mine::init()
 {
     SDL_QueryTexture(player_torpObj, 0, 0, &mine_dim.w, &mine_dim.h);
@@ -257,10 +267,12 @@ void Mine::init()
     xy_check = 0;
 }
 
+
 void Mine::render()
 {
     SDL_RenderCopy(gameRenderer, enemy_mineObj, 0, &mine_dim);
 }
+
 
 void Mine::renewal()
 {
@@ -268,6 +280,7 @@ void Mine::renewal()
     xy_check = 0;
     mine_dim.x = -3000;
 }
+
 
 void Mine::drop_single_mine(int a)
 {
@@ -324,6 +337,7 @@ void Mine::drop_single_mine(int a)
     }
 }
 
+
 void GameBackground::init()
 {
     texBG = NULL;
@@ -336,6 +350,7 @@ void GameBackground::init()
         bg_dim[i].h = FSH;
     }
 }
+
 
 void GameBackground::scroll()
 {
@@ -352,6 +367,7 @@ void GameBackground::scroll()
     }
 }
 
+
 void GameBackground::render()
 {
     if (stage==LEVEL1)
@@ -365,6 +381,7 @@ void GameBackground::render()
     SDL_RenderCopy(gameRenderer, texBG, 0, &bg_dim[0]);
     SDL_RenderCopy(gameRenderer, texBG, 0, &bg_dim[1]);
 }
+
 
 void Player::init()
 {
@@ -398,6 +415,7 @@ void Player::init()
     pmissile_launch_count = 0;
 }
 
+
 void Player::render()
 {
     if (!is_exploded || is_paused == 1)
@@ -415,6 +433,7 @@ void Player::render()
         }
     }
 }
+
 
 void Player::handle_event_movement()
 {
@@ -474,6 +493,7 @@ void Player::handle_event_movement()
     
 }
 
+
 void Player::handle_event_torps()
 {
     
@@ -500,6 +520,7 @@ void Player::handle_event_torps()
         }
     }
 }
+
 
 void Player::handle_event_missiles()
 {
@@ -529,6 +550,7 @@ void Player::handle_event_missiles()
     }
 }
 
+
 void Player::launch_torps()
 {
     for (int i = 0; i < P_TORP_N; i++)
@@ -537,6 +559,7 @@ void Player::launch_torps()
     }
 }
 
+
 void Player::launch_missiles()
 {
     for (int i = 0; i < P_MISSILE_N; i++)
@@ -544,6 +567,7 @@ void Player::launch_missiles()
         player_missiles[i].launch_single_missile();
     }
 }
+
 
 void Player::collision_for_player()
 {
@@ -595,6 +619,7 @@ void Player::collision_for_player()
     }
 }
 
+
 void Enemy_Sub::render()
 {
     if (!is_exploded)
@@ -602,6 +627,7 @@ void Enemy_Sub::render()
         SDL_RenderCopyEx(gameRenderer, enemy_subObj, NULL, &esub_dim, 0, 0, SDL_FLIP_HORIZONTAL);
     }
 }
+
 
 void Enemy_Sub::single_sub_launch()
 {
@@ -630,6 +656,7 @@ void Enemy_Sub::single_sub_launch()
         e_torps[j].launch_single_etorp();
     }
 }
+
 
 void Enemy_Sub_Set::init()
 {
@@ -694,6 +721,7 @@ void Enemy_Sub_Set::init()
     xmove_setting();
 }
 
+
 void Enemy_Sub_Set::render()
 {
     for (int i = 0; i < total_sub; i++)
@@ -724,6 +752,7 @@ void Enemy_Sub_Set::increment()
     }
 }
 
+
 void Enemy_Sub_Set::xmove_setting()
 {
     for (int i = 0; i < E_SUB_N; i++)
@@ -753,6 +782,7 @@ void Enemy_Sub_Set::xmove_setting()
     }
 }
 
+
 void Enemy_Sub_Set::xmove()
 {
     if (!is_paused)
@@ -769,6 +799,7 @@ void Enemy_Sub_Set::xmove()
         }
     }
 }
+
 
 void Enemy_Sub_Set::ymove()
 {
@@ -836,6 +867,7 @@ void Enemy_Sub_Set::ymove()
     }
 }
 
+
 void Enemy_Sub_Set::launch_torps()
 {
     for (int i = 0; i < total_sub; i++)
@@ -843,6 +875,7 @@ void Enemy_Sub_Set::launch_torps()
         e_sub[i].single_sub_launch();
     }
 }
+
 
 void Enemy_Ship::render()
 {
@@ -881,6 +914,7 @@ void Enemy_Ship::single_ship_drop()
     }
 }
 
+
 void Enemy_Ship_Set::init()
 {
     int w = 0, h = 0;
@@ -909,6 +943,7 @@ void Enemy_Ship_Set::init()
     reset_pos[4]=WINDOW_WIDTH+300-450*4; 
 }
 
+
 void Enemy_Ship_Set::render()
 {
     for (int i = 0; i < total_ship; i++)
@@ -916,6 +951,7 @@ void Enemy_Ship_Set::render()
         e_ship[i].render();
     }
 }
+
 
 void Enemy_Ship_Set::increment()
 {
@@ -933,6 +969,7 @@ void Enemy_Ship_Set::increment()
     }
 }
 
+
 void Enemy_Ship_Set::xmove()
 {
     for (int i = 0; i < total_ship; i++)
@@ -949,6 +986,7 @@ void Enemy_Ship_Set::xmove()
     }
 }
 
+
 void Enemy_Ship_Set::launch_mines()
 {
     for (int i = 0; i < total_ship; i++)
@@ -956,6 +994,7 @@ void Enemy_Ship_Set::launch_mines()
         e_ship[i].single_ship_drop();
     }
 }
+
 
 void missile_collision_init()
 {
@@ -969,6 +1008,7 @@ void missile_collision_init()
         mcollision_sprite_num[i] = MISSILE_COLLISION_SN;
     }
 }
+
 
 void ptorp_collision_init()
 {
@@ -988,6 +1028,7 @@ void ptorp_collision_init()
         ptorp_collision_sprite_num[i] = TORP_COLLISION_SN;
     }
 }
+
 
 void missile_collision_for_eship()
 {
@@ -1054,6 +1095,7 @@ void missile_collision_for_eship()
         }
     }
 }
+
 
 void ptorp_collision_for_esub()
 {
