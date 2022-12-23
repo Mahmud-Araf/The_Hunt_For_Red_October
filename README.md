@@ -4,8 +4,12 @@ CSE-1211 Lab Project (Fall 2022)
 ![Intro image](assets/obj%20%26%20background/mainmenubg.png)
 
 ## Outline
-This is an academic project of the course CSE-1211 for 1st year 2nd semester in the Department of Computer Science and Engineering of the Univeristy of Dhaka. The game project is developed for only **Linux** as of now using **SDL2**
+This is an academic group project of the course CSE-1211 for 1st year 2nd semester in the Department of Computer Science and Engineering of the Univeristy of Dhaka. The game project is developed for only **Linux** as of now using **SDL2**
 
+## Members:
+1. Abrar Eyasir , Roll 12
+2. Abdullah Al Mahmud , Roll 15
+3. Saadman Moyeed , Roll 33
 ## In Details
 **The Hunt For Red October** is a 2D Third-person Shooting game. The game project is inspired by the 1990 movie of the same name [The Hunt for Red October](https://en.wikipedia.org/wiki/The_Hunt_for_Red_October_(film)).
 
