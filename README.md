@@ -57,6 +57,6 @@ Like this:
 
 After that move or paste the **The Hunt For Red October.desktop** file in desktop and right clicking tick on **Allow Launching**
 and in **Properties** make sure you ticked **Allow executing as program** in the **Permissions** section.
-Now, double clicking will launch the game. 
+Now, double clicking the icon / launcher will launch the game. 
 
 ## Hope you will enjoy
