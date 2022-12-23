@@ -38,14 +38,17 @@ open the **The Hunt For Red October.desktop** using any text editor (gedit,nano,
 
 In the file assign the full path of `a.out` in `Exec`. 
 Like this:
+
 ```Exec=/home/user-name/The_Hunt_For_Red_October/a.out```
 
 then assign the full path of this game folder in `Path`. 
 Like this:
+
 ```Path=/home/user-name/The_Hunt_For_Red_October/```
 
 finally assign full path of an icon image in `Icon`. 
 Like this:
+
 ```Icon=/home/user-name/The_Hunt_For_Red_October/assets/obj & background/mainmenubg.png```
 
 After that move or paste the **The Hunt For Red October.desktop** file in desktop and right clicking click on **Allow Launching**
