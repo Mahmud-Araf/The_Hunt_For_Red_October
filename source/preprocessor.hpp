@@ -49,7 +49,7 @@ using namespace std;
 #define INCREMENT_SHIP 50000
 #define E_SHIP_REVIVAL_DELAY 3000
 #define E_MINE_SPEED 14
-#define E_MINE_DELAY 5000
+#define E_MINE_DELAY 6000
 #define E_MINE_Y_DELAY 150
 #define MISSILE_COLLISION_SN 4
 #define TORP_COLLISION_SN 9
