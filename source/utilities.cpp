@@ -73,7 +73,7 @@ void resume_music()
 
 void music_handle_event()
 {
-    if( keystate[SDL_SCANCODE_F1] && SDL_GetTicks()-delay_event>500)
+    if( e.type==SDL_KEYDOWN && e.key.keysym.sym==SDLK_F1 && SDL_GetTicks()-delay_event>500)
     {
         if(!music_paused)
         music_paused=true;

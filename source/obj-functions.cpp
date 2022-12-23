@@ -441,13 +441,14 @@ void Player::handle_event_movement()
     player_x_pos = p_dim.x;
     player_y_pos = p_dim.y;
 
-    if (SDL_GetTicks() - delay_event > 500)
+    if (e.type==SDL_KEYDOWN && SDL_GetTicks() - delay_event > 500)
     {
-        if (keystate[SDL_SCANCODE_ESCAPE] && is_paused == 0)
+        
+        if (e.key.keysym.sym==SDLK_ESCAPE && is_paused == 0)
         {
             is_paused = 1;
         }
-        else if (keystate[SDL_SCANCODE_ESCAPE] && is_paused == 1)
+        else if (e.key.keysym.sym==SDLK_ESCAPE && is_paused == 1)
         {
             is_paused = 0;
         }
