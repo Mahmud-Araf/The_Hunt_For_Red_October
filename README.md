@@ -32,7 +32,7 @@ or equivalent packages for other distributions.
 ## Running the game
 
 ### using Terminal
-After opening the terminal in the folder where the game folder issimply use the command `make all` or `./a.out` or 
+After opening the terminal in the folder where the game folder is simply use the command `make all` or `./a.out` or 
 write 
 ```g++ src/*.cpp -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer && ./a.out```
 to run the game.
