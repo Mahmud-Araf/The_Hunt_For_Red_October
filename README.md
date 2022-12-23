@@ -18,11 +18,11 @@ I will try to add new levels and challenges in the game in near future.
 
 ## Pre-requisites
 **For Debian and Debian based distributions:**
-*```g++```
-* ```libsdl2-dev``` 
+* ```g++```
 * ```libsdl2-image-dev``` 
 * ```libsdl2-ttf-dev```
 * ```libsdl2-mixer-dev```
+* ```libsdl2-dev``` 
 or equivalent packages for other distributions.
 
 ## Running the game
