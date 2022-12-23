@@ -38,7 +38,7 @@ write
 to run the game.
 
 ### using Unity Launcher
-open the **The Hunt For Red October.desktop** using any text editor (gedit,nano,vim,vscode etc.).
+open the **launcher.desktop** using any text editor (gedit,nano,vim,vscode etc.).
 
 In the file assign the full path of `a.out` in `Exec`. 
 Like this:
@@ -55,7 +55,7 @@ Like this:
 
 ```Icon=/home/user-name/The_Hunt_For_Red_October/assets/obj & background/mainmenubg.png```
 
-After that move or paste the **The Hunt For Red October.desktop** file in desktop and right clicking tick on **Allow Launching**
+After that move or paste the **launcher.desktop** file in desktop and right clicking tick on **Allow Launching**
 and in **Properties** make sure you ticked **Allow executing as program** in the **Permissions** section.
 Now, double clicking the icon / launcher will launch the game. 
 
