@@ -6,8 +6,6 @@
 
 #include"preprocessor.hpp"
 
-extern SDL_Event e; // variable for event handling
-
 //collision variable for player missile explosion
 extern Uint32 mcollision_start[E_SHIP_N];
 extern Uint32 mcollision_count[E_SHIP_N];

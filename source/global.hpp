@@ -7,6 +7,7 @@
 extern SDL_Window *gameWindow;
 extern SDL_Renderer *gameRenderer;
 extern SDL_Event e;
+extern const Uint8 *keystate;
 
 extern Uint32 first_time_torp_launch;
 extern Uint32 first_time_missile_launch;
@@ -50,6 +51,6 @@ extern bool is_running;
 
 extern bool music_paused;
 
-extern const Uint8 *keystate;
+
 
 #endif

@@ -47,7 +47,7 @@ using namespace std;
 #define PRIMARY_ESHIP_N 1
 #define ESHIP_SPEED 5
 #define INCREMENT_SHIP 50000
-#define E_SHIP_REVIVAL_DELAY 3000
+#define E_SHIP_REVIVAL_DELAY 5000
 #define E_MINE_SPEED 14
 #define E_MINE_DELAY 6000
 #define E_MINE_Y_DELAY 150
