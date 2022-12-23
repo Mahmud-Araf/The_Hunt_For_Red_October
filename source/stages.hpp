@@ -13,11 +13,23 @@
 #include"utilities.hpp"
 #include"text.hpp"
 
+/*
+
+variable and functions used here following naming scheme
+BS = Button Screen
+init() = initializes assigned stage
+run() = runs assigned stage
+render() = renders assigned stage
+handle_event() = handles event of assigned stage
+
+*/
+
+// enumeration for game stages
 enum STAGE{MAIN_MENU,CONTROLS,CREDIT,HIGHSCORES,LEVEL1,LEVEL2,GAME_OVER};
 
 extern enum STAGE stage;
 
-extern Button mainmenuBS;
+extern Button mainmenuBS; 
 
 extern Button playagainBS;
 
@@ -29,13 +41,13 @@ extern Button level2BS;
 
 extern Button refreshBS;
 
-
+//structure for stage Mainmenu
 struct MainMenu
 {
   
-   int Bw;
-   int Bh;
-   int Bspacing;
+   int Bw; // width of button
+   int Bh; // height of button
+   int Bspacing; // spacing between two buttons
 
    bool levelmenuflag;
 
@@ -49,9 +61,9 @@ struct MainMenu
 
    Button exitgameBS;
 
-   void run();
+   void run(); 
 
-   void handle_event();
+   void handle_event(); 
 
    void render();
 
@@ -60,7 +72,7 @@ struct MainMenu
 };
 extern MainMenu mainmenu;
 
-
+// structure for two game levels
 struct GameLevels
 {
      int levelmode;
@@ -73,7 +85,7 @@ struct GameLevels
 };
 extern  GameLevels gamelevels;
 
-
+// struct for controls stage
 struct Controls
 {
     void render();
@@ -82,7 +94,7 @@ struct Controls
 };
 extern Controls controls;
 
-
+// structure for credit stage
 struct Credit
 {
     void render();
@@ -91,9 +103,10 @@ struct Credit
 };
 extern Credit credit;
 
-
+// structure for highscores stage
 struct HighScores
 {
+    // variable for storing player name and scores
     string p_namel1[PLAYER_N_HSCORE];
     string p_namel2[PLAYER_N_HSCORE];
     int p_scorel1[PLAYER_N_HSCORE];
@@ -107,13 +120,13 @@ struct HighScores
 
     FILE *l2_file;
 
-    void scan_highscores();
+    void scan_highscores(); // scans highscores from IO files
 
-    void print_highscores(string p_name[],int p_score[]);
+    void print_highscores(string p_name[],int p_score[]); // renders the highscores from IO files
 
-    void save_highscores(string name, int score);
+    void save_highscores(string name, int score); // saves player name and score in IO files if it is greater than lowest player's score
 
-    void refresh_highscores(int x);
+    void refresh_highscores(int x); // refreshes highscores of parameter level 
 
     void render();
 
@@ -125,10 +138,10 @@ struct HighScores
 };
 extern HighScores highscores;
 
-
+// structure for game over stage
 struct GameOver
 {
-   string name_input=" ";
+   string name_input=" "; // variable to store player name
 
    void render();
 
@@ -138,6 +151,6 @@ struct GameOver
 };
 extern GameOver gameover;
 
-void back_handle_event();
+void back_handle_event(); // function for back button event handling
 
 #endif

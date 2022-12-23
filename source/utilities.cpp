@@ -1,17 +1,22 @@
 #include"header.hpp"
 
-int frameN=0;
+int frameN=0; // variable to store total number of frames that rendered according to FPS macro
 
-int score=0;
+int score=0; // variable to hold player score
 
-bool music_paused=false;
+bool music_paused=false; // variable related to game pausing
 
-Uint32 start_frame=0;
+Uint32 start_frame=0;  // time variable related to frame rate counting
 
+// variable related to game time rendering
 Uint32 current_time=0,paused_time=0,pause_start=0,pause_count=0;
 bool timerflag=false;
 
-const Uint8 *keystate=SDL_GetKeyboardState(NULL);
+SDL_Event e; // variable for event handling
+const Uint8 *keystate=SDL_GetKeyboardState(NULL); // variable to hold current keyboard key state
+Uint32 delay_event = 0; // variable related to delaying event
+
+int is_paused = 0; // variable to pause the game
 
 
 void utilities_init()

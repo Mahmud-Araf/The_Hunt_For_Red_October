@@ -18,6 +18,17 @@ bool loadMedia();
 //destroys texture and files from memory to free memory
 void closeMedia();
 
+/*
+
+texture used in the game follows naming scheme
+Suffix
+BG = Background
+B = Button
+Obj = game Objects
+
+In sound part
+L = Launch
+*/
 
 //texture part
 extern SDL_Texture *mainmenuBG;

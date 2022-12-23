@@ -14,6 +14,25 @@ will be necessary to call standard C++ and SDL2 functions*/
 
 using namespace std;
 
+/*
+Macros used in the game follow a naming scheme
+
+FSW = Full Screen Width
+FSH = Full Screen Height
+FPS = Frames Per Second
+SPF = Scrolling Per Second
+BG = Background
+HSCORE = High Score
+Suffix N = Number
+Prefix P = Player
+Prefix E = Enemy
+SUB = Submarine
+TORP = Torpedo
+Prefix EXP = Explosion
+L = Level
+
+*/
+
 #define WINDOW_WIDTH 1500
 #define WINDOW_HEIGHT 1000
 #define WINDOW_TITLE "The Hunt For Red October"

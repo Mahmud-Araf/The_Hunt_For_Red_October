@@ -15,14 +15,14 @@ extern TTF_Font *Bold2F;
 extern TTF_Font *Bold3F;
 extern TTF_Font *DigitalF;
 
-void loadTextSurface(std::string path,TTF_Font *font,SDL_Color color,int x,int y);
+void loadTextSurface(std::string path,TTF_Font *font,SDL_Color color,int x,int y); // function to simply render text 
 
-void loadTextSurfacewithRect(std::string path,TTF_Font *font,SDL_Color color,SDL_Rect area);
+void loadTextSurfacewithRect(std::string path,TTF_Font *font,SDL_Color color,SDL_Rect area); // function to render text in a fixed area
 
-void loadTextSurfacewithBG(std::string path,TTF_Font *font,SDL_Color color,int x,int y);
+void loadTextSurfacewithBG(std::string path,TTF_Font *font,SDL_Color color,int x,int y);  // function to render text with a background of white color
 
-void font_init();
+void font_init(); // initiates all ttf fonts
 
-void closeFont();
+void closeFont(); // closes all ttf fonts
 
 #endif

@@ -9,11 +9,6 @@ Enemy_Sub_Set enemy_sub_set;
 Enemy_Ship_Set enemy_ship_set;
 
 // necessary variables
-SDL_Event e; // variable for event handling
-
-int is_paused = 0; // variable to pause the game
-
-Uint32 delay_event = 0; // variable related to delaying event
 
 // variables to make sure that first torp or missile launch doesn't cause time delay
 Uint32 first_time_torp_launch = 0;

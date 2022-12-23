@@ -7,9 +7,9 @@
 
 #include"preprocessor.hpp"
 
-extern SDL_Window *gameWindow;
+extern SDL_Window *gameWindow;  // game window
 
-extern SDL_Renderer *gameRenderer;
+extern SDL_Renderer *gameRenderer; // game renderer
 
 struct Init
 {
@@ -23,6 +23,6 @@ struct Init
 
 extern Init init;
 
-void gameinit();
+void gameinit(); // initialize necessary functionalities for game
 
 #endif

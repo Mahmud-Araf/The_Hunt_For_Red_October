@@ -1,9 +1,10 @@
 #include"stages.hpp"
 
-bool is_running=true;
+bool is_running=true; // variable related to core game loop
 
-Uint32 mainmenu_delay=0;
-enum STAGE stage;
+Uint32 mainmenu_delay=0; // variable to store the time spent in mainmenu
+
+enum STAGE stage; 
 
 MainMenu mainmenu;
 

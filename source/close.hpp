@@ -10,6 +10,6 @@ extern SDL_Window *gameWindow;
 
 extern SDL_Renderer*gameRenderer;
 
-void gameclose();
+void gameclose(); // function that closes all game functionalities
 
 #endif

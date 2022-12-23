@@ -6,6 +6,8 @@
 
 #include"preprocessor.hpp"
 
+/*variable and functions follow naming scheme*/
+
 //collision variable for player missile explosion
 extern Uint32 mcollision_start[E_SHIP_N];
 extern Uint32 mcollision_count[E_SHIP_N];
@@ -20,7 +22,7 @@ extern SDL_Rect ptorp_collision_area[E_SUB_N];
 extern SDL_Rect ptorp_collision_source[TORP_COLLISION_SN];
 extern int ptorp_collision_sprite_num[E_SUB_N];
 
-
+// structure for player and enemy torpedo
 struct Torpedo
 {
     SDL_Rect t_dim; //dimension for a torpedo
@@ -48,7 +50,7 @@ struct Torpedo
 
 };
 
-
+// structure for player missile
 struct Missile
 {
     SDL_Rect m1_dim; //dimension for missile type1
@@ -76,7 +78,7 @@ struct Missile
     void launch_single_missile();
 };
 
-
+// structure for enemy ship mine
 struct Mine
 {
    SDL_Rect mine_dim;
@@ -102,7 +104,7 @@ struct Mine
     void drop_single_mine(int a);
 };
 
-
+// structure for game backgrounds(level1, level2)
 struct GameBackground 
 {
     SDL_Texture *texBG; //texture to hold game background textures;
@@ -122,7 +124,7 @@ struct GameBackground
 };
 extern GameBackground gamebackground;
 
-
+// structure for player submarine
 struct Player
 {   
  
@@ -181,7 +183,7 @@ struct Player
 };
 extern Player player;
 
-
+// structure for single enemy submarine
 struct Enemy_Sub
 {
     SDL_Rect esub_dim; //the rectangle of obj
@@ -208,7 +210,7 @@ struct Enemy_Sub
 
 };
 
-
+// structure for set of enemy submarines
 struct Enemy_Sub_Set
 {
     
@@ -242,7 +244,7 @@ struct Enemy_Sub_Set
 };
 extern Enemy_Sub_Set enemy_sub_set;
 
-
+// structure for single enemy ship
 struct Enemy_Ship
 {
     SDL_Rect eship_dim; //the rectangle of obj
@@ -269,7 +271,7 @@ struct Enemy_Ship
 
 };
 
-
+// structure for set of enemy ships
 struct Enemy_Ship_Set
 {
     

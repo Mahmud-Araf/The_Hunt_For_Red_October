@@ -93,7 +93,7 @@ void loadTextSurfacewithBG(std::string path,TTF_Font *font,SDL_Color color,int x
 
 void font_init()
 {
-    Bold1F=TTF_OpenFont("assets/ttf_fonts/ChunkFive-Regular.otf",50);
+    Bold1F=TTF_OpenFont("assets/ttf_fonts/chunk five regular.otf",50);
     if(Bold1F==NULL)
     {
         cout<<"TTF Error: "<<TTF_GetError()<<endl;
@@ -105,13 +105,13 @@ void font_init()
         cout<<"TTF Error: "<<TTF_GetError()<<endl;
     }
 
-    Bold3F=TTF_OpenFont("assets/ttf_fonts/SourceSansPro-BlackIt.otf",50);
+    Bold3F=TTF_OpenFont("assets/ttf_fonts/source sans pro black it.otf",50);
     if(Bold3F==NULL)
     {
         cout<<"TTF Error: "<<TTF_GetError()<<endl;
     }
 
-    DigitalF=TTF_OpenFont("assets/ttf_fonts/digital-7.ttf",100);
+    DigitalF=TTF_OpenFont("assets/ttf_fonts/digital.ttf",100);
     if(DigitalF==NULL)
     {
         cout<<"TTF Error: "<<TTF_GetError()<<endl;
