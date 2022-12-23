@@ -15,8 +15,8 @@ This is an academic group project of the course CSE-1211 for 1st year 2nd semest
 
 The game has two levels till now **Easy** and **Hard** . Both levels are endless. 
 
-In each level the protagonist submarine **Red October** has to avoid being hunted by enemy submarines and ships and has to shoot the enemys with torpedos and missiles to score.
-The game will over when life becomes zero.
+In each level the protagonist submarine **Red October** has to avoid being hunted by enemy submarines and ships and has to shoot the enemies with torpedos and missiles to score.
+The game will over when lives becomes zero.
 
 I will try to add new levels and challenges in the game in near future.
 
