@@ -55,4 +55,4 @@ After that move or paste the **The Hunt For Red October.desktop** file in deskto
 and in **Properties** make sure you ticked **Allow executing as program** in the **Permissions** section.
 Now, double clicking will launch the game. 
 
-#### Hope you will enjoy
+##Hope you will enjoy
