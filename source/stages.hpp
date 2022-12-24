@@ -85,6 +85,19 @@ struct GameLevels
 };
 extern  GameLevels gamelevels;
 
+// structure for game over stage
+struct GameOver
+{
+   string name_input=" "; // variable to store player name
+
+   void render();
+
+   void handle_event();
+
+   void run();
+};
+extern GameOver gameover;
+
 // struct for controls stage
 struct Controls
 {
@@ -93,15 +106,6 @@ struct Controls
     void run();
 };
 extern Controls controls;
-
-// structure for credit stage
-struct Credit
-{
-    void render();
-
-    void run();
-};
-extern Credit credit;
 
 // structure for highscores stage
 struct HighScores
@@ -138,18 +142,14 @@ struct HighScores
 };
 extern HighScores highscores;
 
-// structure for game over stage
-struct GameOver
+// structure for credit stage
+struct Credit
 {
-   string name_input=" "; // variable to store player name
+    void render();
 
-   void render();
-
-   void handle_event();
-
-   void run();
+    void run();
 };
-extern GameOver gameover;
+extern Credit credit;
 
 void back_handle_event(); // function for back button event handling
 

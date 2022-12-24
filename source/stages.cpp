@@ -385,6 +385,125 @@ void GameLevels::run_levelTwo()
 }
 
 
+void GameOver::render()
+{
+    SDL_RenderCopy(gameRenderer,gameoverBG,NULL,NULL);
+
+    loadTextSurfacewithRect("Your Score",Bold1F,black,SDL_Rect{FSW/2-200,200,400,150});
+    
+    loadTextSurfacewithRect(to_string(score),DigitalF,black,SDL_Rect{FSW/2-40,350,80,150});
+
+    loadTextSurfacewithRect("Enter Your Name:",Bold1F,black,SDL_Rect{FSW/2-250,500,500,150});
+
+    loadTextSurfacewithBG(name_input,Bold2F,red,FSW/2,650);
+
+    mainmenuBS.render();
+
+    playagainBS.render();
+}
+
+
+void GameOver::handle_event()
+{
+    SDL_StartTextInput();
+    int x,y;
+
+    SDL_GetMouseState(&x,&y);
+
+    if(mainmenuBS.check_inside(x,y))
+    {   
+        if(e.type==SDL_MOUSEBUTTONDOWN)
+        {
+            stage=MAIN_MENU;
+
+            highscores.save_highscores(name_input,score);
+            highscores.scan_highscores();
+
+            SDL_StopTextInput();
+
+            name_input=" ";
+            mainmenu.levelmenuflag=false;
+        }
+    }
+
+    else if(playagainBS.check_inside(x,y))
+    {   
+        if(e.type==SDL_MOUSEBUTTONDOWN)
+        {
+            stage=MAIN_MENU;
+
+            highscores.save_highscores(name_input,score);
+            highscores.scan_highscores();
+
+            SDL_StopTextInput();
+
+            name_input=" ";
+            mainmenu.levelmenuflag=true;
+        }
+    }
+
+    else if(keystate[SDL_SCANCODE_RETURN])
+    {
+        stage=MAIN_MENU;
+
+        highscores.save_highscores(name_input,score);
+        highscores.scan_highscores();
+
+        SDL_StopTextInput();
+
+        name_input=" ";
+        mainmenu.levelmenuflag=false;
+    }
+    
+    if(e.type==SDL_TEXTINPUT)
+    {
+        if(name_input==" ")
+        {
+            name_input.pop_back();
+        }
+
+        name_input+=e.text.text;
+    }
+
+    if(keystate[SDL_SCANCODE_BACKSPACE] && (SDL_GetTicks()-delay_event)>100)
+    {
+        name_input.pop_back();
+        if(name_input.size()==0)
+        {
+            name_input=" ";
+        }
+        delay_event=SDL_GetTicks();
+    }
+}
+
+
+void GameOver::run()
+{
+    SDL_SetRenderDrawColor(gameRenderer,255,255,255,255);
+    SDL_RenderClear(gameRenderer);
+    
+    handle_event();
+    music_handle_event();
+    pause_music();
+    resume_music();
+
+    render();
+
+    if(e.type==SDL_QUIT)
+    {
+       is_running=false;
+    }
+
+    if(SDL_GetTicks()-start_frame>1000/FPS)
+    {
+        frameN++;
+        start_frame=SDL_GetTicks();
+    }
+
+    SDL_RenderPresent(gameRenderer);
+}
+
+
 void Controls::render()
 {
     SDL_RenderCopy(gameRenderer,controlsBG,NULL,NULL);
@@ -398,41 +517,6 @@ void Controls::run()
     SDL_SetRenderDrawColor(gameRenderer,255,255,255,255);
     SDL_RenderClear(gameRenderer);
     
-    render();
-
-    back_handle_event();
-    music_handle_event();
-    pause_music();
-    resume_music();
-
-    if(e.type==SDL_QUIT)
-    {
-        is_running=false;
-    }
-
-    if(SDL_GetTicks()-start_frame>1000/FPS)
-    {
-        frameN++;
-        start_frame=SDL_GetTicks();
-    }
-
-    SDL_RenderPresent(gameRenderer);
-}
-
-
-void Credit::render()
-{
-    SDL_RenderCopy(gameRenderer,creditBG,NULL,NULL);
-
-    backBS.render();
-}
-
-
-void Credit::run()
-{
-    SDL_SetRenderDrawColor(gameRenderer,255,255,255,255);
-    SDL_RenderClear(gameRenderer);
-
     render();
 
     back_handle_event();
@@ -785,115 +869,29 @@ void HighScores::run()
 }
 
 
-void GameOver::render()
+void Credit::render()
 {
-    SDL_RenderCopy(gameRenderer,gameoverBG,NULL,NULL);
+    SDL_RenderCopy(gameRenderer,creditBG,NULL,NULL);
 
-    loadTextSurfacewithRect("Your Score",Bold1F,black,SDL_Rect{FSW/2-200,200,400,150});
-    
-    loadTextSurfacewithRect(to_string(score),DigitalF,black,SDL_Rect{FSW/2-40,350,80,150});
-
-    loadTextSurfacewithRect("Enter Your Name:",Bold1F,black,SDL_Rect{FSW/2-250,500,500,150});
-
-    loadTextSurfacewithBG(name_input,Bold2F,red,FSW/2,650);
-
-    mainmenuBS.render();
-
-    playagainBS.render();
+    backBS.render();
 }
 
 
-void GameOver::handle_event()
-{
-    SDL_StartTextInput();
-    int x,y;
-
-    SDL_GetMouseState(&x,&y);
-
-    if(mainmenuBS.check_inside(x,y))
-    {   
-        if(e.type==SDL_MOUSEBUTTONDOWN)
-        {
-            stage=MAIN_MENU;
-
-            highscores.save_highscores(name_input,score);
-            highscores.scan_highscores();
-
-            SDL_StopTextInput();
-
-            name_input=" ";
-            mainmenu.levelmenuflag=false;
-        }
-    }
-
-    else if(playagainBS.check_inside(x,y))
-    {   
-        if(e.type==SDL_MOUSEBUTTONDOWN)
-        {
-            stage=MAIN_MENU;
-
-            highscores.save_highscores(name_input,score);
-            highscores.scan_highscores();
-
-            SDL_StopTextInput();
-
-            name_input=" ";
-            mainmenu.levelmenuflag=true;
-        }
-    }
-
-    else if(keystate[SDL_SCANCODE_RETURN])
-    {
-        stage=MAIN_MENU;
-
-        highscores.save_highscores(name_input,score);
-        highscores.scan_highscores();
-
-        SDL_StopTextInput();
-
-        name_input=" ";
-        mainmenu.levelmenuflag=false;
-    }
-    
-    if(e.type==SDL_TEXTINPUT)
-    {
-        if(name_input==" ")
-        {
-            name_input.pop_back();
-        }
-
-        name_input+=e.text.text;
-    }
-
-    if(keystate[SDL_SCANCODE_BACKSPACE] && (SDL_GetTicks()-delay_event)>100)
-    {
-        name_input.pop_back();
-        if(name_input.size()==0)
-        {
-            name_input=" ";
-        }
-        delay_event=SDL_GetTicks();
-    }
-
-    
-}
-
-
-void GameOver::run()
+void Credit::run()
 {
     SDL_SetRenderDrawColor(gameRenderer,255,255,255,255);
     SDL_RenderClear(gameRenderer);
-    
-    handle_event();
+
+    render();
+
+    back_handle_event();
     music_handle_event();
     pause_music();
     resume_music();
 
-    render();
-
     if(e.type==SDL_QUIT)
     {
-       is_running=false;
+        is_running=false;
     }
 
     if(SDL_GetTicks()-start_frame>1000/FPS)
