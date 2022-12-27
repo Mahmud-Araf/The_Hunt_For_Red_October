@@ -617,7 +617,7 @@ void HighScores::save_highscores(string name, int score)
     
     if(gamelevels.levelmode==1)
     {
-        if(score>p_scorel1[0])
+        if(score>=p_scorel1[0])
         {
             p_scorel1[0]=score;
 
@@ -667,7 +667,7 @@ void HighScores::save_highscores(string name, int score)
 
     else if(gamelevels.levelmode==2)
     {
-        if(score>p_scorel2[0])
+        if(score>=p_scorel2[0])
         {
             p_scorel2[0]=score;
 
