@@ -8,6 +8,8 @@ bool music_paused=false; // variable related to game pausing
 
 Uint32 start_frame=0;  // time variable related to frame rate counting
 
+Uint32 mainmenu_delay=0; // variable to store the time spent in mainmenu
+
 // variable related to game time rendering
 Uint32 current_time=0,paused_time=0,pause_start=0,pause_count=0;
 bool timerflag=false;
@@ -25,6 +27,15 @@ void utilities_init()
     start_music();
 }
 
+void time_init()
+{
+   current_time=0;
+   paused_time=0;
+   pause_start=0;
+   pause_count=0;
+   timerflag=false;
+   mainmenu_delay=SDL_GetTicks();
+}
 
 void Button::render()
 {   if(!is_inside)

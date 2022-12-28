@@ -28,6 +28,8 @@ struct Button
 
 void utilities_init(); // initializing utilities like font , music
 
+void time_init();  // initializes necessary time variables
+
 void start_music(); 
 
 void pause_music();

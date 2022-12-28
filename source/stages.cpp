@@ -2,8 +2,6 @@
 
 bool is_running=true; // variable related to core game loop
 
-Uint32 mainmenu_delay=0; // variable to store the time spent in mainmenu
-
 enum STAGE stage; 
 
 MainMenu mainmenu;
@@ -164,7 +162,6 @@ void MainMenu::handle_event()
             if(e.type==SDL_MOUSEBUTTONDOWN)
             {
                 levelmenuflag=true;
-                current_time=0;
             }
         }
         else if(controlsBS.check_inside(x,y))
@@ -249,8 +246,8 @@ void MainMenu::run()
     is_running=false;
     }
 
-    mainmenu_delay=SDL_GetTicks();
-
+    time_init();
+    
     if(SDL_GetTicks()-start_frame>1000/FPS)
     {
         frameN++;
@@ -410,7 +407,19 @@ void GameOver::handle_event()
     int x,y;
 
     SDL_GetMouseState(&x,&y);
+    
+    if(keystate[SDL_SCANCODE_RETURN])
+    {
+        stage=MAIN_MENU;
 
+        highscores.save_highscores(name_input,score);
+        highscores.scan_highscores();
+
+        SDL_StopTextInput();
+
+        name_input=" ";
+        mainmenu.levelmenuflag=false;
+    }
     if(mainmenuBS.check_inside(x,y))
     {   
         if(e.type==SDL_MOUSEBUTTONDOWN)
@@ -427,7 +436,7 @@ void GameOver::handle_event()
         }
     }
 
-    else if(playagainBS.check_inside(x,y))
+    if(playagainBS.check_inside(x,y))
     {   
         if(e.type==SDL_MOUSEBUTTONDOWN)
         {
@@ -443,19 +452,7 @@ void GameOver::handle_event()
         }
     }
 
-    else if(keystate[SDL_SCANCODE_RETURN])
-    {
-        stage=MAIN_MENU;
 
-        highscores.save_highscores(name_input,score);
-        highscores.scan_highscores();
-
-        SDL_StopTextInput();
-
-        name_input=" ";
-        mainmenu.levelmenuflag=false;
-    }
-    
     if(e.type==SDL_TEXTINPUT)
     {
         if(name_input==" ")
