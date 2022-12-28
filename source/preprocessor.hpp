@@ -41,7 +41,7 @@ L = Level
 #define FSW 1980
 #define FSH 1080
 #define FPS 45
-#define PLAYER_LIFE 10
+#define PLAYER_LIFE 5
 #define PLAYER_N_HSCORE 5
 #define BG_N 2
 #define SPF  3

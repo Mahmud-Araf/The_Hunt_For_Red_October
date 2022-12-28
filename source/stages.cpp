@@ -164,6 +164,7 @@ void MainMenu::handle_event()
             if(e.type==SDL_MOUSEBUTTONDOWN)
             {
                 levelmenuflag=true;
+                current_time=0;
             }
         }
         else if(controlsBS.check_inside(x,y))
