@@ -59,4 +59,8 @@ After that move or paste the **launcher.desktop** file in desktop and right clic
 and in **Properties** make sure you ticked **Allow executing as program** in the **Permissions** section.
 Now, double clicking the icon / launcher will launch the game. 
 
+## Video Link:
+
+https://youtu.be/7D8OlUxwNgY
+
 ## Hope you will enjoy
