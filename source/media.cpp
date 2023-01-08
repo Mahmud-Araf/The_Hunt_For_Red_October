@@ -360,7 +360,7 @@ bool loadMedia()
         success=false;
     }
 
-    player_torpObj=loadTexture("assets/obj & background/red_october_torpedo.png");
+    player_torpObj=loadTexture("assets/obj & background/red october torpedo.png");
     if(player_torpObj==NULL)
     {
         cout<<"Failed to load player torpedo"<<endl;
