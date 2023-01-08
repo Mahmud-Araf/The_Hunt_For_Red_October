@@ -5,6 +5,7 @@
 TTF_Font *Bold1F;
 TTF_Font *Bold2F;
 TTF_Font *Bold3F;
+TTF_Font *Bold4F;
 TTF_Font *DigitalF;
 
 //colors
@@ -59,7 +60,7 @@ void loadTextSurfacewithRect(std::string path,TTF_Font *font,SDL_Color color, SD
 }
 
 
-void loadTextSurfacewithBG(std::string path,TTF_Font *font,SDL_Color color,int x,int y)
+void loadTextSurfacewithBG(std::string path,TTF_Font *font,SDL_Color color,int x,int y,int r,int g,int b)
 {
     SDL_Texture *newTexture=NULL;
 
@@ -83,7 +84,7 @@ void loadTextSurfacewithBG(std::string path,TTF_Font *font,SDL_Color color,int x
 
     bg=area;
 
-    SDL_SetRenderDrawColor(gameRenderer,255,255,255,255);
+    SDL_SetRenderDrawColor(gameRenderer,r,g,b,255);
 
     SDL_RenderFillRect(gameRenderer,&bg);
 
@@ -93,20 +94,27 @@ void loadTextSurfacewithBG(std::string path,TTF_Font *font,SDL_Color color,int x
 
 void font_init()
 {
-    Bold1F=TTF_OpenFont("assets/ttf_fonts/chunk five regular.otf",50);
+    Bold1F=TTF_OpenFont("assets/ttf_fonts/chunk five  bold.otf",50);
     if(Bold1F==NULL)
     {
         cout<<"TTF Error: "<<TTF_GetError()<<endl;
     }
 
-    Bold2F=TTF_OpenFont("assets/ttf_fonts/hemi head bd it.ttf",50);
+    Bold2F=TTF_OpenFont("assets/ttf_fonts/hemi head bold italic.ttf",50);
     if(Bold2F==NULL)
     {
         cout<<"TTF Error: "<<TTF_GetError()<<endl;
     }
 
-    Bold3F=TTF_OpenFont("assets/ttf_fonts/source sans pro black it.otf",50);
+    Bold3F=TTF_OpenFont("assets/ttf_fonts/source sans pro bold italic.otf",50);
     if(Bold3F==NULL)
+    {
+        cout<<"TTF Error: "<<TTF_GetError()<<endl;
+    }
+
+    
+    Bold4F=TTF_OpenFont("assets/ttf_fonts/playfair bold.otf",50);
+    if(Bold4F==NULL)
     {
         cout<<"TTF Error: "<<TTF_GetError()<<endl;
     }
@@ -128,6 +136,8 @@ void closeFont()
     Bold2F=NULL;
     TTF_CloseFont(Bold3F);
     Bold3F=NULL;
+    TTF_CloseFont(Bold4F);
+    Bold4F=NULL;
     TTF_CloseFont(DigitalF);
     DigitalF=NULL;
 

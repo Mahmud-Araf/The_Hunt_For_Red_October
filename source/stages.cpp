@@ -387,13 +387,13 @@ void GameOver::render()
 {
     SDL_RenderCopy(gameRenderer,gameoverBG,NULL,NULL);
 
-    loadTextSurfacewithRect("Your Score",Bold1F,black,SDL_Rect{FSW/2-200,200,400,150});
+    loadTextSurfacewithRect("Your Score",Bold4F,black,SDL_Rect{FSW/2-200,200,400,150});
     
     loadTextSurfacewithRect(to_string(score),DigitalF,black,SDL_Rect{FSW/2-40,350,80,150});
 
-    loadTextSurfacewithRect("Enter Your Name:",Bold1F,black,SDL_Rect{FSW/2-250,500,500,150});
+    loadTextSurfacewithRect("Enter Your Name:",Bold4F,black,SDL_Rect{FSW/2-250,500,500,150});
 
-    loadTextSurfacewithBG(name_input,Bold2F,red,FSW/2,650);
+    loadTextSurfacewithBG(name_input,Bold1F,red,FSW/2,650,255,255,255);
 
     mainmenuBS.render();
 
