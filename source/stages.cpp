@@ -583,7 +583,6 @@ void HighScores::scan_highscores()
         fscanf(l2_file,"%d",&p_scorel2[i]);
     }
 
-
     fclose(l1_file);
     fclose(l2_file);
 
