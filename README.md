@@ -1,6 +1,7 @@
 # The_Hunt_For_Red_October
-CSE-1211 Lab Project (Fall 2022)
 
+CSE-1211 Lab Project (Fall 2022)
+---
 ![Intro image](assets/obj%20%26%20background/mainmenubg.png)
 
 ## Outline
@@ -34,7 +35,10 @@ or equivalent packages for other distributions.
 ### using Terminal
 After opening the terminal in the folder where the game folder is simply use the command `make all` or `./a.out` or 
 write 
-```g++ src/*.cpp -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer && ./a.out```
+
+```
+g++ src/*.cpp -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer && ./a.out
+```
 to run the game.
 
 ### using Unity Launcher
@@ -43,17 +47,23 @@ open the **launcher.desktop** using any text editor (gedit,nano,vim,vscode etc.)
 In the file assign the full path of `a.out` in `Exec`. 
 Like this:
 
-```Exec=/home/user-name/The_Hunt_For_Red_October/a.out```
+```
+Exec=/home/user-name/The_Hunt_For_Red_October/a.out
+```
 
 then assign the full path of this game folder in `Path`. 
 Like this:
 
-```Path=/home/user-name/The_Hunt_For_Red_October/```
+```
+Path=/home/user-name/The_Hunt_For_Red_October/
+```
 
 finally assign full path of an icon image in `Icon`. 
 Like this:
 
-```Icon=/home/user-name/The_Hunt_For_Red_October/assets/obj & background/mainmenubg.png```
+```
+Icon=/home/user-name/The_Hunt_For_Red_October/assets/obj & background/mainmenubg.png
+```
 
 After that move or paste the **launcher.desktop** file in desktop and right clicking tick on **Allow Launching**
 and in **Properties** make sure you ticked **Allow executing as program** in the **Permissions** section.
