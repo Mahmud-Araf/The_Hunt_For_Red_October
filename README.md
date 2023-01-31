@@ -2,16 +2,28 @@
 
 CSE-1211 Lab Project (Fall 2022)
 ---
+<hr>
+
 ![Intro image](assets/obj%20%26%20background/mainmenubg.png)
 
+<hr>
+
 ## Outline
+<hr>
 This is an academic group project of the course CSE-1211 for 1st year 2nd semester in the Department of Computer Science and Engineering of the Univeristy of Dhaka. The game project is developed for only **Linux** as of now using **SDL2**
+<hr>
 
 ## Members:
+<hr>
+
 1. Abrar Eyasir , Roll 12
 2. Abdullah Al Mahmud , Roll 15
 3. Saadman Moyeed , Roll 33
+<hr>
+
 ## In Details
+<hr>
+
 **The Hunt For Red October** is a 2D Third-person Shooting game. The game project is inspired by the 1990 movie of the same name [The Hunt for Red October](https://en.wikipedia.org/wiki/The_Hunt_for_Red_October_(film)).
 
 The game has two levels till now **Easy** and **Hard** . Both levels are endless. 
@@ -20,8 +32,11 @@ In each level the protagonist submarine **Red October** has to avoid being hunte
 The game will over when lives becomes zero.
 
 I will try to add new levels and challenges in the game in near future.
+<hr>
 
 ## Pre-requisites
+<hr>
+
 **For Debian and Debian based distributions:**
 * ```g++```
 * ```libsdl2-image-dev``` 
@@ -29,10 +44,13 @@ I will try to add new levels and challenges in the game in near future.
 * ```libsdl2-mixer-dev```
 * ```libsdl2-dev``` 
 or equivalent packages for other distributions.
+<hr>
 
 ## Running the game
+<hr>
 
 ### using Terminal
+<hr>
 After opening the terminal in the folder where the game folder is simply use the command `make all` or `./a.out` or 
 write 
 
@@ -40,8 +58,10 @@ write
 g++ src/*.cpp -lSDL2 -lSDL2_image -lSDL2_ttf -lSDL2_mixer && ./a.out
 ```
 to run the game.
+<hr>
 
 ### using Unity Launcher
+<hr>
 open the **launcher.desktop** using any text editor (gedit,nano,vim,vscode etc.).
 
 In the file assign the full path of `a.out` in `Exec`. 
@@ -68,9 +88,13 @@ Icon=/home/user-name/The_Hunt_For_Red_October/assets/obj & background/mainmenubg
 After that move or paste the **launcher.desktop** file in desktop and right clicking tick on **Allow Launching**
 and in **Properties** make sure you ticked **Allow executing as program** in the **Permissions** section.
 Now, double clicking the icon / launcher will launch the game. 
+<hr>
 
 ## Video Link:
+<hr>
 
 https://youtu.be/7D8OlUxwNgY
+<hr>
 
 ## Hope you will enjoy
+<hr>
