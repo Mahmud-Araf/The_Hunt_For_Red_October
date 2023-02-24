@@ -17,16 +17,6 @@ This is an academic group project of the course CSE-1211 for 1st year 2nd semest
 
 <hr>
 
-## Members:
-
-<hr>
-
-1. Abrar Eyasir , Roll 12
-2. Abdullah Al Mahmud , Roll 15
-3. Saadman Moyeed , Roll 33
-
-<hr>
-
 ## In Details
 
 <hr>
