@@ -67,7 +67,7 @@ to run the game.
 ### using Unity Launcher
 
 <hr>
-open the **launcher.desktop** using any text editor (gedit,nano,vim,vscode etc.).
+open the <b>launcher.desktop</b> using any text editor (gedit,nano,vim,vscode etc.).
 
 In the file assign the full path of `a.out` in `Exec`. 
 Like this:
