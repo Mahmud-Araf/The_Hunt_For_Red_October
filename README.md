@@ -50,7 +50,7 @@ or equivalent packages for other distributions.
 
 <hr>
 
-### using Terminal
+### 1. using Terminal
 
 <hr>
 
@@ -64,7 +64,7 @@ to run the game.
 
 <hr>
 
-### using Unity Launcher
+### 2. using Unity Launcher
 
 <hr>
 open the <b>launcher.desktop</b> using any text editor (gedit,nano,vim,vscode etc.).
