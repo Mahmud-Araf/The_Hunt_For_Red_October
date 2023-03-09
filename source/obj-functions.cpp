@@ -574,27 +574,27 @@ void Player::launch_missiles()
 void Player::collision_for_player()
 {
     // enemy torpedo hitting part
-    for (int i = 0; i < total_sub; i++)
+
+    for (int i = 0; i < total_sub && is_exploded==0; i++)
     {
         for (int j = 0; j < E_TORP_N; j++)
         {
-            if (!is_exploded)
+            
+            if (enemy_sub_set.e_sub[i].e_torps[j].t_dim.x >= p_dim.x && enemy_sub_set.e_sub[i].e_torps[j].t_dim.x <= p_dim.x + 270 && enemy_sub_set.e_sub[i].e_torps[j].t_dim.y >= p_dim.y + 70 && enemy_sub_set.e_sub[i].e_torps[j].t_dim.y <= p_dim.y + 130)
             {
-                if (enemy_sub_set.e_sub[i].e_torps[j].t_dim.x >= p_dim.x && enemy_sub_set.e_sub[i].e_torps[j].t_dim.x <= p_dim.x + 270 && enemy_sub_set.e_sub[i].e_torps[j].t_dim.y >= p_dim.y + 70 && enemy_sub_set.e_sub[i].e_torps[j].t_dim.y <= p_dim.y + 130)
-                {
-                    is_exploded = 1;
-                    enemy_sub_set.e_sub[i].e_torps[j].renewal();
-                    Mix_PlayChannel(-1, explosion_water_chunk, 0);
-                    is_started = current_time;
-                    life--;
-                    break;
-                }
+                is_exploded = 1;
+                enemy_sub_set.e_sub[i].e_torps[j].renewal();
+                Mix_PlayChannel(-1, explosion_water_chunk, 0);
+                is_started = current_time;
+                life--;
+                break;
             }
+            
         }
     }
 
     // enemy mine hitting part
-    for (int i = 0; i < total_ship; i++)
+    for (int i = 0; i < total_ship && is_exploded==0; i++)
     {
         for (int j = 0; j < E_MINE_N; j++)
         {
@@ -609,6 +609,33 @@ void Player::collision_for_player()
                     life--;
                     break;
                 }
+            }
+        }
+    }
+
+    // collision with enemy submarine
+    for(int i=0;i<total_sub && is_exploded==0;i++)
+    {
+        if(!is_exploded)
+        {
+            if(enemy_sub_set.e_sub[i].esub_dim.x>=player.p_dim.x-200 && enemy_sub_set.e_sub[i].esub_dim.x<=player.p_dim.x+330 && enemy_sub_set.e_sub[i].esub_dim.y>=player.p_dim.y+10 && enemy_sub_set.e_sub[i].esub_dim.y<=player.p_dim.y+100)
+            {
+                //player part
+                is_exploded = 1;
+                Mix_PlayChannel(-1, explosion_water_chunk, 0);
+                is_started = current_time;
+                life--;
+
+                //enemy sub part
+                enemy_sub_set.e_sub[i].is_exploded = 1;
+                ptorp_collision_area[i].x = enemy_sub_set.e_sub[i].esub_dim.x + 240;
+                ptorp_collision_area[i].y = enemy_sub_set.e_sub[i].esub_dim.y + 130;
+                ptorp_collision_sprite_num[i] = 0;
+                ptorp_collision_start[i] = current_time;
+                enemy_sub_set.e_sub[i].is_started = current_time;
+                enemy_sub_set.e_sub[i].revival = 0;
+                enemy_sub_set.e_sub[i].esub_dim.x = WINDOW_WIDTH+300;
+                break;
             }
         }
     }
@@ -791,12 +818,15 @@ void Enemy_Sub_Set::xmove()
     {
         for (int i = 0; i < total_sub; i++)
         {
-            e_sub[i].esub_dim.x -= esub_speed[i];
-
-            if (e_sub[i].esub_dim.x <= -500)
+            if(!e_sub[i].is_exploded)
             {
-                e_sub[i].esub_dim.x = WINDOW_WIDTH + 300;
-                e_sub[i].is_exploded = 0;
+                e_sub[i].esub_dim.x -= esub_speed[i];
+
+                if (e_sub[i].esub_dim.x <= -500)
+                {
+                    e_sub[i].esub_dim.x = WINDOW_WIDTH + 300;
+                    e_sub[i].is_exploded = 0;
+                }
             }
         }
     }
@@ -809,62 +839,65 @@ void Enemy_Sub_Set::ymove()
     if (!is_paused)
     {
         for (int i = 0; i < total_sub; i++)
-        {
-            if (e_sub[i].esub_dim.y >=800)
+        {  
+            if(!e_sub[i].is_exploded)
             {
-                y_limit_check[i] = 1;
-            }
-            else if (e_sub[i].esub_dim.y <= 360)
-            {
-                y_limit_check[i] = 0;
-            }
+                if (e_sub[i].esub_dim.y >=800)
+                {
+                    y_limit_check[i] = 1;
+                }
+                else if (e_sub[i].esub_dim.y <= 360)
+                {
+                    y_limit_check[i] = 0;
+                }
 
-            if (y_limit_check[i])
-            {
-                if (i % 5 == 0)
+                if (y_limit_check[i])
                 {
-                    e_sub[i].esub_dim.y -= 1;
+                    if (i % 5 == 0)
+                    {
+                        e_sub[i].esub_dim.y -= 1;
+                    }
+                    else if (i % 5 == 1)
+                    {
+                        e_sub[i].esub_dim.y -= 2;
+                    }
+                    else if (i % 5 == 2)
+                    {
+                        e_sub[i].esub_dim.y -= 3;
+                    }
+                    else if (i % 5 == 3)
+                    {
+                        e_sub[i].esub_dim.y -= 4;
+                    }
+                    else if (i % 5 == 4)
+                    {
+                        e_sub[i].esub_dim.y -= 5;
+                    }
                 }
-                else if (i % 5 == 1)
+                else
                 {
-                    e_sub[i].esub_dim.y -= 2;
+                    if (i % 5 == 0)
+                    {
+                        e_sub[i].esub_dim.y += 1;
+                    }
+                    else if (i % 5 == 1)
+                    {
+                        e_sub[i].esub_dim.y += 2;
+                    }
+                    else if (i % 5 == 2)
+                    {
+                        e_sub[i].esub_dim.y += 3;
+                    }
+                    else if (i % 5 == 3)
+                    {
+                        e_sub[i].esub_dim.y += 4;
+                    }
+                    else if (i % 5 == 4)
+                    {
+                        e_sub[i].esub_dim.y += 5;
+                    }
                 }
-                else if (i % 5 == 2)
-                {
-                    e_sub[i].esub_dim.y -= 3;
-                }
-                else if (i % 5 == 3)
-                {
-                    e_sub[i].esub_dim.y -= 4;
-                }
-                else if (i % 5 == 4)
-                {
-                    e_sub[i].esub_dim.y -= 5;
-                }
-            }
-            else
-            {
-                if (i % 5 == 0)
-                {
-                    e_sub[i].esub_dim.y += 1;
-                }
-                else if (i % 5 == 1)
-                {
-                    e_sub[i].esub_dim.y += 2;
-                }
-                else if (i % 5 == 2)
-                {
-                    e_sub[i].esub_dim.y += 3;
-                }
-                else if (i % 5 == 3)
-                {
-                    e_sub[i].esub_dim.y += 4;
-                }
-                else if (i % 5 == 4)
-                {
-                    e_sub[i].esub_dim.y += 5;
-                }
-            }
+            }    
         }
     }
 }
@@ -976,7 +1009,7 @@ void Enemy_Ship_Set::xmove()
 {
     for (int i = 0; i < total_ship; i++)
     {
-        if (!is_paused)
+        if (!is_paused && e_ship[i].is_exploded==0)
         {
             e_ship[i].eship_dim.x -= ESHIP_SPEED;
         }
