@@ -9,6 +9,16 @@ CSE-1211 Lab Project (Fall 2022)
 
 <hr>
 
+<hr>
+
+## Current Version
+
+<hr>
+
+1.1
+
+<hr>
+
 ## Outline
 
 <hr>
